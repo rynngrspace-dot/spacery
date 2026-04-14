@@ -40,7 +40,10 @@ export default function ImageCompressor() {
     };
 
     try {
-      const compressedFile = await imageCompression(image, options);
+      const [compressedFile] = await Promise.all([
+        imageCompression(image, options),
+        new Promise(r => setTimeout(r, 2000)),
+      ]);
       const newSize = compressedFile.size;
       setCompressedSize(newSize);
       setReductionPercent(Math.round((1 - newSize / image.size) * 100));
@@ -84,7 +87,7 @@ export default function ImageCompressor() {
                 {/* Progress bar */}
                 <div className="w-48 h-1 bg-white/10 rounded-full overflow-hidden mb-4">
                   <div
-                    className="h-full bg-gradient-to-r from-sky-500 to-sky-300 rounded-full transition-all duration-300 ease-out"
+                    className="h-full bg-linear-to-r from-sky-500 to-sky-300 rounded-full transition-all duration-300 ease-out"
                     style={{ width: `${progress}%` }}
                   ></div>
                 </div>
@@ -143,7 +146,7 @@ export default function ImageCompressor() {
                 {/* Result banner */}
                 {compressedSize && reductionPercent !== null && (
                   <div className="p-4 rounded-xl bg-emerald-500/5 border border-emerald-500/20 flex items-center gap-4">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center">
+                    <div className="shrink-0 w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center">
                       <span className="text-sm font-bold font-mono text-emerald-400">↓</span>
                     </div>
                     <div className="flex flex-col">

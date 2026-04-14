@@ -35,7 +35,10 @@ export default function ImageCropper() {
     setCroppedBlob(null);
     
     try {
-      const blob = await cropImage(imgSrc, completedCrop);
+      const [blob] = await Promise.all([
+        cropImage(imgSrc, completedCrop),
+        new Promise(r => setTimeout(r, 2000)),
+      ]);
       setCroppedBlob(blob);
     } catch (err) {
       console.error("Crop error:", err);

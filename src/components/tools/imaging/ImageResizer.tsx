@@ -54,7 +54,10 @@ export default function ImageResizer() {
     setIsProcessing(true);
     setResultBlob(null);
     try {
-      const blob = await resizeImage(file, width, height);
+      const [blob] = await Promise.all([
+        resizeImage(file, width, height),
+        new Promise(r => setTimeout(r, 2000)),
+      ]);
       setResultBlob(blob);
     } catch (err) {
       console.error("Resizing error:", err);
