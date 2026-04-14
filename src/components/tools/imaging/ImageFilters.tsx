@@ -114,23 +114,23 @@ export default function ImageFilters() {
     }
   };
 
+  const activeSlider = FILTERS.find(fl => fl.key === selectedFilter);
+
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-6 md:gap-10">
       {!image ? (
         <FileUploader accept="image/*" label="Upload Visual Signal" onFileSelect={handleFileSelect} />
       ) : (
-        <div className="flex flex-col lg:flex-row gap-8 md:gap-12">
+        <div className="flex flex-col lg:flex-row gap-4 md:gap-8">
           
           {/* Preview Area */}
-          <div className="flex-1 w-full bg-black/40 rounded-3xl overflow-hidden border border-white/5 relative group min-h-[300px] md:min-h-[500px]">
-             {/* Processing Overlay */}
+          <div className="flex-1 w-full bg-black/40 rounded-2xl overflow-hidden border border-white/5 relative group min-h-[220px] md:min-h-[500px]">
              {isProcessing && (
                <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/70 backdrop-blur-md">
-                 <div className="relative w-24 h-24 mb-8">
+                 <div className="relative w-20 h-20 mb-6">
                    <div className="absolute inset-0 rounded-full border-2 border-sky-500/20"></div>
                    <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-sky-400 animate-spin"></div>
                    <div className="absolute inset-2 rounded-full border-2 border-transparent border-b-sky-300 animate-spin" style={{ animationDirection: "reverse", animationDuration: "1.5s" }}></div>
-                   <div className="absolute inset-4 rounded-full border-2 border-transparent border-t-white/40 animate-spin" style={{ animationDuration: "2s" }}></div>
                  </div>
                  <span className="text-[10px] font-mono text-sky-400 uppercase tracking-[0.3em] animate-pulse">
                    Rendering Filter Matrix...
@@ -147,51 +147,48 @@ export default function ImageFilters() {
                style={{ filter: showOriginal ? "none" : buildFilterString() }}
              />
 
-             {/* Top bar */}
-             <div className="absolute top-4 left-4 px-4 py-2 bg-black/60 backdrop-blur-md rounded-full text-[10px] font-mono text-sky-400 uppercase tracking-widest border border-white/10">
+             <div className="absolute top-3 left-3 px-3 py-1.5 bg-black/60 backdrop-blur-md rounded-lg text-[9px] font-mono text-sky-400 uppercase tracking-widest border border-white/10">
                 {showOriginal ? "ORIGINAL" : isModified ? "FILTERED" : "RAW"}
              </div>
 
-             <div className="absolute top-4 right-4 flex gap-2">
-               {/* Toggle Original */}
+             <div className="absolute top-3 right-3 flex gap-2">
                <button 
                  onMouseDown={() => setShowOriginal(true)}
                  onMouseUp={() => setShowOriginal(false)}
                  onMouseLeave={() => setShowOriginal(false)}
                  onTouchStart={() => setShowOriginal(true)}
                  onTouchEnd={() => setShowOriginal(false)}
-                 className={`px-4 py-2 backdrop-blur-md rounded-full text-[10px] font-mono uppercase tracking-widest border transition-all ${
+                 className={`px-3 py-1.5 backdrop-blur-md rounded-lg text-[9px] font-mono uppercase tracking-widest border transition-all ${
                    showOriginal 
                      ? "bg-sky-500/30 text-sky-300 border-sky-400/50" 
-                     : "bg-black/60 text-slate-400 border-white/10 hover:text-sky-400 hover:border-sky-500/30"
+                     : "bg-black/60 text-slate-400 border-white/10"
                  }`}
                >
                  Hold: Original
                </button>
-
-               {/* Close */}
                <button 
                  onClick={() => { setImage(null); resetFilters(); setResultBlob(null); }}
-                 className="p-3 bg-black/60 backdrop-blur-md rounded-full hover:bg-red-500/20 text-slate-400 hover:text-red-400 transition-all border border-white/10"
+                 className="px-2.5 py-1.5 bg-black/60 backdrop-blur-md rounded-lg hover:bg-red-500/20 text-slate-400 hover:text-red-400 transition-all border border-white/10 text-xs"
                >
                  ×
                </button>
              </div>
           </div>
 
+          {/* Controls */}
           <ToolOptionsDrawer title="Filter Controls">
-            {/* Presets */}
-            <div className="flex flex-col gap-3">
-              <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Quick Presets</span>
-              <div className="grid grid-cols-3 gap-2">
+            {/* Presets - horizontal scroll on mobile */}
+            <div className="flex flex-col gap-2">
+              <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">Presets</span>
+              <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-hide lg:grid lg:grid-cols-3 lg:gap-2">
                 {PRESETS.map((p) => (
                   <button
                     key={p.name}
                     onClick={() => applyPreset(p)}
-                    className={`py-2 rounded-xl text-[9px] font-mono uppercase tracking-widest border transition-all ${
+                    className={`shrink-0 px-3 py-1.5 rounded-lg text-[8px] font-mono uppercase tracking-widest border transition-all whitespace-nowrap ${
                       JSON.stringify(filterValues) === JSON.stringify(p.values)
                         ? "bg-sky-500 text-white border-sky-400"
-                        : "bg-white/2 text-slate-500 border-white/5 hover:border-white/10"
+                        : "bg-white/2 text-slate-500 border-white/5"
                     }`}
                   >
                     {p.name}
@@ -200,62 +197,53 @@ export default function ImageFilters() {
               </div>
             </div>
 
-            {/* Filter Selector + Active Slider */}
-            <div className="flex flex-col gap-4 mt-2">
-              <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Fine Tuning</span>
-              <div className="grid grid-cols-2 gap-2">
+            {/* Filter Selector - compact pill buttons */}
+            <div className="flex flex-col gap-2">
+              <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">Adjust</span>
+              <div className="flex flex-wrap gap-1.5">
                 {FILTERS.map((f) => (
                   <button
                     key={f.key}
                     onClick={() => setSelectedFilter(f.key)}
-                    className={`px-3 py-2.5 rounded-xl text-[9px] font-mono uppercase tracking-widest border transition-all text-left flex justify-between items-center ${
+                    className={`px-2.5 py-1 rounded-lg text-[8px] font-mono uppercase tracking-wider border transition-all ${
                       selectedFilter === f.key
                         ? "bg-sky-500/10 text-sky-400 border-sky-500/30"
                         : filterValues[f.key] !== f.defaultValue
                           ? "bg-white/2 text-sky-300 border-white/10"
-                          : "bg-white/2 text-slate-500 border-white/5 hover:border-white/10"
+                          : "bg-white/2 text-slate-500 border-white/5"
                     }`}
                   >
-                    <span>{f.name}</span>
-                    <span className="text-[8px] opacity-60">{filterValues[f.key]}{f.unit}</span>
+                    {f.name}
                   </button>
                 ))}
               </div>
 
               {/* Active Filter Slider */}
-              {(() => {
-                const f = FILTERS.find(fl => fl.key === selectedFilter);
-                if (!f) return null;
-                return (
-                  <div className="p-4 rounded-2xl bg-sky-500/5 border border-sky-500/10 flex flex-col gap-3">
-                    <div className="flex justify-between items-center">
-                      <span className="text-[10px] font-mono text-sky-400 uppercase tracking-widest">{f.name}</span>
-                      <span className="text-sm font-mono text-sky-400 font-bold">{filterValues[f.key]}{f.unit}</span>
-                    </div>
-                    <input
-                      type="range"
-                      min={f.min}
-                      max={f.max}
-                      step={f.step}
-                      value={filterValues[f.key]}
-                      onChange={(e) => updateFilter(f.key, parseFloat(e.target.value))}
-                      className="w-full h-1.5 bg-white/10 rounded-full appearance-none cursor-pointer accent-sky-500"
-                    />
-                    <div className="flex justify-between text-[8px] font-mono text-slate-600">
-                      <span>{f.min}{f.unit}</span>
-                      <span>{f.max}{f.unit}</span>
-                    </div>
+              {activeSlider && (
+                <div className="p-3 rounded-xl bg-sky-500/5 border border-sky-500/10 flex flex-col gap-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-[9px] font-mono text-sky-400 uppercase tracking-widest">{activeSlider.name}</span>
+                    <span className="text-xs font-mono text-sky-400 font-bold">{filterValues[activeSlider.key]}{activeSlider.unit}</span>
                   </div>
-                );
-              })()}
+                  <input
+                    type="range"
+                    min={activeSlider.min}
+                    max={activeSlider.max}
+                    step={activeSlider.step}
+                    value={filterValues[activeSlider.key]}
+                    onChange={(e) => updateFilter(activeSlider.key, parseFloat(e.target.value))}
+                    className="w-full h-1 bg-white/10 rounded-full appearance-none cursor-pointer accent-sky-500"
+                  />
+                </div>
+              )}
             </div>
 
             {/* Actions */}
-            <div className="flex flex-col gap-3 pt-4">
+            <div className="flex flex-col gap-2 pt-2">
               <button
                 onClick={applyAndDownload}
                 disabled={isProcessing || !isModified}
-                className="w-full py-5 bg-sky-500 text-white font-bold rounded-2xl hover:bg-sky-400 transition-all text-sm uppercase tracking-[0.2em] shadow-[0_0_30px_rgba(56,189,248,0.2)] disabled:opacity-50"
+                className="w-full py-4 bg-sky-500 text-white font-bold rounded-xl hover:bg-sky-400 transition-all text-xs uppercase tracking-[0.2em] shadow-[0_0_30px_rgba(56,189,248,0.2)] disabled:opacity-50"
               >
                 {isProcessing ? "Rendering..." : "Apply & Prepare Download"}
               </button>
@@ -263,7 +251,7 @@ export default function ImageFilters() {
               {resultBlob && (
                 <button
                   onClick={() => downloadBlob(resultBlob, `spacery_filtered_${Date.now()}.webp`)}
-                  className="w-full py-4 bg-emerald-500 text-white font-bold rounded-2xl hover:bg-emerald-400 transition-all text-xs uppercase tracking-[0.2em] shadow-[0_0_30px_rgba(16,185,129,0.25)]"
+                  className="w-full py-3 bg-emerald-500 text-white font-bold rounded-xl hover:bg-emerald-400 transition-all text-xs uppercase tracking-[0.2em] shadow-[0_0_30px_rgba(16,185,129,0.25)]"
                 >
                   ↓ Download Filtered Image
                 </button>
@@ -271,7 +259,7 @@ export default function ImageFilters() {
 
               <button
                 onClick={resetFilters}
-                className="py-3 text-[10px] font-mono text-slate-600 hover:text-sky-400 uppercase tracking-widest transition-colors"
+                className="py-2 text-[9px] font-mono text-slate-600 hover:text-sky-400 uppercase tracking-widest transition-colors"
               >
                 Reset All Filters
               </button>
