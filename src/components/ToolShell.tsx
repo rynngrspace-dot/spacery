@@ -47,8 +47,15 @@ export default function ToolShell({ tool, children }: ToolShellProps) {
           </div>
 
           <div className="flex items-center gap-4 bg-white/5 border border-white/5 rounded-full px-5 py-2 w-full sm:w-auto justify-center">
-             <div className="w-2 h-2 rounded-full bg-sky-500 animate-pulse shadow-[0_0_8px_rgba(56,189,248,0.8)]"></div>
-             <span className="text-[10px] font-mono text-slate-400 uppercase tracking-[0.2em]">Module Status: Operational</span>
+             {(() => {
+                const isFunctional = !tool.isComingSoon && !["Motion", "Documents"].includes(tool.category);
+                return (
+                  <>
+                    <div className={`w-2 h-2 rounded-full ${isFunctional ? "bg-sky-500 shadow-[0_0_8px_rgba(56,189,248,0.8)]" : "bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.8)] animate-pulse"}`}></div>
+                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-[0.2em]">Module Status: {isFunctional ? "Operational" : "Under Recalibration"}</span>
+                  </>
+                );
+             })()}
              <span className="text-[10px] font-mono text-slate-700 hidden sm:inline">|</span>
              <span className="text-[10px] font-mono text-slate-500 uppercase tracking-[0.2em] hidden sm:inline">{tool.category}</span>
           </div>

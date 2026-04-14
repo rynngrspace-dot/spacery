@@ -51,7 +51,7 @@ export default function ToolsArchive() {
           The Archives
         </h1>
         <p className="text-slate-400 text-base md:text-lg max-w-2xl mb-12 md:mb-16 leading-relaxed px-1">
-          A comprehensive database of every operational laboratory module. Filter by category to initialize specific mission-critical utilities.
+          A comprehensive database of every laboratory module. Filter by category to initialize specific mission-critical utilities.
         </p>
 
         {/* Filter Navigation - Scrollable on Mobile */}
