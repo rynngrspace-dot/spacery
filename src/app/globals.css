@@ -6,8 +6,15 @@
   --font-mono: var(--font-jetbrains-mono);
 }
 
+html, 
 body {
-  background: transparent !important;
+  background-color: #010205;
+  color: #e2e8f0;
+  overscroll-behavior-y: none;
+}
+
+body {
+  overflow-x: hidden;
 }
 
 @layer utilities {
