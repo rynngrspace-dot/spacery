@@ -145,6 +145,12 @@ export const TOOLS: Tool[] = [
     desc: "Calculate final prices and total savings during sales and shopping trips.",
     category: "Calculations"
   },
+  {
+    slug: "currency-converter",
+    title: "Currency Converter",
+    desc: "Convert between major currencies with real-time exchange rates.",
+    category: "Calculations"
+  },
   { 
     slug: "color-palette", 
     title: "Color Palette Generator", 
