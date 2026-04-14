@@ -124,7 +124,7 @@ export default function ImageFilters() {
         <div className="flex flex-col lg:flex-row gap-4 md:gap-8">
           
           {/* Preview Area */}
-          <div className="flex-1 w-full bg-black/40 rounded-2xl overflow-hidden border border-white/5 relative group min-h-[220px] md:min-h-[500px]">
+          <div className="flex-1 w-full bg-black/40 rounded-xl overflow-hidden border border-white/5 relative group min-h-[220px] md:min-h-[500px]">
              {isProcessing && (
                <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/70 backdrop-blur-md">
                  <div className="relative w-20 h-20 mb-6">
@@ -147,7 +147,7 @@ export default function ImageFilters() {
                style={{ filter: showOriginal ? "none" : buildFilterString() }}
              />
 
-             <div className="absolute top-3 left-3 px-3 py-1.5 bg-black/60 backdrop-blur-md rounded-lg text-[9px] font-mono text-sky-400 uppercase tracking-widest border border-white/10">
+             <div className="absolute top-3 left-3 px-3 py-1.5 bg-black/60 backdrop-blur-md rounded-md text-[9px] font-mono text-sky-400 uppercase tracking-widest border border-white/10">
                 {showOriginal ? "ORIGINAL" : isModified ? "FILTERED" : "RAW"}
              </div>
 
@@ -158,7 +158,7 @@ export default function ImageFilters() {
                  onMouseLeave={() => setShowOriginal(false)}
                  onTouchStart={() => setShowOriginal(true)}
                  onTouchEnd={() => setShowOriginal(false)}
-                 className={`px-3 py-1.5 backdrop-blur-md rounded-lg text-[9px] font-mono uppercase tracking-widest border transition-all ${
+                 className={`px-3 py-1.5 backdrop-blur-md rounded-md text-[9px] font-mono uppercase tracking-widest border transition-all ${
                    showOriginal 
                      ? "bg-sky-500/30 text-sky-300 border-sky-400/50" 
                      : "bg-black/60 text-slate-400 border-white/10"
@@ -168,7 +168,7 @@ export default function ImageFilters() {
                </button>
                <button 
                  onClick={() => { setImage(null); resetFilters(); setResultBlob(null); }}
-                 className="px-2.5 py-1.5 bg-black/60 backdrop-blur-md rounded-lg hover:bg-red-500/20 text-slate-400 hover:text-red-400 transition-all border border-white/10 text-xs"
+                 className="px-2.5 py-1.5 bg-black/60 backdrop-blur-md rounded-md hover:bg-red-500/20 text-slate-400 hover:text-red-400 transition-all border border-white/10 text-xs"
                >
                  ×
                </button>
@@ -200,12 +200,12 @@ export default function ImageFilters() {
             {/* Filter Selector - compact pill buttons */}
             <div className="flex flex-col gap-2">
               <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">Adjust</span>
-              <div className="flex flex-wrap gap-1.5">
+              <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-hide lg:flex-wrap">
                 {FILTERS.map((f) => (
                   <button
                     key={f.key}
                     onClick={() => setSelectedFilter(f.key)}
-                    className={`px-2.5 py-1 rounded-lg text-[8px] font-mono uppercase tracking-wider border transition-all ${
+                    className={`shrink-0 px-2.5 py-1 rounded-lg text-[8px] font-mono uppercase tracking-wider border transition-all whitespace-nowrap ${
                       selectedFilter === f.key
                         ? "bg-sky-500/10 text-sky-400 border-sky-500/30"
                         : filterValues[f.key] !== f.defaultValue
@@ -220,7 +220,7 @@ export default function ImageFilters() {
 
               {/* Active Filter Slider */}
               {activeSlider && (
-                <div className="p-3 rounded-xl bg-sky-500/5 border border-sky-500/10 flex flex-col gap-2">
+                <div className="p-3 rounded-lg bg-sky-500/5 border border-sky-500/10 flex flex-col gap-2">
                   <div className="flex justify-between items-center">
                     <span className="text-[9px] font-mono text-sky-400 uppercase tracking-widest">{activeSlider.name}</span>
                     <span className="text-xs font-mono text-sky-400 font-bold">{filterValues[activeSlider.key]}{activeSlider.unit}</span>
@@ -243,7 +243,7 @@ export default function ImageFilters() {
               <button
                 onClick={applyAndDownload}
                 disabled={isProcessing || !isModified}
-                className="w-full py-4 bg-sky-500 text-white font-bold rounded-xl hover:bg-sky-400 transition-all text-xs uppercase tracking-[0.2em] shadow-[0_0_30px_rgba(56,189,248,0.2)] disabled:opacity-50"
+                className="w-full py-4 bg-sky-500 text-white font-bold rounded-lg hover:bg-sky-400 transition-all text-xs uppercase tracking-[0.2em] shadow-[0_0_30px_rgba(56,189,248,0.2)] disabled:opacity-50"
               >
                 {isProcessing ? "Rendering..." : "Apply & Prepare Download"}
               </button>
@@ -251,7 +251,7 @@ export default function ImageFilters() {
               {resultBlob && (
                 <button
                   onClick={() => downloadBlob(resultBlob, `spacery_filtered_${Date.now()}.webp`)}
-                  className="w-full py-3 bg-emerald-500 text-white font-bold rounded-xl hover:bg-emerald-400 transition-all text-xs uppercase tracking-[0.2em] shadow-[0_0_30px_rgba(16,185,129,0.25)]"
+                  className="w-full py-3 bg-emerald-500 text-white font-bold rounded-lg hover:bg-emerald-400 transition-all text-xs uppercase tracking-[0.2em] shadow-[0_0_30px_rgba(16,185,129,0.25)]"
                 >
                   ↓ Download Filtered Image
                 </button>
