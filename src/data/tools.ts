@@ -122,6 +122,12 @@ export const TOOLS: Tool[] = [
     category: "Calculations"
   },
   { 
+    slug: "age-calculator", 
+    title: "Chronos Age Calculator", 
+    desc: "Calculate your exact age and time spent in the temporal stream with high precision.",
+    category: "Calculations"
+  },
+  { 
     slug: "color-palette", 
     title: "Color Palette Generator", 
     desc: "Generate harmonious color palettes from CSS variables or images.",

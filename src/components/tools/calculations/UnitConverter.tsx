@@ -20,8 +20,25 @@ export default function UnitConverter() {
 
   const calculateResult = () => {
     const value = parseFloat(val) || 0;
+    if (value === 0) return "0.00";
+    
     const baseValue = value / CONVERSIONS[from];
-    return (baseValue * CONVERSIONS[to]).toExponential(4);
+    const result = baseValue * CONVERSIONS[to];
+    const absResult = Math.abs(result);
+
+    // If it's effectively 0 at high precision
+    if (absResult < 1e-25) return "0.00";
+
+    // Use scientific notation only for extremely small or large numbers
+    if (absResult < 0.0001 || absResult >= 100000000) {
+      return result.toExponential(4);
+    }
+
+    // Standard decimal formatting
+    return new Intl.NumberFormat("en-US", {
+      maximumFractionDigits: 8,
+      minimumFractionDigits: 0,
+    }).format(result);
   };
 
   const units = Object.keys(CONVERSIONS) as Unit[];
