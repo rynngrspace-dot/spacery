@@ -40,6 +40,7 @@ const PRESETS = [
 export default function ImageFilters() {
   const [image, setImage] = useState<string | null>(null);
   const [showOriginal, setShowOriginal] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState<FilterKey>("grayscale");
   const [isProcessing, setIsProcessing] = useState(false);
   const [resultBlob, setResultBlob] = useState<Blob | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -199,26 +200,54 @@ export default function ImageFilters() {
               </div>
             </div>
 
-            {/* Individual Sliders */}
+            {/* Filter Selector + Active Slider */}
             <div className="flex flex-col gap-4 mt-2">
               <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Fine Tuning</span>
-              {FILTERS.map((f) => (
-                <div key={f.key} className="flex flex-col gap-2">
-                  <div className="flex justify-between items-center">
-                    <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">{f.name}</span>
-                    <span className="text-[10px] font-mono text-sky-400">{filterValues[f.key]}{f.unit}</span>
+              <div className="grid grid-cols-2 gap-2">
+                {FILTERS.map((f) => (
+                  <button
+                    key={f.key}
+                    onClick={() => setSelectedFilter(f.key)}
+                    className={`px-3 py-2.5 rounded-xl text-[9px] font-mono uppercase tracking-widest border transition-all text-left flex justify-between items-center ${
+                      selectedFilter === f.key
+                        ? "bg-sky-500/10 text-sky-400 border-sky-500/30"
+                        : filterValues[f.key] !== f.defaultValue
+                          ? "bg-white/2 text-sky-300 border-white/10"
+                          : "bg-white/2 text-slate-500 border-white/5 hover:border-white/10"
+                    }`}
+                  >
+                    <span>{f.name}</span>
+                    <span className="text-[8px] opacity-60">{filterValues[f.key]}{f.unit}</span>
+                  </button>
+                ))}
+              </div>
+
+              {/* Active Filter Slider */}
+              {(() => {
+                const f = FILTERS.find(fl => fl.key === selectedFilter);
+                if (!f) return null;
+                return (
+                  <div className="p-4 rounded-2xl bg-sky-500/5 border border-sky-500/10 flex flex-col gap-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-[10px] font-mono text-sky-400 uppercase tracking-widest">{f.name}</span>
+                      <span className="text-sm font-mono text-sky-400 font-bold">{filterValues[f.key]}{f.unit}</span>
+                    </div>
+                    <input
+                      type="range"
+                      min={f.min}
+                      max={f.max}
+                      step={f.step}
+                      value={filterValues[f.key]}
+                      onChange={(e) => updateFilter(f.key, parseFloat(e.target.value))}
+                      className="w-full h-1.5 bg-white/10 rounded-full appearance-none cursor-pointer accent-sky-500"
+                    />
+                    <div className="flex justify-between text-[8px] font-mono text-slate-600">
+                      <span>{f.min}{f.unit}</span>
+                      <span>{f.max}{f.unit}</span>
+                    </div>
                   </div>
-                  <input
-                    type="range"
-                    min={f.min}
-                    max={f.max}
-                    step={f.step}
-                    value={filterValues[f.key]}
-                    onChange={(e) => updateFilter(f.key, parseFloat(e.target.value))}
-                    className="w-full h-1 bg-white/10 rounded-full appearance-none cursor-pointer accent-sky-500"
-                  />
-                </div>
-              ))}
+                );
+              })()}
             </div>
 
             {/* Actions */}
