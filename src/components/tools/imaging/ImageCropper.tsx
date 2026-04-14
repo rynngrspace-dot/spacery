@@ -13,6 +13,7 @@ export default function ImageCropper() {
   const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
   const [aspect, setAspect] = useState<number | undefined>(undefined);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [croppedBlob, setCroppedBlob] = useState<Blob | null>(null);
   const imgRef = useRef<HTMLImageElement>(null);
 
   const onSelectFile = (file: File) => {
@@ -31,12 +32,11 @@ export default function ImageCropper() {
   const executeCrop = async () => {
     if (!completedCrop || !imgRef.current) return;
     setIsProcessing(true);
+    setCroppedBlob(null);
     
     try {
-      // Calculate coordinates relative to original image if needed, 
-      // but canvas drawImage handle source rect naturally.
       const blob = await cropImage(imgSrc, completedCrop);
-      downloadBlob(blob, `spacery_crop_${Date.now()}.webp`);
+      setCroppedBlob(blob);
     } catch (err) {
       console.error("Crop error:", err);
       alert("Sector cutting failed. Target coordinates unstable.");
@@ -124,8 +124,18 @@ export default function ImageCropper() {
                 >
                   {isProcessing ? "Extracting Sector..." : "Execute Crop"}
                 </button>
+
+                {croppedBlob && (
+                  <button
+                    onClick={() => downloadBlob(croppedBlob, `spacery_crop_${Date.now()}.webp`)}
+                    className="w-full py-4 bg-emerald-500 text-white font-bold rounded-2xl hover:bg-emerald-400 transition-all text-xs uppercase tracking-[0.2em] shadow-[0_0_30px_rgba(16,185,129,0.25)]"
+                  >
+                    ↓ Download Cropped File
+                  </button>
+                )}
+
                 <button
-                  onClick={() => { setImgSrc(""); setCrop(undefined); }}
+                  onClick={() => { setImgSrc(""); setCrop(undefined); setCroppedBlob(null); }}
                   className="py-3 text-[10px] font-mono text-slate-600 hover:text-red-400 uppercase tracking-widest transition-colors"
                 >
                   Eject Signal

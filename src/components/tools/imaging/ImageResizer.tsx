@@ -14,6 +14,7 @@ export default function ImageResizer() {
   const [originalRatio, setOriginalRatio] = useState<number>(1);
   const [maintainAspect, setMaintainAspect] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [resultBlob, setResultBlob] = useState<Blob | null>(null);
 
   // Capture original dimensions on upload
   const handleFileSelect = (selectedFile: File) => {
@@ -51,9 +52,10 @@ export default function ImageResizer() {
   const executeResize = async () => {
     if (!file || !width || !height) return;
     setIsProcessing(true);
+    setResultBlob(null);
     try {
-      const resultBlob = await resizeImage(file, width, height);
-      downloadBlob(resultBlob, `spacery_resized_${file.name.split('.')[0]}.webp`);
+      const blob = await resizeImage(file, width, height);
+      setResultBlob(blob);
     } catch (err) {
       console.error("Resizing error:", err);
       alert("Calibration failed during image reconstruction.");
@@ -122,8 +124,17 @@ export default function ImageResizer() {
                   {isProcessing ? "Reconstructing..." : "Execute Resizing"}
                 </button>
 
+                {resultBlob && (
+                  <button 
+                    onClick={() => downloadBlob(resultBlob, `spacery_resized_${file.name.split('.')[0]}.webp`)}
+                    className="w-full py-4 bg-emerald-500 text-white font-bold rounded-2xl hover:bg-emerald-400 transition-all text-xs uppercase tracking-[0.2em] shadow-[0_0_30px_rgba(16,185,129,0.25)]"
+                  >
+                    ↓ Download Resized File
+                  </button>
+                )}
+
                 <button 
-                  onClick={() => { setFile(null); setPreview(null); }} 
+                  onClick={() => { setFile(null); setPreview(null); setResultBlob(null); }} 
                   className="py-3 text-[10px] font-mono text-slate-600 hover:text-red-400 uppercase tracking-widest transition-colors"
                 >
                    Eject Source
