@@ -61,7 +61,20 @@ export default function ImageCropper() {
         <FileUploader accept="image/*" label="Initialize Visual Signal" onFileSelect={onSelectFile} />
       ) : (
         <div className="flex flex-col lg:flex-row gap-8 md:gap-10">
-          <div className="flex-1 bg-black/40 rounded-[32px] border border-white/5 p-4 md:p-8 flex items-center justify-center min-h-[400px]">
+          <div className="flex-1 bg-black/40 rounded-[32px] border border-white/5 p-4 md:p-8 flex items-center justify-center min-h-[400px] relative overflow-hidden">
+            {isProcessing && (
+              <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/70 backdrop-blur-md">
+                <div className="relative w-24 h-24 mb-8">
+                  <div className="absolute inset-0 rounded-full border-2 border-sky-500/20"></div>
+                  <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-sky-400 animate-spin"></div>
+                  <div className="absolute inset-2 rounded-full border-2 border-transparent border-b-sky-300 animate-spin" style={{ animationDirection: "reverse", animationDuration: "1.5s" }}></div>
+                  <div className="absolute inset-4 rounded-full border-2 border-transparent border-t-white/40 animate-spin" style={{ animationDuration: "2s" }}></div>
+                </div>
+                <span className="text-[10px] font-mono text-sky-400 uppercase tracking-[0.3em] animate-pulse">
+                  Extracting Target Sector...
+                </span>
+              </div>
+            )}
             <ReactCrop
               crop={crop}
               onChange={(c) => setCrop(c)}
