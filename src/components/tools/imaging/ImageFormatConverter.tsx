@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useRef } from "react";
-import FileUploader from "../../shared/FileUploader";
-import ToolOptionsDrawer from "../../shared/ToolOptionsDrawer";
+import FileUploader from "@/components/tools/shared/FileUploader";
+import ToolOptionsDrawer from "@/components/tools/shared/ToolOptionsDrawer";
 
 export default function ImageFormatConverter() {
   const [imgSrc, setImgSrc] = useState<string>("");

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { jsPDF } from "jspdf";
-import FileUploader from "../../shared/FileUploader";
+import FileUploader from "@/components/tools/shared/FileUploader";
 
 interface QueuedImage {
   id: string;
