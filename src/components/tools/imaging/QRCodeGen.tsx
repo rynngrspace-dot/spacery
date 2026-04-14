@@ -38,15 +38,15 @@ export default function QRCodeGen() {
            <QRCodeCanvas 
              ref={canvasRef}
              value={value || "https://spacery.io"} 
-             size={200}
+             size={256}
              level="H"
-             includeMargin={false}
+             includeMargin={true}
              imageSettings={{
                 src: "/favicon.ico",
                 x: undefined,
                 y: undefined,
-                height: 40,
-                width: 40,
+                height: 48,
+                width: 48,
                 excavate: true,
              }}
            />
