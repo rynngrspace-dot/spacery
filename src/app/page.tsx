@@ -74,7 +74,7 @@ export default function Home() {
             transform: `translate3d(${mousePos.x}px, ${mousePos.y}px, 0) rotateX(${-mousePos.y * 0.2}deg) rotateY(${mousePos.x * 0.2}deg)`,
             transition: isHovered ? 'transform 0.1s linear' : 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)'
           }}
-          className="w-full max-w-2xl animate-[fadeUp_1s_cubic-bezier(0.16,1,0.3,1)_forwards] rounded-[24px] bg-[#060b19]/40 backdrop-blur-2xl p-10 text-center opacity-0 sm:p-14 sm:max-w-3xl border border-white/5 relative overflow-hidden"
+          className="w-full max-w-2xl animate-[fadeUp_1s_cubic-bezier(0.16,1,0.3,1)_forwards] rounded-[24px] bg-[#060b19]/40 backdrop-blur-2xl p-6 text-center opacity-0 sm:p-14 sm:max-w-3xl border border-white/5 relative overflow-hidden"
         >
           {/* Internal Reflection Glow */}
           <div 
