@@ -54,8 +54,8 @@ export default function QRCodeGen() {
     // 3. Lab Branding Header
     ctx.fillStyle = "white";
     ctx.textAlign = "center";
-    ctx.font = "bold 32px sans-serif";
-    ctx.fillText("SPACERY LABORATORY", template.width / 2, 80);
+    ctx.font = "bold 36px sans-serif";
+    ctx.fillText("SPACERY LAB", template.width / 2, 80);
     
     ctx.fillStyle = "#38bdf8";
     ctx.font = "14px monospace";
@@ -75,11 +75,14 @@ export default function QRCodeGen() {
     // 5. Draw QR Code
     ctx.drawImage(qrCanvas, x, y, qrSize, qrSize);
 
-    // 6. Metadata Footer
+    // 6. Metadata Footer & Humorous Motivation
+    ctx.fillStyle = "white";
+    ctx.font = "italic 16px serif";
+    ctx.fillText("\"Believe in yourself as much as we believe in our error correction levels.\"", template.width / 2, y + qrSize + 80);
+
     ctx.fillStyle = "rgba(255, 255, 255, 0.3)";
-    ctx.font = "12px monospace";
-    ctx.fillText("UPLINK SOURCE: " + (inputValue.length > 40 ? inputValue.substring(0, 40) + "..." : inputValue), template.width / 2, y + qrSize + 80);
-    ctx.fillText("ORIGIN: SPACERY_ORBITAL_HUB // TIMESTAMP: " + new Date().toISOString(), template.width / 2, y + qrSize + 110);
+    ctx.font = "10px monospace";
+    ctx.fillText("ORIGIN: SPACERY_ORBITAL_HUB // TIMESTAMP: " + new Date().toISOString(), template.width / 2, y + qrSize + 120);
 
     // 7. Trigger Download
     const url = template.toDataURL("image/png");
