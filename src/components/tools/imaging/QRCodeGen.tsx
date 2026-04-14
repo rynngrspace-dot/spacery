@@ -8,7 +8,7 @@ export default function QRCodeGen() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const downloadQR = () => {
-    const canvas = document.querySelector('canvas') as HTMLCanvasElement;
+    const canvas = canvasRef.current;
     if (!canvas) return;
     const url = canvas.toDataURL("image/png");
     const link = document.createElement("a");
@@ -36,6 +36,7 @@ export default function QRCodeGen() {
         <div className="absolute -inset-1 bg-sky-500/20 rounded-3xl blur opacity-0 group-hover:opacity-100 transition duration-700"></div>
         <div className="relative p-8 bg-white rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)]">
            <QRCodeCanvas 
+             ref={canvasRef}
              value={value || "https://spacery.io"} 
              size={200}
              level="H"
