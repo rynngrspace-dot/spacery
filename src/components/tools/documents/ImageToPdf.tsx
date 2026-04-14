@@ -63,6 +63,8 @@ export default function ImageToPdf() {
       format: format,
     });
 
+    const startTime = Date.now();
+
     for (let i = 0; i < images.length; i++) {
       if (i > 0) pdf.addPage();
       
@@ -94,8 +96,15 @@ export default function ImageToPdf() {
 
     const blob = pdf.output("blob");
     const url = URL.createObjectURL(blob);
-    setPdfUrl(url);
-    setIsGenerating(false);
+    
+    // Ensure at least 2 seconds of loading time for better UX
+    const elapsedTime = Date.now() - startTime;
+    const remainingTime = Math.max(0, 2000 - elapsedTime);
+
+    setTimeout(() => {
+      setPdfUrl(url);
+      setIsGenerating(false);
+    }, remainingTime);
   };
 
   const downloadPdf = () => {
