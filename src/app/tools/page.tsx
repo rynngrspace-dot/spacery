@@ -37,7 +37,7 @@ export default function ToolsArchive() {
   }, [activeCategory]);
 
   return (
-    <div ref={containerRef} className="min-h-screen pt-32 md:pt-40 pb-20 md:pb-32 px-3 md:px-8 flex flex-col items-center select-none overflow-x-hidden">
+    <div ref={containerRef} className="min-h-screen pt-32 md:pt-40 pb-20 md:pb-32 px-4 md:px-8 flex flex-col items-center select-none overflow-x-hidden">
       
       {/* Header Area */}
       <div className="max-w-6xl w-full archive-header">
@@ -79,7 +79,7 @@ export default function ToolsArchive() {
               <Link 
                 href={`/tools/${tool.category.toLowerCase()}/${tool.slug}`} 
                 key={tool.slug} 
-                className="tool-card-archive group relative overflow-hidden rounded-[24px] bg-[#060b19]/60 backdrop-blur-xl border border-white/5 p-8 transition-all duration-500 hover:bg-white/5 hover:border-sky-400/30 hover:shadow-[0_20px_60px_-15px_rgba(56,189,248,0.15)] block"
+                className="tool-card-archive group relative overflow-hidden rounded-[24px] bg-[#060b19]/60 backdrop-blur-xl border border-white/5 p-5 md:p-8 transition-all duration-500 hover:bg-white/5 hover:border-sky-400/30 hover:shadow-[0_20px_60px_-15px_rgba(56,189,248,0.15)] block"
               >
                 <div className="absolute inset-0 bg-linear-to-br from-sky-400/0 via-sky-400/0 to-sky-400/10 opacity-0 transition-opacity duration-700 group-hover:opacity-100"></div>
                 

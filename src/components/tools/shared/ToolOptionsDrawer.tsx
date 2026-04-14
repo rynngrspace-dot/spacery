@@ -24,11 +24,11 @@ export default function ToolOptionsDrawer({
   }, [isOpen]);
 
   return (
-    <div className="w-full lg:w-80 flex flex-col bg-white/2 border border-white/5 rounded-[32px] overflow-hidden transition-all duration-500">
+    <div className="w-full lg:w-80 flex flex-col bg-white/2 border border-white/5 rounded-2xl md:rounded-[32px] overflow-hidden transition-all duration-500">
       {/* Header / Toggle */}
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full p-6 flex items-center justify-between group hover:bg-white/5 transition-colors"
+        className="w-full p-4 md:p-6 flex items-center justify-between group hover:bg-white/5 transition-colors"
       >
         <div className="flex flex-col items-start gap-1">
           <span className="text-[10px] font-mono text-sky-500 uppercase tracking-widest">{title}</span>
@@ -43,8 +43,8 @@ export default function ToolOptionsDrawer({
 
       {/* Content Area */}
       <div className="drawer-content overflow-hidden">
-        <div className="p-6 md:p-8 pt-0 md:pt-0 space-y-6 md:space-y-8">
-           <div className="h-px bg-white/5 w-full mb-6"></div>
+        <div className="p-4 md:p-8 pt-0 md:pt-0 space-y-4 md:space-y-8">
+           <div className="h-px bg-white/5 w-full mb-4 md:mb-6"></div>
            {children}
         </div>
       </div>

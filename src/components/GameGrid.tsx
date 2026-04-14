@@ -36,7 +36,7 @@ export default function GameGrid() {
   }, { scope: container });
 
   return (
-    <section id="games" ref={container} className="relative z-10 w-full py-20 md:py-32 px-3 md:px-8 flex flex-col items-center overflow-x-hidden">
+    <section id="games" ref={container} className="relative z-10 w-full py-20 md:py-32 px-4 md:px-8 flex flex-col items-center overflow-x-hidden">
       <div className="max-w-5xl w-full">
         <div className="mb-12 md:mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="text-center md:text-left">
@@ -50,7 +50,7 @@ export default function GameGrid() {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           {games.map((game, i) => (
-            <Link href={`/games/${game.slug}`} key={i} className="game-card group cursor-pointer relative overflow-hidden rounded-[24px] bg-[#0d0714]/60 backdrop-blur-xl border border-white/5 p-8 md:p-10 transition-all duration-300 hover:bg-white/5 hover:border-purple-400/30 hover:-translate-y-2 hover:shadow-[0_15px_40px_-10px_rgba(168,85,247,0.15)] block">
+            <Link href={`/games/${game.slug}`} key={i} className="game-card group cursor-pointer relative overflow-hidden rounded-[24px] bg-[#0d0714]/60 backdrop-blur-xl border border-white/5 p-5 md:p-10 transition-all duration-300 hover:bg-white/5 hover:border-purple-400/30 hover:-translate-y-2 hover:shadow-[0_15px_40px_-10px_rgba(168,85,247,0.15)] block">
               {/* Purple Glow */}
               <div className="absolute inset-0 bg-linear-to-br from-purple-500/0 via-purple-500/0 to-purple-500/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
               

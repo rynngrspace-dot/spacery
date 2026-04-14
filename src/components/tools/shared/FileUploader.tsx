@@ -35,7 +35,7 @@ export default function FileUploader({ accept, label, onFileSelect }: FileUpload
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
       onClick={() => fileInputRef.current?.click()}
-      className={`relative w-full py-12 md:py-20 border-2 border-dashed rounded-[32px] transition-all duration-500 cursor-pointer flex flex-col items-center justify-center text-center px-4 md:px-6 ${
+      className={`relative w-full py-8 md:py-20 border-2 border-dashed rounded-xl md:rounded-[32px] transition-all duration-500 cursor-pointer flex flex-col items-center justify-center text-center px-4 md:px-6 ${
         isDragging 
           ? "border-sky-500 bg-sky-500/10 scale-[1.02] shadow-[0_0_40px_rgba(56,189,248,0.2)]" 
           : "border-white/10 bg-white/2 hover:border-white/20 hover:bg-white/5"

@@ -33,7 +33,7 @@ export default function UnitConverter() {
            <label className="text-[10px] font-mono text-slate-500 uppercase tracking-widest px-2">Source Magnitude</label>
            <input 
              type="number" value={val} onChange={(e) => setVal(e.target.value)}
-             className="w-full bg-black/40 border border-white/10 rounded-2xl p-4 md:p-6 font-mono text-xl md:text-2xl text-sky-400 focus:outline-none focus:border-sky-500/50 transition-all"
+             className="w-full bg-black/40 border border-white/10 rounded-2xl p-3 md:p-6 font-mono text-xl md:text-2xl text-sky-400 focus:outline-none focus:border-sky-500/50 transition-all"
              placeholder="0.00"
            />
            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -52,7 +52,7 @@ export default function UnitConverter() {
 
         <div className="flex-1 w-full space-y-4">
            <label className="text-[10px] font-mono text-slate-500 uppercase tracking-widest px-2">Projected Value</label>
-           <div className="w-full bg-white/2 border border-white/5 rounded-2xl p-4 md:p-6 font-mono text-xl md:text-2xl text-slate-200">
+           <div className="w-full bg-white/2 border border-white/5 rounded-2xl p-3 md:p-6 font-mono text-xl md:text-2xl text-slate-200">
               {calculateResult()}
            </div>
            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -68,7 +68,7 @@ export default function UnitConverter() {
         </div>
       </div>
 
-      <div className="mt-6 p-8 rounded-3xl bg-sky-500/5 border border-white/5 text-center">
+      <div className="mt-6 p-4 md:p-8 rounded-3xl bg-sky-500/5 border border-white/5 text-center">
          <p className="text-[10px] font-mono text-slate-600 uppercase tracking-[0.3em]">
            Calculation powered by Orbital Parallax Engine v4.0
          </p>

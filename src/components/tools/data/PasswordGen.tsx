@@ -25,12 +25,12 @@ export default function PasswordGen() {
   };
 
   return (
-    <div className="flex flex-col gap-10 md:gap-12 items-center py-6 md:py-10">
+    <div className="flex flex-col gap-8 md:gap-12 items-center py-4 md:py-10 text-center">
       
       {/* Visual Display */}
       <div className="w-full max-w-xl relative group">
          <div className="absolute -inset-1 bg-linear-to-r from-sky-500 to-purple-500 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
-         <div className="relative bg-black h-20 md:h-24 rounded-2xl border border-white/5 flex items-center justify-center p-6 md:p-8 overflow-hidden">
+         <div className="relative bg-black h-20 md:h-24 rounded-2xl border border-white/5 flex items-center justify-center p-4 md:p-8 overflow-hidden">
             <span className={`text-xl md:text-3xl font-mono text-center tracking-wider truncate mb-1 px-4 ${password ? "text-sky-400" : "text-slate-800 italic"}`}>
                {password || "••••••••••••••••"}
             </span>

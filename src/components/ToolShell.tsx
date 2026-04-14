@@ -24,11 +24,11 @@ export default function ToolShell({ tool, children }: ToolShellProps) {
   }, [tool.slug]);
 
   return (
-    <div className="min-h-screen bg-[#010205] text-slate-200 pt-24 md:pt-32 pb-16 md:pb-20 px-3 md:px-8 flex flex-col items-center overflow-x-hidden">
+    <div className="min-h-screen bg-[#010205] text-slate-200 pt-24 md:pt-32 pb-16 md:pb-20 px-0 md:px-8 flex flex-col items-center overflow-x-hidden">
       <div className="max-w-5xl w-full">
         
         {/* Navigation & Breadcrumbs */}
-        <div className="tool-header flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 md:mb-12 gap-6">
+        <div className="tool-header flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 md:mb-12 gap-6 px-4 md:px-0">
           <div className="flex flex-col gap-4 w-full sm:w-auto">
             <Link 
               href="/tools" 
@@ -62,7 +62,7 @@ export default function ToolShell({ tool, children }: ToolShellProps) {
         </div>
 
         {/* Tool Branding Header */}
-        <div className="tool-header mb-12 md:mb-16">
+        <div className="tool-header mb-12 md:mb-16 px-4 md:px-0">
           <h1 className="text-3xl md:text-6xl font-bold mb-4 bg-linear-to-r from-white via-slate-200 to-slate-500 bg-clip-text text-transparent">
             {tool.title}
           </h1>
@@ -72,11 +72,11 @@ export default function ToolShell({ tool, children }: ToolShellProps) {
         </div>
 
         {/* The Action Area */}
-        <div className="tool-content-area relative w-full bg-[#060b19]/60 backdrop-blur-3xl border border-white/5 rounded-[32px] overflow-hidden shadow-[0_40px_100px_-20px_rgba(0,0,0,0.5)]">
+        <div className="tool-content-area relative w-full bg-[#060b19]/60 backdrop-blur-3xl border-y md:border border-white/5 rounded-none md:rounded-[32px] overflow-hidden shadow-[0_40px_100px_-20px_rgba(0,0,0,0.5)]">
            <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-sky-500/20 to-transparent"></div>
            <div className="absolute bottom-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-sky-500/10 to-transparent"></div>
            
-           <div className="p-6 md:p-12">
+           <div className="p-4 md:p-12">
              {children}
            </div>
         </div>

@@ -35,7 +35,7 @@ export default function ColorPalette() {
   const palette = generatePalette();
 
   return (
-    <div className="flex flex-col gap-12 py-10 items-center">
+    <div className="flex flex-col gap-8 md:gap-12 py-6 md:py-10 items-center">
       
       <div className="flex flex-col items-center gap-6">
          <label className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Base Spectral Frequency</label>
@@ -54,7 +54,7 @@ export default function ColorPalette() {
           {palette.map((color, i) => (
             <div 
               key={i} 
-              className="group flex flex-col gap-3 p-4 bg-white/2 border border-white/5 rounded-2xl hover:border-sky-500/30 transition-all duration-500"
+              className="group flex flex-col gap-3 p-3 md:p-4 bg-white/2 border border-white/5 rounded-2xl hover:border-sky-500/30 transition-all duration-500"
             >
               <div 
                 className="w-full aspect-square rounded-xl shadow-inner relative overflow-hidden"

@@ -67,7 +67,7 @@ export default function ToolGrid() {
   }, { scope: container });
 
   return (
-    <section id="tools" ref={container} className="relative z-10 w-full py-20 md:py-32 px-3 md:px-8 flex flex-col items-center overflow-x-hidden">
+    <section id="tools" ref={container} className="relative z-10 w-full py-20 md:py-32 px-4 md:px-8 flex flex-col items-center overflow-x-hidden">
       <div className="max-w-6xl w-full">
         <h2 className="tools-title text-3xl sm:text-5xl font-bold mb-12 md:mb-16 text-center bg-linear-to-r from-sky-300 to-white bg-clip-text text-transparent underline decoration-sky-500/20 underline-offset-8">
           Featured Laboratories
@@ -75,7 +75,7 @@ export default function ToolGrid() {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
           {featuredTools.map((tool, i) => tool && (
-            <Link href={`/tools/${tool.category.toLowerCase()}/${tool.slug}`} key={i} className="tool-card group cursor-pointer relative overflow-hidden rounded-[24px] bg-[#060b19]/60 backdrop-blur-xl border border-white/5 p-6 md:p-10 transition-all duration-500 hover:bg-white/5 hover:border-sky-400/30 hover:shadow-[0_20px_60px_-15px_rgba(56,189,248,0.15)] block">
+            <Link href={`/tools/${tool.category.toLowerCase()}/${tool.slug}`} key={i} className="tool-card group cursor-pointer relative overflow-hidden rounded-[24px] bg-[#060b19]/60 backdrop-blur-xl border border-white/5 p-5 md:p-10 transition-all duration-500 hover:bg-white/5 hover:border-sky-400/30 hover:shadow-[0_20px_60px_-15px_rgba(56,189,248,0.15)] block">
               <div className="absolute inset-0 bg-linear-to-br from-sky-400/0 via-sky-400/0 to-sky-400/10 opacity-0 transition-opacity duration-700 group-hover:opacity-100"></div>
               
               <div className="flex justify-between items-start mb-6">

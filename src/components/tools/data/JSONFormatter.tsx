@@ -30,13 +30,13 @@ export default function JSONFormatter() {
             <textarea 
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              className="flex-1 bg-black/40 border border-white/5 rounded-2xl p-4 md:p-6 font-mono text-sm text-sky-300 focus:outline-none focus:border-sky-500/50 transition-colors resize-none placeholder:text-slate-800 h-full"
+              className="flex-1 bg-black/40 border border-white/5 rounded-2xl p-3 md:p-6 font-mono text-sm text-sky-300 focus:outline-none focus:border-sky-500/50 transition-colors resize-none placeholder:text-slate-800 h-full"
               placeholder='{"signal": "active"}'
             />
           </div>
           <div className="flex flex-col gap-4 flex-1 h-[300px] lg:h-full relative">
             <label className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Formatted Telemetry</label>
-            <div className="flex-1 relative bg-white/2 border border-white/5 rounded-2xl p-4 md:p-6 font-mono text-sm overflow-auto group h-full">
+            <div className="flex-1 relative bg-white/2 border border-white/5 rounded-2xl p-3 md:p-6 font-mono text-sm overflow-auto group h-full">
                {error ? (
                  <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-xs">
                     {error}
