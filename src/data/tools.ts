@@ -41,6 +41,12 @@ export const TOOLS: Tool[] = [
     category: "Imaging",
     isComingSoon: true
   },
+  {
+    slug: "image-converter",
+    title: "Image Format Converter",
+    desc: "Convert images between JPG, PNG, and WEBP formats instantly in your browser.",
+    category: "Imaging"
+  },
 
   // --- Motion ---
   { 
@@ -79,6 +85,12 @@ export const TOOLS: Tool[] = [
     slug: "pdf-merge", 
     title: "PDF Merger", 
     desc: "Combine multiple PDF documents into a single consolidated file.",
+    category: "Documents"
+  },
+  {
+    slug: "image-to-pdf",
+    title: "Image to PDF Converter",
+    desc: "Combine one or more images into a single, high-quality PDF document.",
     category: "Documents"
   },
   { 
@@ -125,6 +137,12 @@ export const TOOLS: Tool[] = [
     slug: "age-calculator", 
     title: "Age Calculator", 
     desc: "Calculate your exact age in years, months, and days with high precision.",
+    category: "Calculations"
+  },
+  { 
+    slug: "discount-calculator", 
+    title: "Discount Calculator", 
+    desc: "Calculate final prices and total savings during sales and shopping trips.",
     category: "Calculations"
   },
   { 
@@ -175,6 +193,12 @@ export const TOOLS: Tool[] = [
     slug: "regex-tester",
     title: "RegEx Tester",
     desc: "Test and debug Regular Expression patterns with live feedback.",
+    category: "Data"
+  },
+  {
+    slug: "random-choice-maker",
+    title: "Random Choice Maker",
+    desc: "Let fate decide—randomly pick an item from your custom list of options.",
     category: "Data"
   }
 ];
