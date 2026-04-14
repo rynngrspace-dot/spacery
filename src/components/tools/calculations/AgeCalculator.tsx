@@ -76,19 +76,19 @@ export default function AgeCalculator() {
       {age && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 animate-[fadeUp_0.6s_ease-out_forwards]">
           <div className="p-6 rounded-2xl bg-white/2 border border-white/5 flex flex-col items-center">
-            <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-4">Cycles Completed</span>
+            <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-4">Current Age</span>
             <span className="text-5xl font-bold text-white mb-2">{age.years}</span>
-            <span className="text-[10px] font-mono text-sky-500 uppercase tracking-widest">Earth Years</span>
+            <span className="text-[10px] font-mono text-sky-500 uppercase tracking-widest">Years Old</span>
           </div>
           
           <div className="p-6 rounded-2xl bg-white/2 border border-white/5 flex flex-col items-center">
-             <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-4">Lunar Phase Offset</span>
+             <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-4">Additional Span</span>
              <span className="text-5xl font-bold text-white mb-2">{age.months}</span>
              <span className="text-[10px] font-mono text-sky-500 uppercase tracking-widest">Months</span>
           </div>
 
           <div className="p-6 rounded-2xl bg-white/2 border border-white/5 flex flex-col items-center">
-             <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-4">Rotational Shift</span>
+             <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-4">Precise Delta</span>
              <span className="text-5xl font-bold text-white mb-2">{age.days}</span>
              <span className="text-[10px] font-mono text-sky-500 uppercase tracking-widest">Days</span>
           </div>
@@ -99,15 +99,15 @@ export default function AgeCalculator() {
       {age && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
            <div className="p-8 rounded-2xl bg-sky-500/5 border border-sky-500/10 flex flex-col items-center group hover:bg-sky-500/10 transition-all">
-              <span className="text-[10px] font-mono text-sky-400 uppercase tracking-widest mb-4">Total Temporal Existence</span>
+              <span className="text-[10px] font-mono text-sky-400 uppercase tracking-widest mb-4">Total Days Lived</span>
               <div className="flex items-baseline gap-3">
                 <span className="text-2xl font-bold text-white">{age.totalDays.toLocaleString()}</span>
-                <span className="text-[10px] font-mono text-slate-500 uppercase">Days in Grid</span>
+                <span className="text-[10px] font-mono text-slate-500 uppercase">Days Since Birth</span>
               </div>
            </div>
 
            <div className="p-8 rounded-2xl bg-purple-500/5 border border-purple-500/10 flex flex-col items-center group hover:bg-purple-500/10 transition-all">
-              <span className="text-[10px] font-mono text-purple-400 uppercase tracking-widest mb-4">Next Solar Calibration</span>
+              <span className="text-[10px] font-mono text-purple-400 uppercase tracking-widest mb-4">Next Birthday</span>
               <div className="flex items-baseline gap-3">
                 <span className="text-2xl font-bold text-white">{age.nextBirthday}</span>
                 <span className="text-[10px] font-mono text-slate-500 uppercase">Days Remaining</span>

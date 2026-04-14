@@ -132,5 +132,49 @@ export const TOOLS: Tool[] = [
     title: "Color Palette Generator", 
     desc: "Generate harmonious color palettes from CSS variables or images.",
     category: "Calculations"
+  },
+
+  // --- New Utility Expansion ---
+  {
+    slug: "qr-generator",
+    title: "Uplink QR Generator",
+    desc: "Generate high-fidelity QR codes for instant data sharing across systems.",
+    category: "Imaging"
+  },
+  {
+    slug: "glassmorphism-generator",
+    title: "Nebula Glass Generator",
+    desc: "Design stunning frosted glass UI components with real-time CSS output.",
+    category: "Imaging"
+  },
+  {
+    slug: "color-extractor",
+    title: "Spectral Color Extractor",
+    desc: "Identify and extract the hex signals from any visual asset instantly.",
+    category: "Imaging"
+  },
+  {
+    slug: "case-converter",
+    title: "Signature Case Converter",
+    desc: "Format your text signals into different cases including UPPER, lower, and camelCase.",
+    category: "Data"
+  },
+  {
+    slug: "url-pulse-checker",
+    title: "URL Pulse & Preview",
+    desc: "Encode, decode, and simulate social metadata previews for your links.",
+    category: "Data"
+  },
+  {
+    slug: "reading-refiner",
+    title: "Bionic Reading Refiner",
+    desc: "Enhance reading velocity by bolding the primary letters of every word.",
+    category: "Data"
+  },
+  {
+    slug: "regex-tester",
+    title: "RegEx Spectral Tester",
+    desc: "Test and debug your Regular Expression patterns against live data streams.",
+    category: "Data"
   }
 ];

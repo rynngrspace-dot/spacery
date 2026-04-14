@@ -130,7 +130,7 @@ export default function CosmicClicker() {
           <div 
             ref={coreRef}
             onClick={handleClick}
-            className="w-64 h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-br from-purple-500 to-indigo-900 cursor-pointer relative shadow-[0_0_80px_rgba(168,85,247,0.3)] hover:shadow-[0_0_120px_rgba(168,85,247,0.5)] transition-all duration-300 group"
+            className="w-64 h-64 md:w-80 md:h-80 rounded-full bg-linear-to-br from-purple-500 to-indigo-900 cursor-pointer relative shadow-[0_0_80px_rgba(168,85,247,0.3)] hover:shadow-[0_0_120px_rgba(168,85,247,0.5)] transition-all duration-300 group"
           >
              {/* Inner glow */}
              <div className="absolute inset-4 rounded-full border-2 border-white/10 animate-pulse" />
