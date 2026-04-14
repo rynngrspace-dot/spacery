@@ -60,7 +60,7 @@ export default function DiscountCalculator() {
                  onChange={(e) => setOriginalPrice(e.target.value)}
                  placeholder="0"
                  className={`w-full bg-black/40 border border-white/10 rounded-2xl p-5 md:p-6 font-mono text-xl text-sky-400 focus:outline-none focus:border-sky-500/50 transition-all ${
-                   currency === "IDR" ? "pl-14" : "pl-10"
+                   currency === "IDR" ? "pl-20" : "pl-12"
                  }`}
                />
             </div>
