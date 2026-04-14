@@ -25,7 +25,13 @@ export const TOOLS: Tool[] = [
   { 
     slug: "image-resizer", 
     title: "Image Resizer", 
-    desc: "Resize and crop images with aspect ratio locking for social media.",
+    desc: "Resize images with aspect ratio locking for high-precision mission assets.",
+    category: "Imaging"
+  },
+  { 
+    slug: "image-cropper", 
+    title: "Image Cropper", 
+    desc: "Cut and crop specific sectors from visual signals with precision targeting.",
     category: "Imaging"
   },
   { 

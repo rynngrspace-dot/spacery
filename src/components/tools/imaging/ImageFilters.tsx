@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import FileUploader from "@/components/tools/shared/FileUploader";
+import ToolOptionsDrawer from "@/components/tools/shared/ToolOptionsDrawer";
 
 const FILTERS = [
   { name: "Raw", filter: "none" },
@@ -52,32 +53,28 @@ export default function ImageFilters() {
              </button>
           </div>
 
-          {/* Control Panel */}
-          <div className="w-full lg:w-80 flex flex-col gap-6 md:gap-8">
-             <div className="flex flex-col gap-4">
-                <label className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Available Matrices</label>
-                <div className="grid grid-cols-2 lg:grid-cols-1 gap-3">
-                   {FILTERS.map((f) => (
-                      <button
-                        key={f.name}
-                        onClick={() => setActiveFilter(f)}
-                        className={`px-5 py-3 rounded-xl text-xs font-mono transition-all text-left border ${
-                          activeFilter.name === f.name 
-                            ? "bg-sky-500 text-white border-sky-400 shadow-[0_0_15px_rgba(56,189,248,0.3)]"
-                            : "bg-white/2 text-slate-400 border-transparent hover:border-white/10 hover:bg-white/5"
-                        }`}
-                      >
-                        {f.name}
-                      </button>
-                   ))}
-                </div>
+          <ToolOptionsDrawer title="Available Matrices">
+             <div className="grid grid-cols-2 lg:grid-cols-1 gap-3">
+                {FILTERS.map((f) => (
+                   <button
+                     key={f.name}
+                     onClick={() => setActiveFilter(f)}
+                     className={`px-5 py-3 rounded-xl text-[10px] md:text-xs font-mono transition-all text-left border ${
+                       activeFilter.name === f.name 
+                         ? "bg-sky-500 text-white border-sky-400 shadow-[0_0_15px_rgba(56,189,248,0.3)]"
+                         : "bg-white/2 text-slate-400 border-white/5 hover:border-white/10 hover:bg-white/5"
+                     }`}
+                   >
+                     {f.name}
+                   </button>
+                ))}
              </div>
 
-             <div className="p-5 rounded-2xl bg-white/2 border border-white/5">
+             <div className="p-5 rounded-2xl bg-white/2 border border-white/5 mt-4">
                 <span className="block text-[8px] font-mono text-slate-600 uppercase tracking-widest mb-2">Technical Info</span>
-                <p className="text-[9px] text-slate-500 leading-relaxed font-mono">CSS3 Warp Engine active. Real-time GPU acceleration enabled.</p>
+                <p className="text-[10px] md:text-[11px] text-slate-500 leading-relaxed font-mono">CSS3 Warp Engine active. Real-time GPU acceleration enabled.</p>
              </div>
-          </div>
+          </ToolOptionsDrawer>
 
         </div>
       )}
