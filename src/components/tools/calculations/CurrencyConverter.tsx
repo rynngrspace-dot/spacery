@@ -134,7 +134,7 @@ export default function CurrencyConverter() {
                 
                 <div className="flex flex-col items-center gap-2">
                    <div className="px-5 py-2 bg-sky-500/10 border border-sky-500/20 rounded-full">
-                      <span className="text-[10px] font-mono text-sky-400">1 {fromCurrency} = {rate.toFixed(currency === "IDR" ? 2 : 4)} {toCurrency}</span>
+                      <span className="text-[10px] font-mono text-sky-400">1 {fromCurrency} = {rate.toFixed(toCurrency === "IDR" ? 2 : 4)} {toCurrency}</span>
                    </div>
                    <span className="text-[8px] font-mono text-slate-600 uppercase tracking-widest">Live Exchange Logic Active</span>
                 </div>

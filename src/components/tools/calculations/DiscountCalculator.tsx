@@ -51,9 +51,6 @@ export default function DiscountCalculator() {
           <div className="flex flex-col gap-3">
             <label className="text-[10px] font-mono text-slate-500 uppercase tracking-widest px-2">Original Price</label>
             <div className="relative group">
-               <span className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-500 font-mono text-lg">
-                 {currency === "IDR" ? "Rp" : currency === "USD" ? "$" : "€"}
-               </span>
                <input 
                  type="number"
                  value={originalPrice}
@@ -63,6 +60,9 @@ export default function DiscountCalculator() {
                    currency === "IDR" ? "pl-20" : "pl-12"
                  }`}
                />
+               <span className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-500 font-mono text-lg pointer-events-none z-10">
+                 {currency === "IDR" ? "Rp" : currency === "USD" ? "$" : "€"}
+               </span>
             </div>
           </div>
 
