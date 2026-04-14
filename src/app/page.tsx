@@ -93,7 +93,7 @@ export default function Home() {
           <GreetingTyping />
           
           <p className="relative z-10 mx-auto mb-10 max-w-[90%] text-lg font-normal leading-relaxed text-slate-400 opacity-0 animate-[fadeUp_0.8s_cubic-bezier(0.16,1,0.3,1)_0.6s_forwards]">
-            Welcome to my digital backyard in the stars. I build tools that don&apos;t just work—they vibe. Scroll down to see what&apos;s cooking in the lab!
+            Welcome to my digital space. I build tools that are fast, functional, and well-designed. Scroll down to see the latest collection!
           </p>
           
           <div className="relative z-10 flex flex-col items-center justify-center gap-5 sm:flex-row opacity-0 animate-[fadeUp_0.8s_cubic-bezier(0.16,1,0.3,1)_0.8s_forwards]">
@@ -112,7 +112,7 @@ export default function Home() {
                 href="/about"
                 className="px-8 py-4 text-sm font-semibold text-slate-300 hover:text-white transition-colors"
               >
-                Read Dossier
+                About Me
               </Link>
             </Magnetic>
           </div>

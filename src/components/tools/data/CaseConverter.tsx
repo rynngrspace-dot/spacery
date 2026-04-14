@@ -35,11 +35,11 @@ export default function CaseConverter() {
   return (
     <div className="flex flex-col gap-10">
       <div className="flex flex-col gap-4">
-        <label className="text-[10px] font-mono text-slate-500 uppercase tracking-widest px-2">Raw Text Signal</label>
+        <label className="text-[10px] font-mono text-slate-500 uppercase tracking-widest px-2">Text Input</label>
         <textarea 
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder="Paste signal string here..."
+          placeholder="Enter the text you want to convert..."
           className="w-full bg-black/40 border border-white/10 rounded-2xl p-6 font-mono text-sm text-sky-400 focus:outline-none focus:border-sky-500/50 transition-all min-h-[250px] resize-none"
         />
       </div>

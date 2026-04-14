@@ -72,7 +72,7 @@ export default function RegExTester() {
         {/* Pattern Configuration */}
         <div className="flex flex-col gap-8">
            <div className="flex flex-col gap-4">
-              <label className="text-[10px] font-mono text-slate-500 uppercase tracking-widest px-2">Regular Expression Pattern</label>
+              <label className="text-[10px] font-mono text-slate-500 uppercase tracking-widest px-2">Regex Pattern</label>
               <div className="flex gap-2 p-2 bg-black/40 border border-white/10 rounded-2xl items-center">
                  <span className="pl-4 font-mono text-slate-600 text-xl">/</span>
                  <input 
@@ -92,28 +92,28 @@ export default function RegExTester() {
               {error && (
                 <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-xl">
                    <p className="text-[10px] font-mono text-red-400 uppercase tracking-widest">
-                      Syntax Violation: {error}
+                      Syntax Error: {error}
                    </p>
                 </div>
               )}
            </div>
 
            <div className="flex flex-col gap-4">
-              <label className="text-[10px] font-mono text-slate-500 uppercase tracking-widest px-2">Test Data Stream</label>
+              <label className="text-[10px] font-mono text-slate-500 uppercase tracking-widest px-2">Test Text</label>
               <textarea 
                 value={testText}
                 onChange={(e) => setTestText(e.target.value)}
-                placeholder="Paste telemetry here..."
+                placeholder="Paste your text here..."
                 className="w-full bg-black/40 border border-white/10 rounded-2xl p-6 font-mono text-sm text-slate-300 focus:outline-none focus:border-sky-500/50 transition-all min-h-[200px] resize-none"
               />
            </div>
         </div>
 
-        {/* Live Analysis */}
+        {/* Results Area */}
         <div className="flex flex-col gap-4 h-full">
            <div className="flex justify-between items-center px-2">
-              <label className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Spectral Analysis Real-Time</label>
-              <span className="text-[10px] font-mono text-sky-500 uppercase tracking-widest">{matches.length} Matches Detected</span>
+              <label className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Regex Results</label>
+              <span className="text-[10px] font-mono text-sky-500 uppercase tracking-widest">{matches.length} Matches Found</span>
            </div>
            
            <div className="flex-1 w-full bg-white/2 border border-white/5 rounded-2xl p-8 font-mono text-sm leading-relaxed overflow-auto min-h-[400px]">
@@ -123,15 +123,15 @@ export default function RegExTester() {
            <div className="grid grid-cols-3 gap-4">
               <div className="bg-white/5 border border-white/5 p-4 rounded-xl flex flex-col items-center">
                  <span className="text-[8px] font-mono text-slate-500 uppercase mb-1">Status</span>
-                 <span className="text-[10px] font-mono text-sky-400 uppercase tracking-widest">{error ? "ERROR" : "ACTIVE"}</span>
+                 <span className="text-[10px] font-mono text-sky-400 uppercase tracking-widest">{error ? "ERROR" : "READY"}</span>
               </div>
               <div className="bg-white/5 border border-white/5 p-4 rounded-xl flex flex-col items-center">
-                 <span className="text-[8px] font-mono text-slate-500 uppercase mb-1">Flavor</span>
+                 <span className="text-[8px] font-mono text-slate-500 uppercase mb-1">Engine</span>
                  <span className="text-[10px] font-mono text-sky-400 uppercase tracking-widest text-center">Standard JS</span>
               </div>
               <div className="bg-white/5 border border-white/5 p-4 rounded-xl flex flex-col items-center">
-                 <span className="text-[8px] font-mono text-slate-500 uppercase mb-1">Intensity</span>
-                 <span className="text-[10px] font-mono text-sky-400 uppercase tracking-widest">High</span>
+                 <span className="text-[8px] font-mono text-slate-500 uppercase mb-1">Performance</span>
+                 <span className="text-[10px] font-mono text-sky-400 uppercase tracking-widest">Optimal</span>
               </div>
            </div>
         </div>
@@ -139,7 +139,7 @@ export default function RegExTester() {
 
       <div className="mt-4 text-center">
          <p className="text-[10px] font-mono text-slate-600 uppercase tracking-[0.3em] leading-relaxed">
-            Pattern evaluation powered by the V8 Regex Engine core.
+            Fast regex testing powered by native JavaScript.
          </p>
       </div>
 

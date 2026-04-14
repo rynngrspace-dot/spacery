@@ -64,7 +64,7 @@ export default function ImageCompressor() {
   return (
     <div className="flex flex-col gap-10">
       {!image ? (
-        <FileUploader accept="image/*" label="Upload Visual Signal" onFileSelect={handleFileSelect} />
+        <FileUploader accept="image/*" label="Upload Image" onFileSelect={handleFileSelect} />
       ) : (
         <div className="flex flex-col lg:flex-row gap-8 md:gap-10">
           {/* Preview Area */}
@@ -93,7 +93,7 @@ export default function ImageCompressor() {
                 </div>
 
                 <span className="text-[10px] font-mono text-sky-400 uppercase tracking-[0.3em] animate-pulse">
-                  Compacting Signal Data...
+                  Compressing Image...
                 </span>
               </div>
             )}
@@ -101,14 +101,14 @@ export default function ImageCompressor() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={previewUrl || ""} alt="Preview" className="max-w-full max-h-[450px] rounded-xl shadow-2xl transition-all duration-500" />
             <div className="absolute top-4 left-4 px-4 py-2 bg-black/60 backdrop-blur-md rounded-full text-[10px] font-mono text-sky-400 uppercase tracking-widest border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity">
-               SIGNAL_ANALYSIS: {formatSize(image.size)}
+               IMAGE INFO: {formatSize(image.size)}
             </div>
           </div>
 
-          <ToolOptionsDrawer title="Compression Matrix">
+          <ToolOptionsDrawer title="Compression Settings">
              <div className="flex flex-col gap-4">
                 <div className="flex justify-between items-center">
-                   <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Intensity Threshold</span>
+                   <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Quality Threshold</span>
                    <span className="text-sm font-mono text-sky-400">{quality}%</span>
                 </div>
                 
@@ -121,7 +121,7 @@ export default function ImageCompressor() {
                 {/* Size comparison cards */}
                 <div className="grid grid-cols-2 gap-4">
                    <div className="p-4 rounded-xl bg-white/2 border border-white/5">
-                      <span className="block text-[8px] font-mono text-slate-600 uppercase mb-1">Source Mass</span>
+                      <span className="block text-[8px] font-mono text-slate-600 uppercase mb-1">Original Size</span>
                       <span className="text-xs font-mono text-slate-400">{formatSize(image.size)}</span>
                    </div>
                    <div className={`p-4 rounded-xl border transition-all duration-500 ${
@@ -151,7 +151,7 @@ export default function ImageCompressor() {
                     </div>
                     <div className="flex flex-col">
                       <span className="text-[10px] font-mono text-emerald-400 uppercase tracking-widest">
-                        Signal Reduced by {reductionPercent}%
+                        Size Reduced by {reductionPercent}%
                       </span>
                       <span className="text-[9px] font-mono text-slate-500 mt-1">
                         {formatSize(image.size)} → {formatSize(compressedSize)}
@@ -167,12 +167,12 @@ export default function ImageCompressor() {
                 disabled={isProcessing}
                 className="w-full py-5 bg-sky-500 text-white font-bold rounded-2xl hover:bg-sky-400 transition-all text-sm uppercase tracking-[0.2em] shadow-[0_0_30px_rgba(56,189,248,0.2)] disabled:opacity-50"
                >
-                 {isProcessing ? "Compressing Signal..." : "Execute Compression"}
+                 {isProcessing ? "Processing..." : "Execute Compression"}
                </button>
 
                {compressedBlob && (
                  <button 
-                  onClick={() => downloadBlob(compressedBlob, `spacery_compressed_${image.name}`)}
+                  onClick={() => downloadBlob(compressedBlob, `compressed_${image.name}`)}
                   className="w-full py-4 bg-emerald-500 text-white font-bold rounded-2xl hover:bg-emerald-400 transition-all text-xs uppercase tracking-[0.2em] shadow-[0_0_30px_rgba(16,185,129,0.25)]"
                  >
                    ↓ Download Compressed File

@@ -60,7 +60,7 @@ export default function AgeCalculator() {
       
       {/* Input Module */}
       <div className="flex flex-col items-center gap-6">
-        <label className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Temporal Entry Point (Birth Date)</label>
+        <label className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Date of Birth</label>
         <div className="relative group w-full max-w-md">
           <input 
             type="date" 
@@ -82,15 +82,15 @@ export default function AgeCalculator() {
           </div>
           
           <div className="p-6 rounded-2xl bg-white/2 border border-white/5 flex flex-col items-center">
-             <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-4">Additional Span</span>
+             <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-4">Months</span>
              <span className="text-5xl font-bold text-white mb-2">{age.months}</span>
-             <span className="text-[10px] font-mono text-sky-500 uppercase tracking-widest">Months</span>
+             <span className="text-[10px] font-mono text-sky-500 uppercase tracking-widest">Additional Months</span>
           </div>
 
           <div className="p-6 rounded-2xl bg-white/2 border border-white/5 flex flex-col items-center">
-             <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-4">Precise Delta</span>
+             <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-4">Days</span>
              <span className="text-5xl font-bold text-white mb-2">{age.days}</span>
-             <span className="text-[10px] font-mono text-sky-500 uppercase tracking-widest">Days</span>
+             <span className="text-[10px] font-mono text-sky-500 uppercase tracking-widest">Additional Days</span>
           </div>
         </div>
       )}
@@ -119,7 +119,7 @@ export default function AgeCalculator() {
       {!age && (
         <div className="py-20 text-center">
            <p className="text-xs font-mono text-slate-600 uppercase tracking-[0.4em] animate-pulse">
-             Awaiting Temporal Parameters Configuration...
+             Select your date of birth to begin...
            </p>
         </div>
       )}

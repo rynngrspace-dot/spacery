@@ -35,12 +35,12 @@ export default function ToolShell({ tool, children }: ToolShellProps) {
               className="group flex items-center justify-center sm:justify-start gap-3 w-full sm:w-fit px-6 py-3 bg-white/5 border border-white/10 rounded-full text-[10px] font-mono text-slate-400 hover:text-sky-400 hover:border-sky-500/30 transition-all uppercase tracking-[0.2em]"
             >
               <span className="transition-transform group-hover:-translate-x-1">←</span>
-              <span>Back to Archives</span>
+              <span>Back to Tools</span>
             </Link>
             <div className="flex items-center gap-2 text-[9px] md:text-[10px] font-mono text-slate-600 uppercase tracking-widest ml-1 overflow-x-auto whitespace-nowrap pb-2 sm:pb-0 scrollbar-hide">
-              <span>Bridge</span>
+              <span>Home</span>
               <span className="opacity-30">/</span>
-              <span className="text-slate-400">Archives</span>
+              <span className="text-slate-400">Tools</span>
               <span className="opacity-30">/</span>
               <span className="text-sky-400/80">{tool.title}</span>
             </div>
@@ -52,7 +52,7 @@ export default function ToolShell({ tool, children }: ToolShellProps) {
                 return (
                   <>
                     <div className={`w-2 h-2 rounded-full ${isFunctional ? "bg-sky-500 shadow-[0_0_8px_rgba(56,189,248,0.8)]" : "bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.8)] animate-pulse"}`}></div>
-                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-[0.2em]">Module Status: {isFunctional ? "Operational" : "Under Recalibration"}</span>
+                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-[0.2em]">Status: {isFunctional ? "Operational" : "Updating"}</span>
                   </>
                 );
              })()}
@@ -84,16 +84,16 @@ export default function ToolShell({ tool, children }: ToolShellProps) {
         {/* Technical Metadata Footer for the Lab */}
         <div className="tool-header mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
            <div className="p-6 rounded-2xl bg-white/2 border border-white/5">
-              <span className="block text-[10px] font-mono text-sky-500 uppercase tracking-widest mb-3">Security Protocol</span>
-              <p className="text-[11px] text-slate-500 leading-relaxed font-mono">End-to-end encryption active. No data leaves the local orbital environment. Private by design.</p>
+              <span className="block text-[10px] font-mono text-sky-500 uppercase tracking-widest mb-3">Privacy & Security</span>
+              <p className="text-[11px] text-slate-500 leading-relaxed font-mono">End-to-end encryption. All processing happens locally in your browser. No data is stored on our servers.</p>
            </div>
            <div className="p-6 rounded-2xl bg-white/2 border border-white/5">
-              <span className="block text-[10px] font-mono text-sky-500 uppercase tracking-widest mb-3">Performance Data</span>
-              <p className="text-[11px] text-slate-500 leading-relaxed font-mono">Latency: 0.02ms. Engine: Next/Rust Hybrid. High performance mode initialized.</p>
+              <span className="block text-[10px] font-mono text-sky-500 uppercase tracking-widest mb-3">System Performance</span>
+              <p className="text-[11px] text-slate-500 leading-relaxed font-mono">Powered by native browser APIs for maximum speed and efficiency. High performance mode active.</p>
            </div>
            <div className="p-6 rounded-2xl bg-white/2 border border-white/5">
-              <span className="block text-[10px] font-mono text-sky-500 uppercase tracking-widest mb-3">Module Context</span>
-              <p className="text-[11px] text-slate-500 leading-relaxed font-mono">This module is part of the Spacery 2.0 Lab grid. Regularly updated via orbital patches.</p>
+              <span className="block text-[10px] font-mono text-sky-500 uppercase tracking-widest mb-3">Technical Support</span>
+              <p className="text-[11px] text-slate-500 leading-relaxed font-mono">Part of the Spacery open-source utility suite. Certified stable for production environments.</p>
            </div>
         </div>
 

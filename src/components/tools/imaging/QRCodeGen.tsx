@@ -97,14 +97,14 @@ export default function QRCodeGen() {
       
       {/* Input Module */}
       <div className="w-full max-w-xl flex flex-col gap-6">
-        <label className="text-[10px] font-mono text-slate-500 uppercase tracking-widest px-2">Data Signal to Encode</label>
+        <label className="text-[10px] font-mono text-slate-500 uppercase tracking-widest px-2">Text or URL to Encode</label>
         <textarea 
           value={inputValue}
           onChange={(e) => {
              setInputValue(e.target.value);
              setIsGenerated(false); // Reset if changed
           }}
-          placeholder="Enter URL or text to beam..."
+          placeholder="Enter the URL or text you want to encode..."
           className="w-full bg-black/40 border border-white/10 rounded-2xl p-5 md:p-6 font-mono text-sm text-sky-400 focus:outline-none focus:border-sky-500/50 transition-all min-h-[120px] resize-none"
         />
         
@@ -114,7 +114,7 @@ export default function QRCodeGen() {
             disabled={!inputValue.trim()}
             className="w-full py-4 bg-white/5 border border-white/10 rounded-xl text-white font-bold text-[10px] uppercase tracking-[0.3em] hover:bg-sky-500/20 hover:border-sky-500/40 transition-all disabled:opacity-20"
           >
-            Start Signal Synthesis
+            Generate QR Code
           </button>
         )}
       </div>
@@ -134,7 +134,7 @@ export default function QRCodeGen() {
                 {/* Scanning line */}
                 <div className="absolute top-0 left-0 w-full h-px bg-sky-500/60 shadow-[0_0_10px_rgba(56,189,248,1)] animate-[scan_2s_ease-in-out_infinite]"></div>
              </div>
-             <span className="text-[10px] font-mono text-sky-400 uppercase tracking-[0.4em] animate-pulse">Synthesizing Signal Grid...</span>
+             <span className="text-[10px] font-mono text-sky-400 uppercase tracking-[0.4em] animate-pulse">Generating QR Code...</span>
           </div>
         )}
 
@@ -167,7 +167,7 @@ export default function QRCodeGen() {
                 onClick={downloadBrandedTemplate}
                 className="px-8 py-4 bg-sky-500 text-white font-bold rounded-full hover:bg-sky-400 transition-all shadow-[0_0_30px_rgba(56,189,248,0.3)] text-[10px] uppercase tracking-widest group flex items-center gap-3"
               >
-                <span>Download Branded Artifact</span>
+                <span>Download QR Code Artifact</span>
                 <span className="group-hover:translate-y-1 transition-transform">↓</span>
               </button>
             </div>
@@ -177,13 +177,13 @@ export default function QRCodeGen() {
         {/* Empty State */}
         {!isGenerated && !isGenerating && (
            <div className="text-center opacity-30">
-              <p className="text-[10px] font-mono text-slate-500 uppercase tracking-[0.3em]">Module Standing By</p>
+              <p className="text-[10px] font-mono text-slate-500 uppercase tracking-[0.3em]">Ready to generate</p>
            </div>
         )}
       </div>
 
       <p className="text-[10px] font-mono text-slate-600 uppercase tracking-[0.3em] text-center max-w-sm leading-relaxed px-4">
-        High-fidelity visual encoding optimized for terrestrial scanners. Certified by Spacery Lab.
+        High-fidelity QR code generation. Optimized for mobile and desktop scanning.
       </p>
 
       <style jsx>{`

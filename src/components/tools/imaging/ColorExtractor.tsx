@@ -56,7 +56,7 @@ export default function ColorExtractor() {
       {!imagePreview ? (
         <FileUploader 
           accept="image/*" 
-          label="Target Asset for Scanning" 
+          label="Target Asset for Analysis" 
           onFileSelect={extractColors} 
         />
       ) : (
@@ -64,17 +64,31 @@ export default function ColorExtractor() {
             <div className="w-full max-w-sm aspect-square relative rounded-2xl overflow-hidden border border-white/5">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={imagePreview} alt="Preview" className="w-full h-full object-cover" />
-                <button 
-                  onClick={() => { setImagePreview(null); setColors([]); }}
-                  className="absolute top-4 right-4 p-3 bg-black/60 backdrop-blur-md rounded-full text-white hover:bg-red-500/40 transition-all border border-white/10"
-                >
-                  ✕
-                </button>
+                <ToolOptionsDrawer title="Color Analysis">
+                  <div className="space-y-6">
+                    <div className="p-4 rounded-xl bg-sky-500/5 border border-sky-500/10">
+                       <span className="block text-[8px] font-mono text-sky-400/60 uppercase mb-2">Color Statistics</span>
+                       <div className="flex flex-col gap-2 font-mono text-[10px] text-slate-500">
+                          <span>Detected: {colors.length} unique colors</span>
+                          <span>Ready for export</span>
+                       </div>
+                    </div>
+
+                    <div className="flex flex-col gap-3 pt-4">
+                      <button
+                        onClick={() => { setImagePreview(null); setColors([]); }}
+                        className="py-3 text-[10px] font-mono text-slate-600 hover:text-red-400 uppercase tracking-widest transition-colors text-center"
+                      >
+                        Clear Image
+                      </button>
+                    </div>
+                  </div>
+                </ToolOptionsDrawer>
             </div>
 
             <div className="flex-1 w-full space-y-6">
                 <div className="flex flex-col gap-1">
-                  <span className="text-[10px] font-mono text-sky-500 uppercase tracking-widest">Extracted Spectral Signals</span>
+                  <span className="text-[10px] font-mono text-sky-500 uppercase tracking-widest">Extracted Color Data</span>
                   <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">Ordered by frequency intensity</span>
                 </div>
 

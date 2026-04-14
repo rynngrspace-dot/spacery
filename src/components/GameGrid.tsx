@@ -6,10 +6,10 @@ import { useGSAP } from "@gsap/react";
 import Link from "next/link";
 
 const games = [
-  { slug: "space-typer", title: "Space Typer", desc: "Test your transmission speeds against the cosmic void. Fast fingers only.", icon: "⌨️" },
-  { slug: "cosmic-clicker", title: "Cosmic Clicker", desc: "Mine dark matter with every click. Build your galactic empire.", icon: "🖱️" },
-  { slug: "orbit-defense", title: "Orbit Defense", desc: "Protect your laboratory from incoming space debris.", icon: "🛰️" },
-  { slug: "void-runner", title: "Void Runner", desc: "An experimental reflex-based traversal simulation.", icon: "🏃" },
+  { slug: "space-typer", title: "Space Typer", desc: "Test your typing speed in a fast-paced environment. Accuracy is key.", icon: "⌨️" },
+  { slug: "cosmic-clicker", title: "Cosmic Clicker", desc: "A simple idle clicker game where you gather resources to build your fleet.", icon: "🖱️" },
+  { slug: "orbit-defense", title: "Orbit Defense", desc: "Protect the orbital station from incoming space debris.", icon: "🛰️" },
+  { slug: "void-runner", title: "Void Runner", desc: "A fast-paced reflex game focused on traversal and timing.", icon: "🏃" },
 ];
 
 export default function GameGrid() {
@@ -40,12 +40,12 @@ export default function GameGrid() {
       <div className="max-w-5xl w-full">
         <div className="mb-12 md:mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="text-center md:text-left">
-            <span className="text-[10px] font-mono text-purple-400 uppercase tracking-[0.3em] mb-4 block">Section: Recreation Wing</span>
+            <span className="text-[10px] font-mono text-purple-400 uppercase tracking-[0.3em] mb-4 block">Section: Games</span>
             <h2 className="text-3xl sm:text-5xl font-bold bg-linear-to-r from-purple-400 to-white bg-clip-text text-transparent">
-              Experimental Recreation
+              Games & Experiments
             </h2>
           </div>
-          <p className="text-slate-600 font-mono text-[9px] uppercase mb-2 tracking-[0.2em] text-center md:text-right">Unauthorized access encouraged</p>
+          <p className="text-slate-600 font-mono text-[9px] uppercase mb-2 tracking-[0.2em] text-center md:text-right">Play for free in the browser</p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">

@@ -34,9 +34,22 @@ export default function ImageCropper() {
     setIsProcessing(true);
     setCroppedBlob(null);
     
+    // Calculate scale factors between rendered size and original resolution
+    const image = imgRef.current;
+    const scaleX = image.naturalWidth / image.width;
+    const scaleY = image.naturalHeight / image.height;
+
+    // Apply scaling to the crop area
+    const scaledCrop = {
+      x: completedCrop.x * scaleX,
+      y: completedCrop.y * scaleY,
+      width: completedCrop.width * scaleX,
+      height: completedCrop.height * scaleY,
+    };
+    
     try {
       const [blob] = await Promise.all([
-        cropImage(imgSrc, completedCrop),
+        cropImage(imgSrc, scaledCrop),
         new Promise(r => setTimeout(r, 2000)),
       ]);
       setCroppedBlob(blob);
@@ -61,7 +74,7 @@ export default function ImageCropper() {
   return (
     <div className="flex flex-col gap-10">
       {!imgSrc ? (
-        <FileUploader accept="image/*" label="Initialize Visual Signal" onFileSelect={onSelectFile} />
+        <FileUploader accept="image/*" label="Upload Image" onFileSelect={onSelectFile} />
       ) : (
         <div className="flex flex-col lg:flex-row gap-8 md:gap-10">
           <div className="flex-1 bg-black/40 rounded-[32px] border border-white/5 p-4 md:p-8 flex items-center justify-center min-h-[400px] relative overflow-hidden">
@@ -74,7 +87,7 @@ export default function ImageCropper() {
                   <div className="absolute inset-4 rounded-full border-2 border-transparent border-t-white/40 animate-spin" style={{ animationDuration: "2s" }}></div>
                 </div>
                 <span className="text-[10px] font-mono text-sky-400 uppercase tracking-[0.3em] animate-pulse">
-                  Extracting Target Sector...
+                  Cropping Image...
                 </span>
               </div>
             )}
@@ -95,7 +108,7 @@ export default function ImageCropper() {
             </ReactCrop>
           </div>
 
-          <ToolOptionsDrawer title="Crop Calibration">
+          <ToolOptionsDrawer title="Crop Settings">
             <div className="space-y-6">
               <div className="flex flex-col gap-3">
                 <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Target Aspect Ratio</span>
@@ -123,7 +136,7 @@ export default function ImageCropper() {
               </div>
 
               <div className="p-4 rounded-xl bg-sky-500/5 border border-sky-500/10">
-                 <span className="block text-[8px] font-mono text-sky-400/60 uppercase mb-2">Selection Data</span>
+                 <span className="block text-[8px] font-mono text-sky-400/60 uppercase mb-2">Selection Dimensions</span>
                  <div className="grid grid-cols-2 gap-2 font-mono text-[10px] text-slate-500">
                     <span>W: {Math.round(completedCrop?.width || 0)}px</span>
                     <span>H: {Math.round(completedCrop?.height || 0)}px</span>
@@ -138,12 +151,12 @@ export default function ImageCropper() {
                   disabled={!completedCrop || isProcessing}
                   className="w-full py-5 bg-sky-500 text-white font-bold rounded-2xl hover:bg-sky-400 transition-all text-sm uppercase tracking-[0.2em] shadow-[0_0_30px_rgba(56,189,248,0.2)] disabled:opacity-50"
                 >
-                  {isProcessing ? "Extracting Sector..." : "Execute Crop"}
+                  {isProcessing ? "Processing..." : "Execute Crop"}
                 </button>
 
                 {croppedBlob && (
                   <button
-                    onClick={() => downloadBlob(croppedBlob, `spacery_crop_${Date.now()}.webp`)}
+                    onClick={() => downloadBlob(croppedBlob, `cropped_image_${Date.now()}.webp`)}
                     className="w-full py-4 bg-emerald-500 text-white font-bold rounded-2xl hover:bg-emerald-400 transition-all text-xs uppercase tracking-[0.2em] shadow-[0_0_30px_rgba(16,185,129,0.25)]"
                   >
                     ↓ Download Cropped File
@@ -154,7 +167,7 @@ export default function ImageCropper() {
                   onClick={() => { setImgSrc(""); setCrop(undefined); setCroppedBlob(null); }}
                   className="py-3 text-[10px] font-mono text-slate-600 hover:text-red-400 uppercase tracking-widest transition-colors"
                 >
-                  Eject Signal
+                  Clear Image
                 </button>
               </div>
             </div>

@@ -13,25 +13,25 @@ export const TOOLS: Tool[] = [
   { 
     slug: "image-compressor", 
     title: "Image Compressor", 
-    desc: "Reduce file size without losing quality natively in the browser.",
+    desc: "Reduce image file size without losing quality natively in the browser.",
     category: "Imaging"
   },
   { 
     slug: "image-filters", 
     title: "Image Filters", 
-    desc: "Apply various effects including Grayscale, Bloom, and Blur.",
+    desc: "Apply various effects including Grayscale, Brightness, and Blur.",
     category: "Imaging"
   },
   { 
     slug: "image-resizer", 
     title: "Image Resizer", 
-    desc: "Resize images with aspect ratio locking for high-precision mission assets.",
+    desc: "Resize images with aspect ratio locking for high-precision formatting.",
     category: "Imaging"
   },
   { 
     slug: "image-cropper", 
     title: "Image Cropper", 
-    desc: "Cut and crop specific sectors from visual signals with precision targeting.",
+    desc: "Crop specific areas from your images with pixel-perfect precision.",
     category: "Imaging"
   },
   { 
@@ -46,7 +46,7 @@ export const TOOLS: Tool[] = [
   { 
     slug: "video-compressor", 
     title: "Video Compressor", 
-    desc: "Compress large video files for easier sharing across deep space distances.",
+    desc: "Compress large video files for easier sharing and storage.",
     category: "Motion"
   },
   { 
@@ -57,14 +57,14 @@ export const TOOLS: Tool[] = [
   },
   { 
     slug: "video-to-gif", 
-    title: "Video to GIF", 
-    desc: "Extract sequences from video files and convert them into high-quality GIFs.",
+    title: "Video to GIF Converter", 
+    desc: "Convert video sequences into high-quality GIF animations.",
     category: "Motion"
   },
   { 
     slug: "video-muter", 
-    title: "Mute Video", 
-    desc: "Strip audio tracks from video files instantly in the silent void.",
+    title: "Video Muter", 
+    desc: "Remove audio tracks from video files instantly in the browser.",
     category: "Motion"
   },
 
@@ -72,19 +72,19 @@ export const TOOLS: Tool[] = [
   { 
     slug: "pdf-compressor", 
     title: "PDF Compressor", 
-    desc: "Reduce PDF file size for faster uplinks without breaking document structure.",
+    desc: "Reduce PDF file size for faster sharing without breaking document structure.",
     category: "Documents"
   },
   { 
     slug: "pdf-merge", 
-    title: "PDF Merge", 
+    title: "PDF Merger", 
     desc: "Combine multiple PDF documents into a single consolidated file.",
     category: "Documents"
   },
   { 
     slug: "docx-compressor", 
-    title: "Word Compressor", 
-    desc: "Optimize and compress Microsoft Word documents by stripping redundant data.",
+    title: "Word Document Compressor", 
+    desc: "Optimize and compress Microsoft Word documents efficiently.",
     category: "Documents"
   },
 
@@ -92,13 +92,13 @@ export const TOOLS: Tool[] = [
   { 
     slug: "json-formatter", 
     title: "JSON Formatter", 
-    desc: "Prettify or minify JSON configurations on the fly for better legibility.",
+    desc: "Prettify or minify JSON configurations for better legibility.",
     category: "Data"
   },
   {
     slug: "css-minifier",
     title: "CSS Minifier",
-    desc: "Compress standard CSS into production-ready chunks.",
+    desc: "Compress standard CSS into production-ready file sizes.",
     category: "Data"
   },
   { 
@@ -110,7 +110,7 @@ export const TOOLS: Tool[] = [
   { 
     slug: "cosmic-password", 
     title: "Password Generator", 
-    desc: "Generate cryptographically secure passwords for your star systems.",
+    desc: "Generate cryptographically secure passwords for your security needs.",
     category: "Data"
   },
 
@@ -118,63 +118,63 @@ export const TOOLS: Tool[] = [
   { 
     slug: "unit-converter", 
     title: "Unit Converter", 
-    desc: "Convert terrestrial units to astronomical scales (AU, Lightyears, Parsecs).",
+    desc: "Convert standard units to astronomical scales and vice versa.",
     category: "Calculations"
   },
   { 
     slug: "age-calculator", 
-    title: "Chronos Age Calculator", 
-    desc: "Calculate your exact age and time spent in the temporal stream with high precision.",
+    title: "Age Calculator", 
+    desc: "Calculate your exact age in years, months, and days with high precision.",
     category: "Calculations"
   },
   { 
     slug: "color-palette", 
     title: "Color Palette Generator", 
-    desc: "Generate harmonious color palettes from CSS variables or images.",
+    desc: "Generate harmonious color palettes for your design projects.",
     category: "Calculations"
   },
 
-  // --- New Utility Expansion ---
+  // --- Utilities ---
   {
     slug: "qr-generator",
-    title: "Uplink QR Generator",
-    desc: "Generate high-fidelity QR codes for instant data sharing across systems.",
+    title: "QR Code Generator",
+    desc: "Generate high-quality QR codes for instant data sharing.",
     category: "Imaging"
   },
   {
     slug: "glassmorphism-generator",
-    title: "Nebula Glass Generator",
+    title: "Glassmorphism Generator",
     desc: "Design stunning frosted glass UI components with real-time CSS output.",
     category: "Imaging"
   },
   {
     slug: "color-extractor",
-    title: "Spectral Color Extractor",
-    desc: "Identify and extract the hex signals from any visual asset instantly.",
+    title: "Color Extractor",
+    desc: "Extract dominant hex color codes from any visual asset instantly.",
     category: "Imaging"
   },
   {
     slug: "case-converter",
-    title: "Signature Case Converter",
-    desc: "Format your text signals into different cases including UPPER, lower, and camelCase.",
+    title: "Text Case Converter",
+    desc: "Format text into various cases including UPPERCASE, lowercase, and camelCase.",
     category: "Data"
   },
   {
     slug: "url-pulse-checker",
-    title: "URL Pulse & Preview",
-    desc: "Encode, decode, and simulate social metadata previews for your links.",
+    title: "URL Encoder & Decoder",
+    desc: "Encode or decode URLs and preview how they look when shared online.",
     category: "Data"
   },
   {
     slug: "reading-refiner",
-    title: "Bionic Reading Refiner",
-    desc: "Enhance reading velocity by bolding the primary letters of every word.",
+    title: "Bionic Reading Tool",
+    desc: "Enhance reading speed and focus by bolding the start of every word.",
     category: "Data"
   },
   {
     slug: "regex-tester",
-    title: "RegEx Spectral Tester",
-    desc: "Test and debug your Regular Expression patterns against live data streams.",
+    title: "RegEx Tester",
+    desc: "Test and debug Regular Expression patterns with live feedback.",
     category: "Data"
   }
 ];
