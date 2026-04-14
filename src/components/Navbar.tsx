@@ -43,7 +43,7 @@ export default function Navbar() {
           scrolled ? "py-3 md:py-4" : "py-6 md:py-8"
         }`}
       >
-        <div className={`max-w-5xl mx-auto flex items-center justify-between px-6 md:px-8 py-3 rounded-full transition-all duration-500 ${
+        <div className={`max-w-5xl mx-auto flex items-center justify-between px-4 md:px-8 py-3 rounded-full transition-all duration-500 ${
           (scrolled || isMenuOpen)
             ? "bg-[#060b19]/80 backdrop-blur-2xl border border-white/10 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.8)]" 
             : "bg-transparent border border-transparent"

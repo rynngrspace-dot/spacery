@@ -67,7 +67,7 @@ export default function ToolGrid() {
   }, { scope: container });
 
   return (
-    <section id="tools" ref={container} className="relative z-10 w-full min-h-screen py-20 md:py-32 px-4 md:px-8 flex flex-col items-center">
+    <section id="tools" ref={container} className="relative z-10 w-full py-20 md:py-32 px-3 md:px-8 flex flex-col items-center overflow-x-hidden">
       <div className="max-w-6xl w-full">
         <h2 className="tools-title text-3xl sm:text-5xl font-bold mb-12 md:mb-16 text-center bg-linear-to-r from-sky-300 to-white bg-clip-text text-transparent underline decoration-sky-500/20 underline-offset-8">
           Featured Laboratories

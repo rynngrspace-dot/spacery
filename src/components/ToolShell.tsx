@@ -24,7 +24,7 @@ export default function ToolShell({ tool, children }: ToolShellProps) {
   }, [tool.slug]);
 
   return (
-    <div className="min-h-screen bg-[#010205] text-slate-200 pt-24 md:pt-32 pb-16 md:pb-20 px-4 md:px-8 flex flex-col items-center overflow-x-hidden">
+    <div className="min-h-screen bg-[#010205] text-slate-200 pt-24 md:pt-32 pb-16 md:pb-20 px-3 md:px-8 flex flex-col items-center overflow-x-hidden">
       <div className="max-w-5xl w-full">
         
         {/* Navigation & Breadcrumbs */}

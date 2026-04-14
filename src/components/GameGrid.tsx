@@ -36,7 +36,7 @@ export default function GameGrid() {
   }, { scope: container });
 
   return (
-    <section id="games" ref={container} className="relative z-10 w-full py-20 md:py-32 px-4 md:px-8 flex flex-col items-center overflow-x-hidden">
+    <section id="games" ref={container} className="relative z-10 w-full py-20 md:py-32 px-3 md:px-8 flex flex-col items-center overflow-x-hidden">
       <div className="max-w-5xl w-full">
         <div className="mb-12 md:mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="text-center md:text-left">

@@ -26,9 +26,9 @@ export default function Contact() {
   }, { scope: container });
 
   return (
-    <footer id="contact" ref={container} className="relative z-10 w-full py-32 px-8 flex flex-col items-center border-t border-white/5 bg-[#010205]">
+    <footer id="contact" ref={container} className="relative z-10 w-full py-32 px-3 md:px-8 flex flex-col items-center border-t border-white/5 bg-[#010205]">
       <div className="max-w-4xl w-full text-center contact-content">
-        <h2 className="text-4xl sm:text-6xl font-bold mb-8 bg-gradient-to-r from-white to-slate-500 bg-clip-text text-transparent">
+        <h2 className="text-4xl sm:text-6xl font-bold mb-8 bg-linear-to-r from-white to-slate-500 bg-clip-text text-transparent">
           Spacery Laboratory
         </h2>
         <p className="text-slate-400 text-lg mb-16 max-w-2xl mx-auto">

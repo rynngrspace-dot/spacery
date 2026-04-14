@@ -37,7 +37,7 @@ export default function ToolsArchive() {
   }, [activeCategory]);
 
   return (
-    <div ref={containerRef} className="min-h-screen pt-32 md:pt-40 pb-20 md:pb-32 px-4 md:px-8 flex flex-col items-center select-none overflow-x-hidden">
+    <div ref={containerRef} className="min-h-screen pt-32 md:pt-40 pb-20 md:pb-32 px-3 md:px-8 flex flex-col items-center select-none overflow-x-hidden">
       
       {/* Header Area */}
       <div className="max-w-6xl w-full archive-header">

@@ -34,7 +34,7 @@ export default function TechStack() {
   }, { scope: container });
 
   return (
-    <section id="stack" ref={container} className="relative z-10 w-full min-h-screen py-20 md:py-32 px-4 md:px-8 flex flex-col items-center bg-grid overflow-x-hidden">
+    <section id="stack" ref={container} className="relative z-10 w-full min-h-screen py-20 md:py-32 px-3 md:px-8 flex flex-col items-center bg-grid overflow-x-hidden">
       <div className="max-w-5xl w-full">
         <h2 className="text-3xl sm:text-5xl font-bold mb-12 md:mb-16 text-center bg-linear-to-r from-sky-300 to-white bg-clip-text text-transparent px-4 uppercase tracking-tighter">
           The Tech I Crash-Landed With

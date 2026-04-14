@@ -64,7 +64,7 @@ export default function Home() {
       />
       
       {/* Hero Section */}
-      <section className="relative z-10 flex min-h-screen w-full items-center justify-center overflow-hidden p-8 perspective-1000">
+      <section className="relative z-10 flex min-h-screen w-full items-center justify-center overflow-hidden px-4 py-16 md:p-8 perspective-1000">
         <div 
           ref={heroRef}
           onMouseMove={handleMouseMove}
