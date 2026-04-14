@@ -8,9 +8,10 @@ import gsap from "gsap";
 interface UnderConstructionProps {
   title: string;
   category?: string;
+  status?: string;
 }
 
-export default function UnderConstruction({ title, category }: UnderConstructionProps) {
+export default function UnderConstruction({ title, category, status = "Off-Line" }: UnderConstructionProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const gearRef = useRef<HTMLDivElement>(null);
 
@@ -48,7 +49,7 @@ export default function UnderConstruction({ title, category }: UnderConstruction
 
       <div className="construction-content text-center max-w-md">
         <div className="inline-block px-4 py-1.5 bg-sky-500/10 border border-sky-500/20 rounded-full mb-6">
-            <span className="text-[10px] font-mono text-sky-400 uppercase tracking-[0.3em]">Module: Off-Line</span>
+            <span className="text-[10px] font-mono text-sky-400 uppercase tracking-[0.3em]">Module: {status}</span>
         </div>
         
         <h2 className="text-2xl md:text-3xl font-bold text-white mb-4 uppercase tracking-tighter">

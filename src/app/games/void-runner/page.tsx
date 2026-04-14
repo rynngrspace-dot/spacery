@@ -12,7 +12,7 @@ export default function VoidRunner() {
           ← Return to Bridge
         </Link>
         <div className="bg-[#0d0714]/60 backdrop-blur-3xl border border-white/5 rounded-[40px] p-12 overflow-hidden shadow-[0_0_100px_rgba(168,85,247,0.1)]">
-           <UnderConstruction title="Void Runner" category="Traversal Simulation" />
+           <UnderConstruction title="Void Runner" category="Traversal Simulation" status="System_Locked" />
         </div>
       </div>
     </div>

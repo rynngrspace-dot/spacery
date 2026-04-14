@@ -12,7 +12,7 @@ export default function Page() {
   return (
     <ToolShell tool={tool}>
       <div className="bg-black/40 rounded-2xl border border-white/5 overflow-hidden text-center mt-10">
-         <UnderConstruction title="SVG Optimizer" category="Vector Imaging" />
+         <UnderConstruction title="SVG Optimizer" category="Vector Imaging" status="Locked_Sector" />
       </div>
     </ToolShell>
   );

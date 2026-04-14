@@ -7,7 +7,7 @@ export default function DocumentToolUI({ actionLabel, acceptedTypes }: { actionL
   return (
     <div className="flex flex-col gap-10">
       <div className="bg-black/40 rounded-2xl border border-white/5 overflow-hidden text-center">
-         <UnderConstruction title={actionLabel} category="Data Manifest" />
+         <UnderConstruction title={actionLabel} category="Data Manifest" status="Indexing_Manifest" />
       </div>
     </div>
   );
