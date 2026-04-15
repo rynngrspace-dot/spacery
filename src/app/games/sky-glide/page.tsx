@@ -97,6 +97,9 @@ export default function SkyGlide() {
   const scoreRef = useRef(0);
   const sessionCreditsRef = useRef(0);
   const levelRef = useRef(1);
+  const jumpSound = useRef<HTMLAudioElement | null>(null);
+  const failSound = useRef<HTMLAudioElement | null>(null);
+
 
   const selectedSkin = SKINS.find(s => s.id === selectedSkinId) || SKINS[0];
 
@@ -119,7 +122,12 @@ export default function SkyGlide() {
     if (savedOW) {
         try { setOwnedSkins(JSON.parse(savedOW)); } catch(e) { setOwnedSkins(["default"]); }
     }
+
+    // Load Audio
+    jumpSound.current = new Audio("/assets/audio/jump.mp3");
+    failSound.current = new Audio("/assets/audio/fahhh.mp3");
   }, []);
+
 
   const savePilotName = () => {
     if (tempName.trim()) {
@@ -149,10 +157,15 @@ export default function SkyGlide() {
   const jump = useCallback(() => {
     if (gameState === "PLAYING") {
       birdVelocity.current = JUMP_STRENGTH;
+      if (jumpSound.current) {
+        jumpSound.current.currentTime = 0;
+        jumpSound.current.play().catch(() => {});
+      }
     } else if (gameState === "GAME_OVER") {
       resetGame();
     }
   }, [gameState, resetGame]);
+
 
   const buySkin = (skin: Skin) => {
     if (credits >= skin.cost && !ownedSkins.includes(skin.id)) {
@@ -196,9 +209,11 @@ export default function SkyGlide() {
     birdY.current += birdVelocity.current;
     if (birdY.current < 0) birdY.current = 0;
     if (birdY.current > canvas.height - BIRD_SIZE) {
+        failSound.current?.play().catch(() => {});
         setGameState("GAME_OVER");
         return;
     }
+
 
     frameCount.current++;
 
@@ -238,9 +253,11 @@ export default function SkyGlide() {
         p.x -= currentSpeed;
         if (50 + BIRD_SIZE - 5 > p.x && 50 + 5 < p.x + PIPE_WIDTH) {
             if (birdY.current + 5 < p.topHeight || birdY.current + BIRD_SIZE - 5 > p.topHeight + currentGap) {
+                failSound.current?.play().catch(() => {});
                 setGameState("GAME_OVER");
             }
         }
+
         if (!p.passed && p.x + PIPE_WIDTH < 50) {
             p.passed = true;
             scoreRef.current++;
@@ -272,8 +289,12 @@ export default function SkyGlide() {
     meteors.current.forEach(m => {
         m.x += m.vx; m.y += m.vy; m.rotation += m.dr;
         const dist = Math.hypot(m.x - (50 + BIRD_SIZE/2), m.y - (birdY.current + BIRD_SIZE/2));
-        if (dist < (m.size/2 + BIRD_SIZE/2 - 5)) setGameState("GAME_OVER");
+        if (dist < (m.size/2 + BIRD_SIZE/2 - 5)) {
+            failSound.current?.play().catch(() => {});
+            setGameState("GAME_OVER");
+        }
     });
+
 
     pipes.current = pipes.current.filter(p => p.x > -100);
     stars.current = stars.current.filter(s => s.x > -100 && !s.collected);
