@@ -304,9 +304,32 @@ export default function SkyGlide() {
   }, [gameState, selectedSkin]);
 
   useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const handleResize = () => {
+      const isMobile = window.innerWidth < 640;
+      if (isMobile) {
+        // Mobile: 9:12 aspect -> 600x800 internal res
+        canvas.width = 600;
+        canvas.height = 800;
+      } else {
+        // Desktop: 16:10 aspect -> 800x500 internal res
+        canvas.width = 800;
+        canvas.height = 500;
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
     const loop = () => { update(); draw(); requestRef.current = requestAnimationFrame(loop); };
     requestRef.current = requestAnimationFrame(loop);
-    return () => { if (requestRef.current) cancelAnimationFrame(requestRef.current); };
+    
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      if (requestRef.current) cancelAnimationFrame(requestRef.current);
+    };
   }, [update, draw]);
 
   useEffect(() => {
@@ -340,7 +363,7 @@ export default function SkyGlide() {
           className="relative w-full max-w-[800px] aspect-[9/12] sm:aspect-[16/10] bg-[#0d0714]/80 backdrop-blur-3xl rounded-[32px] sm:rounded-[48px] border border-white/10 overflow-hidden shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8)] touch-manipulation"
           onClick={jump}
         >
-            <canvas ref={canvasRef} width={800} height={500} className="w-full h-full block" />
+            <canvas ref={canvasRef} className="w-full h-full block" />
 
             {/* Level Up */}
             {showLevelUp && (
