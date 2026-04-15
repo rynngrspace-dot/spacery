@@ -7,8 +7,8 @@ import Link from "next/link";
 
 const games = [
   { slug: "sky-glide", title: "Sky Glide", desc: "Master the art of space flight. Navigate your vessel through the energy pillars.", icon: "🚀", isReady: true },
+  { slug: "stellar-oracle", title: "Stellar Oracle", desc: "Share your journey with the stars and receive celestial guidance.", icon: "🔮", isReady: true },
   { slug: "space-typer", title: "Space Typer", desc: "Test your typing speed in a fast-paced environment. Accuracy is key.", icon: "⌨️", isReady: true },
-  { slug: "cosmic-clicker", title: "Cosmic Clicker", desc: "A simple idle clicker game where you gather resources to build your fleet.", icon: "🖱️", isReady: false },
   { slug: "orbit-defense", title: "Orbit Defense", desc: "Protect the orbital station from incoming space debris.", icon: "🛰️", isReady: false },
   { slug: "void-runner", title: "Void Runner", desc: "A fast-paced reflex game focused on traversal and timing.", icon: "🏃", isReady: false },
 ];
