@@ -45,6 +45,7 @@ export default function StellarOracle() {
   const [pilotName, setPilotName] = useState("");
   const [userInput, setUserInput] = useState("");
   const [enlightenment, setEnlightenment] = useState("");
+  const [glowColor, setGlowColor] = useState("#a855f7"); // Default purple
   const [hasMounted, setHasMounted] = useState(false);
   const [starsData, setStarsData] = useState<{width:string, height:string, top:string, left:string, delay:string, duration:string}[]>([]);
   
