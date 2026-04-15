@@ -9,28 +9,36 @@ type Step = "ENTRANCE" | "INPUT" | "ANALYZING" | "REVEAL";
 
 const WISDOM_LIBRARY = {
   positive: [
-    "The stars shine brighter when they sense a soul in harmony. Your light is reaching distant galaxies.",
-    "Your joy is like a supernova—it creates elements that will build future worlds. Keep expanding.",
-    "The universe is not just outside you. You are the universe expressing itself in a moment of triumph.",
-    "A soaring spirit is the strongest engine in the cosmos. Your trajectory is set for greatness."
+    "You're doing amazing! Even the stars are noticing your hard work. Keep that momentum going.",
+    "Your energy is contagious. You're creating your own orbit of success right now.",
+    "The universe loves a winner, and right now, you're the main character of this galaxy.",
+    "Great things take time, but you're making it look easy. Your light is reaching further than you think.",
+    "Keep that smile! It's the brightest thing in the sector. You're on the right track.",
+    "Small wins lead to big journeys. Today was a victory, no matter how small it felt."
   ],
   negative: [
-    "Even the largest black holes eventually give way to Hawking radiation. This darkness is not your end.",
-    "The void is not empty; it is a space for stars to be born. Your current silence is a preparation for light.",
-    "When a star collapses, it becomes something denser, stronger, and more mysterious. You are evolving.",
-    "Navigation through a nebula is slow and blind. Trust your internal gyroscopes; you will find clear space soon."
+    "Bad days are like black holes—they feel heavy, but they don't last forever. Take a deep breath.",
+    "It's okay to feel lost sometimes. Even the best pilots need a map. This is just a temporary detour.",
+    "You don't have to be perfect to be a star. Even stars have spots. Be kind to yourself today.",
+    "The void feels lonely sometimes, but remember you're part of a huge, connected system. You're not alone.",
+    "If things look dark, it's just so you can see the stars better. You'll find your way back soon.",
+    "Crying isn't a sign of weakness; it's a systems flush. Let it out, then restart your engines."
   ],
   tired: [
-    "Even the sun sets to recharge its solar winds. Resting is a vital part of your mission, Pilot.",
-    "The vastness of space requires patience. It is okay to drift for a while and just exist among the silence.",
-    "Powering down systems is not a failure; it is a tactical necessity. Close your eyes and let the stars watch over you.",
-    "Your internal battery is low, but the cosmic energy around you is infinite. Plug into the quiet and heal."
+    "It's okay to hit the 'Snooze' button on life. Even orbits need a rest phase. You've done enough for today.",
+    "Your battery is low, and that's okay. Power down, recharge, and try again tomorrow. The stars will still be there.",
+    "Burnout is real. Don't try to fly on an empty tank. Take some time to just... drift.",
+    "Resting isn't quitting. It's tactical maintenance. Go get some real sleep, Pilot.",
+    "The universe is vast and patient. It can wait for you to feel better. Take your time.",
+    "You're not a machine. You're a pilot. And every pilot needs to come home and relax sometimes."
   ],
   neutral: [
-    "The cosmic balance is maintained by the quiet moments. You are the calm between the solar flares.",
-    "Orbiting is as important as traveling. Enjoy the stability of your current path.",
-    "The stars observe your journey with interest. Every small step is recorded in the chronicles of the void.",
-    "Existence is the greatest miracle in the multiverse. Simply being here is enough of a story."
+    "Nothing major happened today? That's actually a win. Enjoy the quiet flight for once.",
+    "Stability is underrated. You're in a stable orbit, and that's a great place to be.",
+    "Just existing is a pretty big deal in a universe this large. You're doing just fine.",
+    "Take a moment to look around. The view is nice, even when nothing is happening.",
+    "Consistency is the secret to long-term flight. Today was a solid day of just... being you.",
+    "The stars are watching quietly. No news is good news in the deep void."
   ]
 };
 
