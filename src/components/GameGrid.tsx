@@ -10,6 +10,7 @@ const games = [
   { slug: "cosmic-clicker", title: "Cosmic Clicker", desc: "A simple idle clicker game where you gather resources to build your fleet.", icon: "🖱️" },
   { slug: "orbit-defense", title: "Orbit Defense", desc: "Protect the orbital station from incoming space debris.", icon: "🛰️" },
   { slug: "void-runner", title: "Void Runner", desc: "A fast-paced reflex game focused on traversal and timing.", icon: "🏃" },
+  { slug: "sky-glide", title: "Sky Glide", desc: "Master the art of space flight. Navigate your vessel through the energy pillars.", icon: "🚀" },
 ];
 
 export default function GameGrid() {

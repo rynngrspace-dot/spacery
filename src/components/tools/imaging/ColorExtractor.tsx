@@ -2,6 +2,7 @@
 
 import React, { useState, useRef } from "react";
 import FileUploader from "@/components/tools/shared/FileUploader";
+import ToolOptionsDrawer from "../shared/ToolOptionsDrawer";
 
 export default function ColorExtractor() {
   const [colors, setColors] = useState<string[]>([]);
