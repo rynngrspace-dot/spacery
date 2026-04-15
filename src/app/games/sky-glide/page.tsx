@@ -36,6 +36,7 @@ export default function SkyGlide() {
   const pipes = useRef<Pipe[]>([]);
   const frameCount = useRef(0);
   const scoreEffects = useRef<{ x: number, y: number, opacity: number }[]>([]);
+  const scoreRef = useRef(0);
 
   // Initialize High Score
   useEffect(() => {
@@ -49,6 +50,7 @@ export default function SkyGlide() {
     pipes.current = [];
     scoreEffects.current = [];
     frameCount.current = 0;
+    scoreRef.current = 0;
     setScore(0);
     setGameState("PLAYING");
   }, []);
@@ -123,7 +125,15 @@ export default function SkyGlide() {
       // Score Check
       if (!pipe.passed && pipe.x + PIPE_WIDTH < 50) {
         pipe.passed = true;
-        setScore(prev => prev + 1);
+        scoreRef.current += 1;
+        setScore(scoreRef.current);
+        
+        // Real-time High Score update
+        if (scoreRef.current > highScore) {
+          setHighScore(scoreRef.current);
+          localStorage.setItem("sky-glide-highscore", scoreRef.current.toString());
+        }
+
         // Add score effect
         scoreEffects.current.push({ x: 70, y: birdY.current, opacity: 1 });
       }
@@ -286,6 +296,20 @@ export default function SkyGlide() {
           className="relative w-full max-w-[800px] aspect-[16/10] sm:aspect-[16/9] bg-[#0d0714]/60 backdrop-blur-3xl rounded-[40px] border border-white/5 overflow-hidden cursor-pointer shadow-[0_0_100px_rgba(56,189,248,0.05)]"
           onClick={jump}
         >
+          {/* Live HUD Overlay */}
+          {gameState === "PLAYING" && (
+            <div className="absolute inset-x-0 top-0 p-8 flex justify-between items-start pointer-events-none z-20 animate-[fadeIn_0.5s_ease-out]">
+               <div className="flex flex-col">
+                  <span className="text-[10px] font-mono text-slate-500 uppercase tracking-[0.3em]">Current Score</span>
+                  <span className="text-4xl font-bold text-white drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]">{score}</span>
+               </div>
+               <div className="flex flex-col items-end">
+                  <span className="text-[10px] font-mono text-sky-500/50 uppercase tracking-[0.3em]">Sector Best</span>
+                  <span className="text-2xl font-bold text-sky-400/80 drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]">{highScore}</span>
+               </div>
+            </div>
+          )}
+
           <canvas 
             ref={canvasRef} 
             width={800} 
