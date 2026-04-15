@@ -6,11 +6,11 @@ import { useGSAP } from "@gsap/react";
 import Link from "next/link";
 
 const games = [
-  { slug: "space-typer", title: "Space Typer", desc: "Test your typing speed in a fast-paced environment. Accuracy is key.", icon: "⌨️" },
-  { slug: "cosmic-clicker", title: "Cosmic Clicker", desc: "A simple idle clicker game where you gather resources to build your fleet.", icon: "🖱️" },
-  { slug: "orbit-defense", title: "Orbit Defense", desc: "Protect the orbital station from incoming space debris.", icon: "🛰️" },
-  { slug: "void-runner", title: "Void Runner", desc: "A fast-paced reflex game focused on traversal and timing.", icon: "🏃" },
-  { slug: "sky-glide", title: "Sky Glide", desc: "Master the art of space flight. Navigate your vessel through the energy pillars.", icon: "🚀" },
+  { slug: "sky-glide", title: "Sky Glide", desc: "Master the art of space flight. Navigate your vessel through the energy pillars.", icon: "🚀", isReady: true },
+  { slug: "space-typer", title: "Space Typer", desc: "Test your typing speed in a fast-paced environment. Accuracy is key.", icon: "⌨️", isReady: true },
+  { slug: "cosmic-clicker", title: "Cosmic Clicker", desc: "A simple idle clicker game where you gather resources to build your fleet.", icon: "🖱️", isReady: false },
+  { slug: "orbit-defense", title: "Orbit Defense", desc: "Protect the orbital station from incoming space debris.", icon: "🛰️", isReady: false },
+  { slug: "void-runner", title: "Void Runner", desc: "A fast-paced reflex game focused on traversal and timing.", icon: "🏃", isReady: false },
 ];
 
 export default function GameGrid() {
@@ -51,23 +51,35 @@ export default function GameGrid() {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           {games.map((game, i) => (
-            <Link href={`/games/${game.slug}`} key={i} className="game-card group cursor-pointer relative overflow-hidden rounded-[24px] bg-[#0d0714]/60 backdrop-blur-xl border border-white/5 p-5 md:p-10 transition-all duration-300 hover:bg-white/5 hover:border-purple-400/30 hover:-translate-y-2 hover:shadow-[0_15px_40px_-10px_rgba(168,85,247,0.15)] block">
+            <Link 
+              href={game.isReady ? `/games/${game.slug}` : "#"} 
+              key={i} 
+              className={`game-card group cursor-pointer relative overflow-hidden rounded-[24px] bg-[#0d0714]/60 backdrop-blur-xl border border-white/5 p-5 md:p-10 transition-all duration-300 block 
+                ${game.isReady ? "hover:bg-white/5 hover:border-purple-400/30 hover:-translate-y-2 hover:shadow-[0_15px_40px_-10px_rgba(168,85,247,0.15)]" : "opacity-40 cursor-not-allowed"}`}
+            >
+              {/* Coming Soon Badge */}
+              {!game.isReady && (
+                <div className="absolute top-6 right-6 px-3 py-1 bg-purple-500/20 border border-purple-500/30 rounded-full z-20">
+                  <span className="text-[8px] font-mono text-purple-400 uppercase tracking-widest font-bold">Coming Soon!</span>
+                </div>
+              )}
+
               {/* Purple Glow */}
               <div className="absolute inset-0 bg-linear-to-br from-purple-500/0 via-purple-500/0 to-purple-500/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
               
-              <div className="relative z-10 text-3xl md:text-4xl mb-6 grayscale group-hover:grayscale-0 transition-all duration-300 transform group-hover:scale-110">
+              <div className={`relative z-10 text-3xl md:text-4xl mb-6 grayscale ${game.isReady ? "group-hover:grayscale-0" : ""} transition-all duration-300 transform ${game.isReady ? "group-hover:scale-110" : ""}`}>
                 {game.icon}
               </div>
 
-              <h3 className="relative z-10 text-xl md:text-2xl font-bold mb-4 text-slate-100 group-hover:text-purple-400 transition-colors duration-300 uppercase tracking-tight">
+              <h3 className={`relative z-10 text-xl md:text-2xl font-bold mb-4 text-slate-100 ${game.isReady ? "group-hover:text-purple-400" : ""} transition-colors duration-300 uppercase tracking-tight`}>
                 {game.title}
               </h3>
               <p className="relative z-10 text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors duration-300 text-sm">
                 {game.desc}
               </p>
               
-              <div className="relative z-10 mt-8 flex items-center text-[11px] font-mono text-purple-500/70 uppercase tracking-widest group-hover:translate-x-2 group-hover:text-purple-400 transition-all duration-300">
-                Play now <span className="ml-2">→</span>
+              <div className={`relative z-10 mt-8 flex items-center text-[11px] font-mono uppercase tracking-widest transition-all duration-300 ${game.isReady ? "text-purple-500/70 group-hover:translate-x-2 group-hover:text-purple-400" : "text-slate-600"}`}>
+                {game.isReady ? "Play now" : "System Pending..."} <span className="ml-2">→</span>
               </div>
             </Link>
           ))}

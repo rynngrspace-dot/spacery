@@ -49,6 +49,9 @@ export default function SkyGlide() {
   const [ownedSkins, setOwnedSkins] = useState<string[]>(["default"]);
   const [selectedSkinId, setSelectedSkinId] = useState("default");
   const [showLevelUp, setShowLevelUp] = useState(false);
+  const [pilotName, setPilotName] = useState("");
+  const [showNamePrompt, setShowNamePrompt] = useState(false);
+  const [tempName, setTempName] = useState("");
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -74,14 +77,28 @@ export default function SkyGlide() {
     const savedCR = localStorage.getItem("sky-glide-credits");
     const savedOW = localStorage.getItem("sky-glide-owned-skins");
     const savedSK = localStorage.getItem("sky-glide-selected-skin");
+    const savedPilot = localStorage.getItem("sky-glide-pilot");
 
     if (savedHL) setHighScore(parseInt(savedHL));
     if (savedCR) setCredits(parseInt(savedCR));
     if (savedSK) setSelectedSkinId(savedSK);
+    if (savedPilot) {
+      setPilotName(savedPilot);
+    } else {
+      setShowNamePrompt(true);
+    }
     if (savedOW) {
         try { setOwnedSkins(JSON.parse(savedOW)); } catch(e) { setOwnedSkins(["default"]); }
     }
   }, []);
+
+  const savePilotName = () => {
+    if (tempName.trim()) {
+      setPilotName(tempName.trim());
+      localStorage.setItem("sky-glide-pilot", tempName.trim());
+      setShowNamePrompt(false);
+    }
+  };
 
   const resetGame = useCallback(() => {
     birdY.current = 250;
@@ -348,12 +365,12 @@ export default function SkyGlide() {
             <Link href="/#games" className="text-[9px] sm:text-[10px] font-mono text-slate-500 hover:text-sky-400 uppercase tracking-[0.2em] sm:tracking-[0.3em] transition-colors truncate">← Bridge</Link>
             <div className="flex gap-4 sm:gap-12 bg-black/40 px-4 sm:px-8 py-2 sm:py-4 rounded-full border border-white/5 backdrop-blur-xl shrink-0">
                 <div className="text-center">
-                    <p className="text-[7px] sm:text-[8px] font-mono text-slate-600 uppercase mb-0.5 sm:mb-1">Credits</p>
-                    <p className="text-sm sm:text-xl font-bold text-yellow-500 tracking-wider sm:tracking-widest">{credits.toLocaleString()}</p>
+                    <p className="text-[7px] sm:text-[8px] font-mono text-slate-600 uppercase mb-0.5 sm:mb-1">Pilot</p>
+                    <p className="text-sm sm:text-lg font-bold text-sky-400 tracking-wider truncate max-w-[80px] sm:max-w-[120px]">{pilotName || "Unknown"}</p>
                 </div>
                 <div className="text-center border-l border-white/5 pl-4 sm:pl-12">
-                    <p className="text-[7px] sm:text-[8px] font-mono text-slate-600 uppercase mb-0.5 sm:mb-1">Best</p>
-                    <p className="text-sm sm:text-xl font-bold text-sky-400 tracking-wider sm:tracking-widest">{highScore}</p>
+                    <p className="text-[7px] sm:text-[8px] font-mono text-slate-600 uppercase mb-0.5 sm:mb-1">Credits</p>
+                    <p className="text-sm sm:text-xl font-bold text-yellow-500 tracking-wider sm:tracking-widest">{credits.toLocaleString()}</p>
                 </div>
             </div>
         </div>
@@ -496,8 +513,11 @@ export default function SkyGlide() {
                 <div className="absolute inset-0 bg-black/70 backdrop-blur-xl flex flex-col items-center justify-center p-6 sm:p-12 text-center animate-[scaleIn_0.4s_ease-out] z-40">
                     <span className="text-[8px] sm:text-[10px] font-mono text-red-500 uppercase tracking-widest mb-2">Signal Lost</span>
                     <h2 className="text-3xl sm:text-5xl font-black text-white italic tracking-tighter mb-2 sm:mb-4 uppercase">Down</h2>
-                    <div className="px-3 py-1 bg-sky-500/20 rounded-full mb-8 sm:mb-10 backdrop-blur-md border border-sky-500/30">
-                        <span className="text-[8px] sm:text-[10px] font-mono text-sky-400 uppercase tracking-widest font-bold font-mono">Lvl reached: {level}</span>
+                    <div className="flex flex-col items-center gap-2 mb-8 sm:mb-10">
+                      <div className="px-3 py-1 bg-sky-500/20 rounded-full backdrop-blur-md border border-sky-500/30">
+                          <span className="text-[8px] sm:text-[10px] font-mono text-sky-400 uppercase tracking-widest font-bold font-mono">Lvl reached: {level}</span>
+                      </div>
+                      <span className="text-[10px] font-mono text-slate-500 uppercase tracking-[0.2em]">Pilot: {pilotName}</span>
                     </div>
                     
                     <div className="grid grid-cols-2 gap-8 sm:gap-12 mb-10 sm:mb-16">
@@ -526,6 +546,36 @@ export default function SkyGlide() {
                         </button>
                     </div>
                 </div>
+            )}
+            {/* Pilot Identity Prompt */}
+            {showNamePrompt && (
+              <div className="absolute inset-0 bg-[#0d0714] backdrop-blur-2xl flex flex-col items-center justify-center p-8 text-center z-[100] animate-[fadeIn_0.5s]">
+                <div className="w-full max-w-sm">
+                  <span className="text-[10px] font-mono text-sky-400 uppercase tracking-[0.5em] mb-4 block">Central Registry</span>
+                  <h2 className="text-3xl font-black text-white italic uppercase tracking-tighter mb-8">Identify Pilot</h2>
+                  <div className="relative mb-8">
+                    <input 
+                      type="text" 
+                      value={tempName}
+                      onChange={(e) => setTempName(e.target.value)}
+                      placeholder="Enter Callsign..."
+                      className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-mono text-sm focus:outline-none focus:border-sky-500/50 transition-all text-center uppercase tracking-widest"
+                      onKeyDown={(e) => e.key === "Enter" && savePilotName()}
+                      autoFocus
+                    />
+                  </div>
+                  <button 
+                    onClick={savePilotName}
+                    disabled={!tempName.trim()}
+                    className="w-full py-5 bg-sky-500 text-white font-bold rounded-2xl hover:bg-sky-400 transition-all text-xs uppercase tracking-widest shadow-[0_0_40px_rgba(56,189,248,0.3)] disabled:opacity-30 disabled:cursor-not-allowed"
+                  >
+                    Authorize Call-Sign
+                  </button>
+                  <p className="mt-8 text-[9px] font-mono text-slate-600 uppercase tracking-widest leading-relaxed">
+                    Identity will be encoded into the galaxy registry for future sorting.
+                  </p>
+                </div>
+              </div>
             )}
         </div>
     </div>
