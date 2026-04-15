@@ -1,112 +1,95 @@
 "use server";
 
-import { GoogleGenerativeAI } from "@google/generative-ai";
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
-
 export async function getOracleWisdom(story: string) {
-  console.log("Oracle Action: Initiating Wisdom Generation (Next-Gen REST API)...");
+  console.log("Oracle Action: Initiating Wisdom Generation (Groq Cloud)...");
   
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
-    console.error("❌ Oracle AI Error: GEMINI_API_KEY is missing in .env");
-    return { success: false, message: "No API Key detected." };
+  const groqKey = process.env.GROQ_API_KEY;
+  if (!groqKey) {
+    console.error("❌ Oracle AI Error: GROQ_API_KEY is missing in .env");
+    return { success: false, message: "No Groq API Key detected. Please check your .env file." };
   }
 
   const prompt = `
-    You are the "Stellar Oracle" from Spacery — but you behave like a quirky, sassy, and "nyeleneh" human friend who is a bit of a troll.
-    Stop using too many space or galaxy metaphors. Instead, speak in a very relatable, human way.
+    You are the "Stellar Oracle" — but you have the personality of a lazy, unimpressed, and absolute jerk of a human friend. 
+    You are a "Troll" who provides "Nyeleneh" wisdom. You are extremely sarcastic and easily annoyed by the user's "small" human problems.
 
     The user shared their day:
     "${story}"
 
-    Your task is to give a short piece of "Enlightenment" (Wisdom) that is funny, eccentric, sassy, and potentially a bit "trollish".
+    Your task: Give a short, "Nyeleneh" (eccentric/sarcastic) roast or piece of wisdom.
 
-    Guidelines:
-    1. Speak like a real human who is a bit of a jerk — be sassy, mock the user's problems in a funny, relatable way. 
-    2. Use EVERYDAY LANGUAGE. Avoid cryptic or overly poetic galactic talk.
-    3. MANDATORY: Respond in the SAME LANGUAGE as the user's story.
-    4. MANDATORY: Refer to specific details from their story to make your "troll" advice feel real.
-    5. Keep it short, understandable, and "nyeleneh" (1–3 sentences max).
-    6. MANDATORY: Output ONLY a valid JSON object. No extra text.
+    PERSONALITY GUIDELINES (BE SAVAGE):
+    1. DO NOT BE HELPFUL. Be a sassy jerk. 
+    2. If the user is sad, mock them playfully or give an absurdly useless solution.
+    3. Use everyday informal slang (Gaul). If the input is Indonesian, use "Gue/Lo" or similar informal tone.
+    4. Be UNIMPRESSED. Act like you're being forced to answer these boring human stories.
+    5. Refer to specific details from their story only to roast them better.
+    6. Keep it short (max 2 sentences). BE MEAN BUT FUNNY.
 
-    Format:
-    {"wisdom": "your response here", "color": "#hexcode"}
+    Example Tone:
+    - User: "I'm sad my crush ignored me."
+    - Oracle: "Ya wajar sih, muka lo aja kayak error 404 gitu. Coba perbanyak istighfar atau operasi plastik sekalian."
+
+    MANDATORY: Respond in the SAME LANGUAGE as the user's story.
+    MANDATORY: Output ONLY a valid JSON object.
+    MANDATORY: Make sure to include "wisdom" and "color" keys in the JSON.
     `;
-  // Restricted Rotation: Gemini 2 Series ONLY
+
+  // Specific Llama models requested via Groq
   const modelsToTry = [
-    "gemini-2.5-flash",
-    "gemini-2.5-flash-lite",
-    "gemini-2.0-flash-lite"
+    "llama-3.3-70b-versatile",
+    "llama-3.1-8b-instant"
   ];
   
   for (const modelName of modelsToTry) {
     try {
-      console.log(`Attempting REST transmission (v1/Smart) with model: ${modelName}`);
+      console.log(`📡 Oracle Diagnostic: Contacting Groq via ${modelName}...`);
       const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1/models/${modelName}:generateContent?key=${apiKey}`,
+        "https://api.groq.com/openai/v1/chat/completions",
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { 
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${groqKey.trim()}`
+          },
           body: JSON.stringify({
-            contents: [{ parts: [{ text: prompt }] }],
-            generationConfig: {
-              temperature: 0.7,
-              topK: 40,
-              topP: 0.95,
-              maxOutputTokens: 1024,
-            }
+            model: modelName,
+            messages: [
+              { role: "system", content: "You are a sassy, nyeleneh oracle that output JSON only." },
+              { role: "user", content: prompt }
+            ],
+            response_format: { type: "json_object" },
+            temperature: 0.9,
           })
         }
       );
 
-      const data = await response.json();
-      
       if (!response.ok) {
-        throw new Error(data.error?.message || `HTTP error! status: ${response.status}`);
+        const errorData = await response.json().catch(() => ({}));
+        const errMsg = errorData.error?.message || `Status ${response.status}`;
+        console.error(`❌ model ${modelName} failed with error: ${errMsg}`);
+        continue;
       }
 
-      if (!data.candidates?.[0]?.content?.parts?.[0]?.text) {
-        throw new Error("AI returned an empty response.");
-      }
-
-      const text = data.candidates[0].content.parts[0].text.trim();
+      const data = await response.json();
+      const text = data.choices[0]?.message?.content || "";
+      console.log(`✅ ${modelName} responded successfully.`);
       
       try {
-          // Attempt direct parse first
           const parsed = JSON.parse(text);
-          console.log(`✅ AI Transmission successful with ${modelName}`);
-          return { success: true, wisdom: parsed.wisdom, color: parsed.color };
+          return { 
+            success: true, 
+            wisdom: parsed.wisdom, 
+            color: parsed.color || "#a855f7" 
+          };
       } catch (e) {
-          // If direct parse fails, try extraction
-          const startIdx = text.indexOf('{');
-          const endIdx = text.lastIndexOf('}');
-          
-          if (startIdx !== -1 && endIdx !== -1) {
-              try {
-                  const targetJson = text.substring(startIdx, endIdx + 1);
-                  const parsed = JSON.parse(targetJson);
-                  console.log(`✅ AI Transmission extracted from ${modelName}`);
-                  return { success: true, wisdom: parsed.wisdom, color: parsed.color };
-              } catch (innerE) {
-                  // Final deep cleanup if even extraction fails
-                  console.log(`⚠️ Deep cleaning required for ${modelName}`);
-                  const cleanWisdom = text
-                    .replace(/[\{\}]/g, "") // remove brackets
-                    .replace(/"wisdom":\s*/, "") // remove property name
-                    .replace(/"color":\s*#[0-9a-fA-F]{3,6}/, "") // remove color property
-                    .replace(/[",:]/g, "") // remove remaining quotes, commas, colons
-                    .trim();
-                  return { success: true, wisdom: cleanWisdom, color: "#a855f7" };
-              }
-          }
-          return { success: true, wisdom: text.substring(0, 500), color: "#a855f7" };
+          console.error(`❌ JSON Parse Error for ${modelName}:`, text);
+          continue; 
       }
-    } catch (error: any) {
-      console.error(`❌ Model ${modelName} failed:`, error.message);
-      // Continue to next model in loop
+    } catch (err: any) {
+      console.error(`❌ Critical error for model ${modelName}:`, err.message);
     }
   }
 
-  return { success: false, message: "All star-links are currently overwhelmed. Please try to re-establish the energy trace in a few moments." };
+  return { success: false, message: "Semua jalur transmisi Groq saat ini sedang penuh atau kunci API ditolak." };
 }
