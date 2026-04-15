@@ -337,7 +337,7 @@ export default function SkyGlide() {
 
         {/* Game Container */}
         <div 
-          className="relative w-full max-w-[800px] aspect-[16/10] bg-[#0d0714]/80 backdrop-blur-3xl rounded-[32px] sm:rounded-[48px] border border-white/10 overflow-hidden shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8)] touch-manipulation"
+          className="relative w-full max-w-[800px] aspect-[9/12] sm:aspect-[16/10] bg-[#0d0714]/80 backdrop-blur-3xl rounded-[32px] sm:rounded-[48px] border border-white/10 overflow-hidden shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8)] touch-manipulation"
           onClick={jump}
         >
             <canvas ref={canvasRef} width={800} height={500} className="w-full h-full block" />
@@ -414,7 +414,7 @@ export default function SkyGlide() {
 
             {/* HANGAR */}
             {gameState === "HANGAR" && (
-                <div className="absolute inset-0 bg-[#0d0714]/95 backdrop-blur-3xl flex flex-col p-6 sm:p-12 overflow-y-auto z-40">
+                <div className="absolute inset-0 bg-[#0d0714]/95 backdrop-blur-3xl flex flex-col p-6 sm:p-12 overflow-y-auto z-40 custom-scrollbar">
                     <div className="flex justify-between items-center mb-6 sm:mb-12 sticky top-0 bg-[#0d0714]/95 py-2 z-10">
                         <h2 className="text-xl sm:text-3xl font-black text-white uppercase tracking-tighter italic">Hangar</h2>
                         <button 
