@@ -35,6 +35,24 @@ const SKINS: Skin[] = [
 
 type GameState = "START" | "PLAYING" | "GAME_OVER" | "HANGAR";
 
+const MOTIVATIONS = [
+  "Bahkan gravitasi tertawa melihat manuver itu.",
+  "Meteor itu sebenarnya cuma mau mampir, tapi kamunya malah nabrak.",
+  "Tenang, pilar itu memang hobi berdiri di jalanmu.",
+  "Pilot handal bukan yang tidak pernah jatuh, tapi yang jetnya paling banyak.",
+  "Apakah kamu mencoba menembus pilar? spoiler: tidak bisa.",
+  "Houston sedang mengirimkan tissue untukmu lewat drone.",
+  "Astronaut lain bilang: 'Lagi ngapain tuh di bawah?'",
+  "Area terbang ini luas, tapi kamu milih nabrak situ... Prestasi!",
+  "Coba lagi, pilar itu sudah mulai sombong karena kamu tabrak.",
+  "Jet cadangan masih banyak, ego saja yang mungkin agak lecet.",
+  "Gravitasi: 1, Skill: 0. Skor sementara ya!",
+  "Kapten bilang: 'Coba pakai kacamata lain kali.'",
+  "Pilar tersebut sedang merayakan kemenangannya sekarang.",
+  "Jangan sedih, pilar itu memang keras kepalanya.",
+  "Apakah itu manuver baru? Oh, ternyata cuma nabrak biasa."
+];
+
 interface Pipe { x: number; topHeight: number; passed: boolean; }
 interface Star { x: number; y: number; collected: boolean; id: string; }
 interface Meteor { x: number; y: number; vx: number; vy: number; size: number; rotation: number; dr: number; }
@@ -52,6 +70,7 @@ export default function SkyGlide() {
   const [pilotName, setPilotName] = useState("");
   const [showNamePrompt, setShowNamePrompt] = useState(false);
   const [tempName, setTempName] = useState("");
+  const [currentMotivation, setCurrentMotivation] = useState("");
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -349,11 +368,16 @@ export default function SkyGlide() {
     };
   }, [update, draw]);
 
+  // Handle Game Over
   useEffect(() => {
     if (gameState === "GAME_OVER") {
       const finalCredits = credits + sessionCredits;
       setCredits(finalCredits);
       localStorage.setItem("sky-glide-credits", finalCredits.toString());
+      
+      // Pick random motivation
+      const randomMsg = MOTIVATIONS[Math.floor(Math.random() * MOTIVATIONS.length)];
+      setCurrentMotivation(randomMsg);
     }
   }, [gameState]);
 
@@ -416,7 +440,9 @@ export default function SkyGlide() {
             {/* START */}
             {gameState === "START" && (
                 <div className="absolute inset-0 bg-black/40 backdrop-blur-md flex flex-col items-center justify-center p-6 sm:p-12 text-center z-40">
-                    <span className="text-[8px] sm:text-[10px] font-mono text-sky-400 uppercase tracking-[0.4em] sm:tracking-[0.6em] mb-2 sm:mb-4">Deep Space Protocol</span>
+                    <span className="text-[8px] sm:text-[10px] font-mono text-sky-400 uppercase tracking-[0.4em] sm:tracking-[0.6em] mb-2 sm:mb-4">
+                      {pilotName ? `Welcome Back, Pilot ${pilotName}` : "Deep Space Protocol"}
+                    </span>
                     <h1 className="text-4xl sm:text-7xl font-black text-white italic tracking-tighter mb-8 sm:mb-12 uppercase">Sky Glide</h1>
                     
                     <div className="hidden sm:flex justify-center gap-12 mb-12 opacity-80 scale-90 sm:scale-100">
@@ -513,6 +539,11 @@ export default function SkyGlide() {
                 <div className="absolute inset-0 bg-black/70 backdrop-blur-xl flex flex-col items-center justify-center p-6 sm:p-12 text-center animate-[scaleIn_0.4s_ease-out] z-40">
                     <span className="text-[8px] sm:text-[10px] font-mono text-red-500 uppercase tracking-widest mb-2">Signal Lost</span>
                     <h2 className="text-3xl sm:text-5xl font-black text-white italic tracking-tighter mb-2 sm:mb-4 uppercase">Down</h2>
+                    
+                    <p className="text-xs sm:text-sm font-mono text-slate-400 mb-6 bg-slate-400/5 px-6 py-3 rounded-2xl italic">
+                      "{currentMotivation}"
+                    </p>
+
                     <div className="flex flex-col items-center gap-2 mb-8 sm:mb-10">
                       <div className="px-3 py-1 bg-sky-500/20 rounded-full backdrop-blur-md border border-sky-500/30">
                           <span className="text-[8px] sm:text-[10px] font-mono text-sky-400 uppercase tracking-widest font-bold font-mono">Lvl reached: {level}</span>
