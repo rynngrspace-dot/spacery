@@ -36,21 +36,31 @@ const SKINS: Skin[] = [
 type GameState = "START" | "PLAYING" | "GAME_OVER" | "HANGAR";
 
 const MOTIVATIONS = [
-  "Bahkan gravitasi tertawa melihat manuver itu.",
-  "Meteor itu sebenarnya cuma mau mampir, tapi kamunya malah nabrak.",
-  "Tenang, pilar itu memang hobi berdiri di jalanmu.",
-  "Pilot handal bukan yang tidak pernah jatuh, tapi yang jetnya paling banyak.",
-  "Apakah kamu mencoba menembus pilar? spoiler: tidak bisa.",
-  "Houston sedang mengirimkan tissue untukmu lewat drone.",
-  "Astronaut lain bilang: 'Lagi ngapain tuh di bawah?'",
-  "Area terbang ini luas, tapi kamu milih nabrak situ... Prestasi!",
-  "Coba lagi, pilar itu sudah mulai sombong karena kamu tabrak.",
-  "Jet cadangan masih banyak, ego saja yang mungkin agak lecet.",
-  "Gravitasi: 1, Skill: 0. Skor sementara ya!",
-  "Kapten bilang: 'Coba pakai kacamata lain kali.'",
-  "Pilar tersebut sedang merayakan kemenangannya sekarang.",
-  "Jangan sedih, pilar itu memang keras kepalanya.",
-  "Apakah itu manuver baru? Oh, ternyata cuma nabrak biasa."
+  "Even gravity is laughing at that maneuver.",
+  "That meteor just wanted a high-five. You gave it your whole ship.",
+  "Don't worry, those pillars have zero respect for personal space.",
+  "A great pilot isn't one who never crashes, but one who follows their dreams... into a wall.",
+  "Were you trying to phase through that? Spoiler: Physics says no.",
+  "Mission Control is officially sending tissues via emergency drone.",
+  "The other astronauts are asking: 'What exactly was the plan there?'",
+  "Space is infinite, yet you found the one thing to hit. Impressive!",
+  "Try again. That pillar is getting a bit too smug.",
+  "We have plenty of backup jets. It's just your ego that's in critical condition.",
+  "Gravity: 1, Pilot: 0. Don't worry, it's just a temporary lead!",
+  "The Captain suggests checking your eye prescription.",
+  "That pylon is currently celebrating its victory. Reclaim your honor!",
+  "Don't be sad. That pillar was always a bit of a jerk anyway.",
+  "Was that a new tactical maneuver? Oh, wait... no, just a regular crash.",
+  "Your flight recorder just filed for early retirement.",
+  "I've seen better flight paths from a confused pigeon.",
+  "Is the joystick upside down? Just checking for a friend.",
+  "That was a masterpiece of unintentional destruction.",
+  "Technically, you successfully stopped. Just... very abruptly.",
+  "The insurance company just blocked our number.",
+  "If you were trying to paint the energy beam with your hull, mission accomplished.",
+  "You're making the vacuum of space look surprisingly crowded.",
+  "Even the stars are blinking in disbelief right now.",
+  "Look on the bright side: you're creating a lot of jobs for the repair crew."
 ];
 
 interface Pipe { x: number; topHeight: number; passed: boolean; }
