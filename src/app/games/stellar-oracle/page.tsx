@@ -105,9 +105,9 @@ export default function StellarOracle() {
 
   // GSAP Animations
   useGSAP(() => {
-    if (step === "ENTRANCE") {
-      gsap.from(".oracle-orb", { scale: 0, opacity: 0, duration: 1.5, ease: "elastic.out(1, 0.5)" });
-      gsap.from(".oracle-text", { y: 20, opacity: 0, delay: 0.5, stagger: 0.2 });
+    if (step === "ENTRANCE" && hasMounted) {
+      gsap.to(".oracle-orb", { scale: 1, opacity: 1, duration: 1.5, ease: "elastic.out(1, 0.5)" });
+      gsap.to(".oracle-text", { y: 0, opacity: 1, delay: 0.5, stagger: 0.2, duration: 0.8 });
     }
     if (step === "INPUT") {
       gsap.from(".input-ui", { y: 30, opacity: 0, duration: 1, ease: "power3.out" });
@@ -116,10 +116,10 @@ export default function StellarOracle() {
       gsap.to(".oracle-orb", { scale: 1.5, repeat: -1, yoyo: true, duration: 1.5, ease: "sine.inOut" });
     }
     if (step === "REVEAL") {
-      gsap.from(".reveal-text", { opacity: 0, scale: 0.9, duration: 1, stagger: 0.3 });
+      gsap.to(".reveal-text", { opacity: 1, scale: 1, duration: 1, stagger: 0.3 });
       gsap.to(".oracle-orb", { scale: 1, filter: `drop-shadow(0 0 40px ${glowColor})`, duration: 2 });
     }
-  }, { scope: containerRef, dependencies: [step] });
+  }, { scope: containerRef, dependencies: [step, hasMounted] });
 
   return (
     <div ref={containerRef} className="min-h-screen pt-40 pb-20 px-8 flex flex-col items-center select-none overflow-hidden bg-[#010205]">
@@ -157,7 +157,7 @@ export default function StellarOracle() {
         {/* The Oracle Visual */}
         <div className="relative mb-20">
           <div 
-            className="oracle-orb w-32 h-32 sm:w-48 sm:h-48 rounded-full bg-linear-to-br from-purple-500 via-indigo-600 to-black relative shadow-[0_0_80px_rgba(168,85,247,0.4)] border border-white/10"
+            className="oracle-orb w-32 h-32 sm:w-48 sm:h-48 rounded-full bg-linear-to-br from-purple-500 via-indigo-600 to-black relative shadow-[0_0_80px_rgba(168,85,247,0.4)] border border-white/10 opacity-0 scale-0"
             style={{ 
               boxShadow: `0 0 100px -20px ${glowColor}66`,
               filter: step === "REVEAL" ? `drop-shadow(0 0 40px ${glowColor}aa)` : "none"
@@ -175,15 +175,15 @@ export default function StellarOracle() {
           
           {step === "ENTRANCE" && (
             <div className="flex flex-col items-center">
-              <span className="oracle-text text-[10px] font-mono text-purple-400 uppercase tracking-[0.6em] mb-4">Celestial Consciousness</span>
-              <h1 className="oracle-text text-5xl sm:text-7xl font-black text-white italic tracking-tighter mb-8 uppercase">Stellar Oracle</h1>
-              <p className="oracle-text text-slate-400 font-mono text-xs max-w-lg mb-12 leading-relaxed">
+              <span className="oracle-text text-[10px] font-mono text-purple-400 uppercase tracking-[0.6em] mb-4 opacity-0 translate-y-4">Celestial Consciousness</span>
+              <h1 className="oracle-text text-5xl sm:text-7xl font-black text-white italic tracking-tighter mb-8 uppercase opacity-0 translate-y-4">Stellar Oracle</h1>
+              <p className="oracle-text text-slate-400 font-mono text-xs max-w-lg mb-12 leading-relaxed opacity-0 translate-y-4">
                 The stars have observed your journey since the dawn of time. They sense the ripples of your experiences. 
                 Are you ready to share your frequency with the void?
               </p>
               <button 
                 onClick={() => setStep("INPUT")}
-                className="oracle-text px-16 py-5 bg-white text-black font-black rounded-2xl hover:bg-purple-400 hover:text-white transition-all text-xs uppercase tracking-widest shadow-[0_20px_40px_-10px_rgba(255,255,255,0.2)]"
+                className="z-100 oracle-text px-16 py-5 bg-white text-black font-black rounded-2xl hover:bg-purple-400 hover:text-white transition-all text-xs uppercase tracking-widest shadow-[0_20px_40px_-10px_rgba(255,255,255,0.2)] opacity-0 translate-y-4"
               >
                 Commune with Wisdom
               </button>
@@ -228,12 +228,12 @@ export default function StellarOracle() {
 
           {step === "REVEAL" && (
             <div className="flex flex-col items-center">
-              <span className="reveal-text text-[10px] font-mono text-slate-500 uppercase tracking-[0.6em] mb-4">Transmission Received</span>
-              <h2 className="reveal-text text-3xl sm:text-4xl font-black text-white italic uppercase tracking-tighter mb-12 max-w-2xl leading-tight">
+              <span className="reveal-text text-[10px] font-mono text-slate-500 uppercase tracking-[0.6em] mb-4 opacity-0 scale-95">Transmission Received</span>
+              <h2 className="reveal-text text-3xl sm:text-4xl font-black text-white italic uppercase tracking-tighter mb-12 max-w-2xl leading-tight opacity-0 scale-95">
                 "{enlightenment}"
               </h2>
               
-              <div className="reveal-text flex gap-4">
+              <div className="reveal-text flex gap-4 opacity-0 scale-95">
                 <button 
                   onClick={() => { setStep("INPUT"); setUserInput(""); setGlowColor("#a855f7"); }}
                   className="px-12 py-4 border border-white/10 text-white font-bold rounded-xl hover:bg-white/5 transition-all text-[10px] uppercase tracking-widest"
