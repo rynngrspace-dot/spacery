@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback, ReactNode } from "react";
 import Link from "next/link";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -12,46 +12,84 @@ const PIPE_SPEED = 2.2;
 const PIPE_WIDTH = 60;
 const PIPE_GAP = 160;
 const BIRD_SIZE = 34;
-const SPAWN_RATE = 100; // frames between pipe spawns
+const SPAWN_RATE = 100;
 
-type GameState = "START" | "PLAYING" | "GAME_OVER";
-
-interface Pipe {
-  x: number;
-  topHeight: number;
-  passed: boolean;
+interface Skin {
+  id: string;
+  name: string;
+  cost: number;
+  body: string;
+  glow: string;
+  flame: string;
+  desc: string;
 }
+
+const SKINS: Skin[] = [
+  { id: "default", name: "Standard Mk.I", cost: 0, body: "#ffffff", glow: "#38bdf8", flame: "#38bdf8", desc: "Reliable scouting vessel. Standard issue." },
+  { id: "neon", name: "Neon Strike", cost: 50, body: "#00f2ff", glow: "#00f2ff", flame: "#00f2ff", desc: "Equipped with high-intensity plasma emitters." },
+  { id: "specter", name: "Void Specter", cost: 150, body: "#a855f7", glow: "#ffffff", flame: "#a855f7", desc: "Phase-shifted hull for deep void traversal." },
+  { id: "solar", name: "Solar Flare", cost: 500, body: "#f59e0b", glow: "#ef4444", flame: "#ffffff", desc: "Forged in the heart of a dying star." },
+];
+
+type GameState = "START" | "PLAYING" | "GAME_OVER" | "HANGAR";
+
+interface Pipe { x: number; topHeight: number; passed: boolean; }
+interface Star { x: number; y: number; collected: boolean; id: string; }
+interface Meteor { x: number; y: number; vx: number; vy: number; size: number; rotation: number; dr: number; }
 
 export default function SkyGlide() {
   const [gameState, setGameState] = useState<GameState>("START");
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
+  const [credits, setCredits] = useState(0);
+  const [sessionCredits, setSessionCredits] = useState(0);
+  const [ownedSkins, setOwnedSkins] = useState<string[]>(["default"]);
+  const [selectedSkinId, setSelectedSkinId] = useState("default");
+
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const requestRef = useRef<number | null>(null);
 
-  // Game Logic Refs (to avoid re-renders during loop)
-  const birdY = useRef(300);
+  // Game Logic Refs
+  const birdY = useRef(250);
   const birdVelocity = useRef(0);
   const pipes = useRef<Pipe[]>([]);
+  const stars = useRef<Star[]>([]);
+  const meteors = useRef<Meteor[]>([]);
   const frameCount = useRef(0);
-  const scoreEffects = useRef<{ x: number, y: number, opacity: number }[]>([]);
+  const scoreEffects = useRef<{ x: number, y: number, opacity: number, text: string, color: string }[]>([]);
   const scoreRef = useRef(0);
+  const sessionCreditsRef = useRef(0);
 
-  // Initialize High Score
+  const selectedSkin = SKINS.find(s => s.id === selectedSkinId) || SKINS[0];
+
+  // Initialize Data
   useEffect(() => {
-    const saved = localStorage.getItem("sky-glide-highscore");
-    if (saved) setHighScore(parseInt(saved));
+    const savedHL = localStorage.getItem("sky-glide-highscore");
+    const savedCR = localStorage.getItem("sky-glide-credits");
+    const savedOW = localStorage.getItem("sky-glide-owned-skins");
+    const savedSK = localStorage.getItem("sky-glide-selected-skin");
+
+    if (savedHL) setHighScore(parseInt(savedHL));
+    if (savedCR) setCredits(parseInt(savedCR));
+    if (savedSK) setSelectedSkinId(savedSK);
+    if (savedOW) {
+        try { setOwnedSkins(JSON.parse(savedOW)); } catch(e) { setOwnedSkins(["default"]); }
+    }
   }, []);
 
   const resetGame = useCallback(() => {
     birdY.current = 250;
     birdVelocity.current = 0;
     pipes.current = [];
+    stars.current = [];
+    meteors.current = [];
     scoreEffects.current = [];
     frameCount.current = 0;
     scoreRef.current = 0;
+    sessionCreditsRef.current = 0;
     setScore(0);
+    setSessionCredits(0);
     setGameState("PLAYING");
   }, []);
 
@@ -63,316 +101,405 @@ export default function SkyGlide() {
     }
   }, [gameState, resetGame]);
 
-  // Handle Input
+  const buySkin = (skin: Skin) => {
+    if (credits >= skin.cost && !ownedSkins.includes(skin.id)) {
+        const newCredits = credits - skin.cost;
+        const newOwned = [...ownedSkins, skin.id];
+        setCredits(newCredits);
+        setOwnedSkins(newOwned);
+        localStorage.setItem("sky-glide-credits", newCredits.toString());
+        localStorage.setItem("sky-glide-owned-skins", JSON.stringify(newOwned));
+    }
+  };
+
+  const equipSkin = (id: string) => {
+    setSelectedSkinId(id);
+    localStorage.setItem("sky-glide-selected-skin", id);
+  };
+
+  // Input listeners
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.code === "Space" || e.code === "ArrowUp") {
+      if ((e.code === "Space" || e.code === "ArrowUp") && gameState !== "HANGAR") {
         e.preventDefault();
         jump();
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [jump]);
+  }, [jump, gameState]);
 
   const update = useCallback(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas || gameState !== "PLAYING") return;
 
-    if (gameState !== "PLAYING") return;
-
-    // Update Bird
+    // --- Bird ---
     birdVelocity.current += GRAVITY;
     birdY.current += birdVelocity.current;
-
-    // Boundary Check
     if (birdY.current < 0) birdY.current = 0;
     if (birdY.current > canvas.height - BIRD_SIZE) {
-      setGameState("GAME_OVER");
-      return;
+        setGameState("GAME_OVER");
+        return;
     }
 
-    // Update Pipes
     frameCount.current++;
+
+    // --- Pipes ---
     if (frameCount.current % SPAWN_RATE === 0) {
       const minHeight = 50;
       const maxHeight = canvas.height - PIPE_GAP - minHeight;
-      const topHeight = Math.floor(Math.random() * (maxHeight - minHeight + 1)) + minHeight;
-      pipes.current.push({ x: canvas.width, topHeight, passed: false });
+      const topH = Math.floor(Math.random() * (maxHeight - minHeight + 1)) + minHeight;
+      pipes.current.push({ x: canvas.width, topHeight: topH, passed: false });
+
+      // Spawn Star sometimes
+      if (Math.random() > 0.4) {
+        stars.current.push({
+            id: Math.random().toString(),
+            x: canvas.width + 100,
+            y: topH + (PIPE_GAP / 2) + (Math.random() * 40 - 20),
+            collected: false
+        });
+      }
     }
 
-    pipes.current.forEach((pipe, i) => {
-      pipe.x -= PIPE_SPEED;
+    // --- Meteors ---
+    if (frameCount.current % 180 === 0 && Math.random() > 0.5) {
+        meteors.current.push({
+            x: canvas.width,
+            y: Math.random() * canvas.height,
+            vx: -(3 + Math.random() * 2),
+            vy: (Math.random() - 0.5) * 1,
+            size: 20 + Math.random() * 30,
+            rotation: 0,
+            dr: (Math.random() - 0.5) * 0.1
+        });
+    }
 
-      // Collision Detection
-      const birdRect = { 
-        left: 50 + 5, 
-        right: 50 + BIRD_SIZE - 5, 
-        top: birdY.current + 5, 
-        bottom: birdY.current + BIRD_SIZE - 5 
-      };
-      
-      const topPipeRect = { left: pipe.x, right: pipe.x + PIPE_WIDTH, top: 0, bottom: pipe.topHeight };
-      const bottomPipeRect = { left: pipe.x, right: pipe.x + PIPE_WIDTH, top: pipe.topHeight + PIPE_GAP, bottom: canvas.height };
-
-      if (
-        (birdRect.right > topPipeRect.left && birdRect.left < topPipeRect.right && birdRect.top < topPipeRect.bottom) ||
-        (birdRect.right > bottomPipeRect.left && birdRect.left < bottomPipeRect.right && birdRect.bottom > bottomPipeRect.top)
-      ) {
-        setGameState("GAME_OVER");
-      }
-
-      // Score Check
-      if (!pipe.passed && pipe.x + PIPE_WIDTH < 50) {
-        pipe.passed = true;
-        scoreRef.current += 1;
-        setScore(scoreRef.current);
-        
-        // Real-time High Score update
-        if (scoreRef.current > highScore) {
-          setHighScore(scoreRef.current);
-          localStorage.setItem("sky-glide-highscore", scoreRef.current.toString());
+    // Process Pipes
+    pipes.current.forEach(p => {
+        p.x -= PIPE_SPEED;
+        // Collision
+        if (50 + BIRD_SIZE - 5 > p.x && 50 + 5 < p.x + PIPE_WIDTH) {
+            if (birdY.current + 5 < p.topHeight || birdY.current + BIRD_SIZE - 5 > p.topHeight + PIPE_GAP) {
+                setGameState("GAME_OVER");
+            }
         }
-
-        // Add score effect
-        scoreEffects.current.push({ x: 70, y: birdY.current, opacity: 1 });
-      }
+        // Score
+        if (!p.passed && p.x + PIPE_WIDTH < 50) {
+            p.passed = true;
+            scoreRef.current++;
+            setScore(scoreRef.current);
+            if (scoreRef.current > highScore) {
+               setHighScore(scoreRef.current);
+               localStorage.setItem("sky-glide-highscore", scoreRef.current.toString());
+            }
+        }
     });
 
-    // Update Score Effects
-    scoreEffects.current.forEach(effect => {
-      effect.y -= 1.5;
-      effect.opacity -= 0.02;
+    // Process Stars
+    stars.current.forEach(s => {
+        s.x -= PIPE_SPEED;
+        const dist = Math.hypot(s.x - (50 + BIRD_SIZE/2), s.y - (birdY.current + BIRD_SIZE/2));
+        if (!s.collected && dist < BIRD_SIZE) {
+            s.collected = true;
+            sessionCreditsRef.current += 10;
+            setSessionCredits(sessionCreditsRef.current);
+            scoreEffects.current.push({ x: 70, y: s.y, opacity: 1, text: "+10", color: "#facc15" });
+        }
+    });
+
+    // Process Meteors
+    meteors.current.forEach(m => {
+        m.x += m.vx;
+        m.y += m.vy;
+        m.rotation += m.dr;
+        const dist = Math.hypot(m.x - (50 + BIRD_SIZE/2), m.y - (birdY.current + BIRD_SIZE/2));
+        if (dist < (m.size/2 + BIRD_SIZE/2 - 5)) {
+            setGameState("GAME_OVER");
+        }
+    });
+
+    // Clean up
+    pipes.current = pipes.current.filter(p => p.x > -100);
+    stars.current = stars.current.filter(s => s.x > -100 && !s.collected);
+    meteors.current = meteors.current.filter(m => m.x > -100);
+
+    // Effects
+    scoreEffects.current.forEach(e => {
+        e.y -= 1;
+        e.opacity -= 0.02;
     });
     scoreEffects.current = scoreEffects.current.filter(e => e.opacity > 0);
 
-    // Remove Off-screen Pipes
-    pipes.current = pipes.current.filter(p => p.x > -PIPE_WIDTH);
-  }, [gameState]);
+  }, [gameState, highScore]);
 
   const draw = useCallback(() => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
     if (!canvas || !ctx) return;
 
-    // Clear Canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Draw Background Subtle Glows
-    const time = Date.now() / 1000;
-    ctx.globalAlpha = 0.3;
-    ctx.fillStyle = "#1e1b4b";
-    ctx.beginPath();
-    ctx.arc(canvas.width/2, canvas.height/2, 200 + Math.sin(time) * 20, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.globalAlpha = 1;
+    // Stars Background
+    ctx.fillStyle = "rgba(255,255,255,0.1)";
+    for(let i=0; i<5; i++) {
+        ctx.beginPath();
+        const tx = (Date.now() / 50 + i * 200) % canvas.width;
+        ctx.arc(canvas.width - tx, (i * 123) % canvas.height, 1, 0, Math.PI * 2);
+        ctx.fill();
+    }
 
-    // Draw Bird (Spaceship)
+    // Draw Pipes
+    pipes.current.forEach(p => {
+        const grad = ctx.createLinearGradient(p.x, 0, p.x + PIPE_WIDTH, 0);
+        grad.addColorStop(0, "#1e1b4b"); grad.addColorStop(0.5, "#4338ca"); grad.addColorStop(1, "#1e1b4b");
+        ctx.fillStyle = grad;
+        ctx.fillRect(p.x, 0, PIPE_WIDTH, p.topHeight);
+        ctx.fillRect(p.x, p.topHeight + PIPE_GAP, PIPE_WIDTH, canvas.height);
+        
+        ctx.strokeStyle = "rgba(168, 85, 247, 0.3)";
+        ctx.strokeRect(p.x, 0, PIPE_WIDTH, p.topHeight);
+        ctx.strokeRect(p.x, p.topHeight + PIPE_GAP, PIPE_WIDTH, canvas.height);
+    });
+
+    // Draw Stars
+    stars.current.forEach(s => {
+        ctx.save();
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = "#facc15";
+        ctx.fillStyle = "#facc15";
+        const pulse = 1 + Math.sin(Date.now() / 150) * 0.2;
+        ctx.translate(s.x, s.y);
+        ctx.scale(pulse, pulse);
+        ctx.beginPath();
+        for(let i=0; i<5; i++) {
+            ctx.rotate(Math.PI / 2.5);
+            ctx.lineTo(0, 0 - 8);
+            ctx.rotate(Math.PI / 2.5);
+            ctx.lineTo(0, 0 - 4);
+        }
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+    });
+
+    // Draw Meteors
+    meteors.current.forEach(m => {
+        ctx.save();
+        ctx.translate(m.x, m.y);
+        ctx.rotate(m.rotation);
+        ctx.fillStyle = "#2d2d2d";
+        ctx.strokeStyle = "#444";
+        ctx.beginPath();
+        ctx.moveTo(m.size/2, 0);
+        for(let i=1; i<8; i++) {
+            const r = m.size/2 + (Math.sin(i * 1.5) * 5);
+            ctx.lineTo(r * Math.cos(i * Math.PI/4), r * Math.sin(i * Math.PI/4));
+        }
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+        // Texture
+        ctx.fillStyle = "#111";
+        ctx.beginPath(); ctx.arc(-5, -5, 4, 0, Math.PI * 2); ctx.fill();
+        ctx.restore();
+    });
+
+    // Draw Bird
     ctx.save();
     ctx.translate(50 + BIRD_SIZE/2, birdY.current + BIRD_SIZE/2);
-    const rotation = Math.min(Math.PI / 4, Math.max(-Math.PI / 4, birdVelocity.current * 0.1));
-    ctx.rotate(rotation);
+    ctx.rotate(Math.min(Math.PI/4, Math.max(-Math.PI/4, birdVelocity.current * 0.1)));
     
-    // Spaceship Glow
-    ctx.shadowBlur = 15;
-    ctx.shadowColor = "#38bdf8";
-    
-    // Main Body
-    ctx.fillStyle = "#ffffff";
-    ctx.beginPath();
-    ctx.moveTo(15, 0);
-    ctx.lineTo(-10, -10);
-    ctx.lineTo(-10, 10);
-    ctx.closePath();
-    ctx.fill();
+    ctx.shadowBlur = 20;
+    ctx.shadowColor = selectedSkin.glow;
+    ctx.fillStyle = selectedSkin.body;
+    ctx.beginPath(); ctx.moveTo(18, 0); ctx.lineTo(-12, -12); ctx.lineTo(-12, 12); ctx.closePath(); ctx.fill();
 
-    // Engine Flame
+    // Flame
     if (gameState === "PLAYING") {
-      ctx.fillStyle = birdVelocity.current < 0 ? "#38bdf8" : "#f59e0b";
-      ctx.beginPath();
-      ctx.moveTo(-10, -5);
-      ctx.lineTo(-20 - Math.random() * 10, 0);
-      ctx.lineTo(-10, 5);
-      ctx.fill();
+        ctx.fillStyle = selectedSkin.flame;
+        ctx.beginPath(); ctx.moveTo(-12, -6); ctx.lineTo(-24 - Math.random()*12, 0); ctx.lineTo(-12, 6); ctx.fill();
     }
     ctx.restore();
 
-    // Draw Pipes (Energy Pillars)
-    pipes.current.forEach(pipe => {
-      const gradient = ctx.createLinearGradient(pipe.x, 0, pipe.x + PIPE_WIDTH, 0);
-      gradient.addColorStop(0, "#1e1b4b");
-      gradient.addColorStop(0.5, "#4338ca");
-      gradient.addColorStop(1, "#1e1b4b");
-
-      ctx.fillStyle = gradient;
-      ctx.strokeStyle = "rgba(168, 85, 247, 0.4)";
-      ctx.lineWidth = 2;
-
-      // Top Pipe
-      ctx.fillRect(pipe.x, 0, PIPE_WIDTH, pipe.topHeight);
-      ctx.strokeRect(pipe.x, 0, PIPE_WIDTH, pipe.topHeight);
-      
-      // Bottom Pipe
-      ctx.fillRect(pipe.x, pipe.topHeight + PIPE_GAP, PIPE_WIDTH, canvas.height - (pipe.topHeight + PIPE_GAP));
-      ctx.strokeRect(pipe.x, pipe.topHeight + PIPE_GAP, PIPE_WIDTH, canvas.height - (pipe.topHeight + PIPE_GAP));
-
-      // Glow Edges
-      ctx.shadowBlur = 10;
-      ctx.shadowColor = "#a855f7";
-      ctx.fillStyle = "#a855f7";
-      ctx.fillRect(pipe.x, pipe.topHeight - 4, PIPE_WIDTH, 4);
-      ctx.fillRect(pipe.x, pipe.topHeight + PIPE_GAP, PIPE_WIDTH, 4);
-      ctx.shadowBlur = 0;
+    // Effects
+    scoreEffects.current.forEach(e => {
+        ctx.save();
+        ctx.globalAlpha = e.opacity;
+        ctx.fillStyle = e.color;
+        ctx.font = "bold 16px font-mono";
+        ctx.fillText(e.text, e.x, e.y);
+        ctx.restore();
     });
 
-    // Draw Score Effects
-    scoreEffects.current.forEach(effect => {
-      ctx.save();
-      ctx.globalAlpha = effect.opacity;
-      ctx.fillStyle = "#ffffff";
-      ctx.font = "bold 20px 'JetBrains Mono', monospace";
-      ctx.fillText("+1", effect.x, effect.y);
-      ctx.restore();
-    });
-
-  }, [gameState]);
+  }, [gameState, selectedSkin]);
 
   // Main Loop
   useEffect(() => {
-    const loop = () => {
-      update();
-      draw();
-      requestRef.current = requestAnimationFrame(loop);
-    };
+    const loop = () => { update(); draw(); requestRef.current = requestAnimationFrame(loop); };
     requestRef.current = requestAnimationFrame(loop);
-    return () => {
-      if (requestRef.current) cancelAnimationFrame(requestRef.current);
-    };
+    return () => { if (requestRef.current) cancelAnimationFrame(requestRef.current); };
   }, [update, draw]);
 
   // Handle Game Over persistence
   useEffect(() => {
     if (gameState === "GAME_OVER") {
-      if (score > highScore) {
-        setHighScore(score);
-        localStorage.setItem("sky-glide-highscore", score.toString());
-      }
+      const finalCredits = credits + sessionCredits;
+      setCredits(finalCredits);
+      localStorage.setItem("sky-glide-credits", finalCredits.toString());
     }
-  }, [gameState, score, highScore]);
+  }, [gameState]);
 
-  // Animations
-  useGSAP(() => {
-    if (gameState === "GAME_OVER") {
-      gsap.fromTo(".game-over-panel", 
-        { scale: 0.8, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.7)" }
-      );
-    }
-  }, { scope: containerRef, dependencies: [gameState] });
-
+  // Render Logic
   return (
-    <div ref={containerRef} className="min-h-screen pt-40 pb-20 px-8 flex flex-col items-center">
-      <div className="max-w-4xl w-full flex flex-col items-center">
+    <div ref={containerRef} className="min-h-screen pt-40 pb-20 px-8 flex flex-col items-center select-none overflow-hidden">
         
-        {/* Header */}
-        <div className="w-full flex justify-between items-center mb-12">
-          <Link href="/#games" className="text-xs font-mono text-slate-500 hover:text-sky-400 transition-colors uppercase tracking-[0.3em]">
-            ← Close Sim
-          </Link>
-          <div className="flex gap-8">
-             <div className="text-center">
-                <p className="text-[10px] font-mono text-slate-600 uppercase mb-1">Current Scan</p>
-                <p className="text-xl font-bold text-white tracking-widest">{score.toString().padStart(3, '0')}</p>
-             </div>
-             <div className="text-center">
-                <p className="text-[10px] font-mono text-slate-600 uppercase mb-1">Sector Record</p>
-                <p className="text-xl font-bold text-sky-400 tracking-widest">{highScore.toString().padStart(3, '0')}</p>
-             </div>
-          </div>
+        {/* HUD: Persistent Header */}
+        <div className="w-full max-w-4xl flex justify-between items-center mb-12">
+            <Link href="/#games" className="text-[10px] font-mono text-slate-500 hover:text-sky-400 uppercase tracking-[0.3em]">← Back to Command</Link>
+            <div className="flex gap-12 bg-black/40 px-8 py-4 rounded-full border border-white/5 backdrop-blur-xl">
+                <div className="text-center">
+                    <p className="text-[8px] font-mono text-slate-600 uppercase mb-1">Star Credits</p>
+                    <p className="text-xl font-bold text-yellow-500 tracking-widest">{credits.toLocaleString()}</p>
+                </div>
+                <div className="text-center">
+                    <p className="text-[8px] font-mono text-slate-600 uppercase mb-1">Sector Record</p>
+                    <p className="text-xl font-bold text-sky-400 tracking-widest">{highScore}</p>
+                </div>
+            </div>
         </div>
 
-        {/* Game Area */}
+        {/* Game Container */}
         <div 
-          className="relative w-full max-w-[800px] aspect-[16/10] sm:aspect-[16/9] bg-[#0d0714]/60 backdrop-blur-3xl rounded-[40px] border border-white/5 overflow-hidden cursor-pointer shadow-[0_0_100px_rgba(56,189,248,0.05)]"
+          className="relative w-full max-w-[800px] aspect-[16/10] bg-[#0d0714]/80 backdrop-blur-3xl rounded-[48px] border border-white/10 overflow-hidden cursor-pointer shadow-[0_40px_100px_-20px_rgba(0,0,0,0.8)]"
           onClick={jump}
         >
-          {/* Live HUD Overlay */}
-          {gameState === "PLAYING" && (
-            <div className="absolute inset-x-0 top-0 p-8 flex justify-between items-start pointer-events-none z-20 animate-[fadeIn_0.5s_ease-out]">
-               <div className="flex flex-col">
-                  <span className="text-[10px] font-mono text-slate-500 uppercase tracking-[0.3em]">Current Score</span>
-                  <span className="text-4xl font-bold text-white drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]">{score}</span>
-               </div>
-               <div className="flex flex-col items-end">
-                  <span className="text-[10px] font-mono text-sky-500/50 uppercase tracking-[0.3em]">Sector Best</span>
-                  <span className="text-2xl font-bold text-sky-400/80 drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]">{highScore}</span>
-               </div>
-            </div>
-          )}
+            <canvas ref={canvasRef} width={800} height={500} className="w-full h-full block" />
 
-          <canvas 
-            ref={canvasRef} 
-            width={800} 
-            height={450}
-            className="w-full h-full block"
-          />
+            {/* Playing HUD Overlay */}
+            {gameState === "PLAYING" && (
+                <div className="absolute inset-x-0 top-0 p-10 flex justify-between items-start pointer-events-none z-10">
+                    <div className="flex flex-col">
+                        <span className="text-[10px] font-mono text-slate-600 uppercase tracking-widest">Pillars Passed</span>
+                        <span className="text-5xl font-black text-white drop-shadow-2xl">{score}</span>
+                    </div>
+                    <div className="flex flex-col items-end">
+                        <div className="flex items-center gap-3 bg-yellow-500/10 border border-yellow-500/20 px-4 py-2 rounded-full">
+                           <span className="text-[10px] font-mono text-yellow-500 uppercase tracking-widest">Captured</span>
+                           <span className="text-lg font-bold text-yellow-400">{sessionCredits}</span>
+                        </div>
+                    </div>
+                </div>
+            )}
 
-          {/* Start Overlay */}
-          {gameState === "START" && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 backdrop-blur-sm">
-               <div className="text-center p-12 animate-[fadeUp_0.8s_forwards]">
-                  <span className="text-[10px] font-mono text-sky-400 uppercase tracking-[0.4em] mb-4 block">Navigation Module: 60FPS</span>
-                  <h1 className="text-4xl md:text-6xl font-bold text-white mb-8 tracking-tighter uppercase italic">Sky Glide</h1>
-                  <p className="text-slate-400 font-mono text-xs uppercase tracking-widest mb-12 max-w-xs mx-auto leading-relaxed">
-                    Protect the ship. Navigate the pillars.
-                  </p>
-                  <button className="px-12 py-4 bg-sky-500 text-white font-bold rounded-full hover:bg-sky-400 transition-all hover:scale-105 shadow-[0_0_40px_rgba(56,189,248,0.3)] text-xs uppercase tracking-widest">
-                    Engage Thrusters
-                  </button>
-                  <p className="mt-8 text-[9px] font-mono text-slate-600 uppercase tracking-widest">Press Space or Click to Jump</p>
-               </div>
-            </div>
-          )}
+            {/* Overlays: Start / Game Over / Hangar */}
+            {gameState === "START" && (
+                <div className="absolute inset-0 bg-black/40 backdrop-blur-md flex flex-col items-center justify-center p-12 text-center">
+                    <span className="text-[10px] font-mono text-sky-400 uppercase tracking-[0.6em] mb-4">Deep Space Protocol</span>
+                    <h1 className="text-6xl md:text-7xl font-black text-white italic tracking-tighter mb-8 uppercase">Sky Glide</h1>
+                    <div className="flex gap-4">
+                        <button className="px-14 py-5 bg-sky-500 text-white font-bold rounded-full hover:bg-sky-400 transition-all text-xs uppercase tracking-widest shadow-[0_0_40px_rgba(56,189,248,0.4)]">Launch Mission</button>
+                        <button 
+                            onClick={(e) => { e.stopPropagation(); setGameState("HANGAR"); }}
+                            className="px-14 py-5 border border-white/10 text-white font-bold rounded-full hover:bg-white/10 transition-all text-xs uppercase tracking-widest backdrop-blur-md"
+                        >
+                            Open Hangar
+                        </button>
+                    </div>
+                </div>
+            )}
 
-          {/* Game Over Overlay */}
-          {gameState === "GAME_OVER" && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/60 backdrop-blur-md">
-               <div className="game-over-panel text-center p-12 bg-[#0d0714]/80 rounded-[40px] border border-white/5 shadow-[0_0_100px_rgba(244,63,94,0.1)]">
-                  <span className="text-[10px] font-mono text-red-400 uppercase tracking-[0.4em] mb-4 block">Signal Lost</span>
-                  <h2 className="text-4xl font-bold text-white mb-4 uppercase italic">Critical Failure</h2>
-                  
-                  <div className="flex justify-center gap-12 my-10">
-                     <div>
-                        <p className="text-8xl font-black text-white">{score}</p>
-                        <p className="text-[10px] font-mono text-slate-500 uppercase mt-2">Final Score</p>
-                     </div>
-                  </div>
+            {gameState === "HANGAR" && (
+                <div className="absolute inset-0 bg-[#0d0714]/95 backdrop-blur-3xl flex flex-col p-12 overflow-y-auto">
+                    <div className="flex justify-between items-center mb-12">
+                        <h2 className="text-3xl font-black text-white uppercase tracking-tighter italic">Vessel Customization</h2>
+                        <button 
+                            onClick={(e) => { e.stopPropagation(); setGameState("START"); }}
+                            className="w-12 h-12 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all"
+                        >
+                            ✕
+                        </button>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {SKINS.map(skin => {
+                            const isOwned = ownedSkins.includes(skin.id);
+                            const isSelected = selectedSkinId === skin.id;
+                            const canBuy = credits >= skin.cost;
 
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                     <button 
-                       onClick={(e) => { e.stopPropagation(); resetGame(); }}
-                       className="px-12 py-4 bg-sky-500 text-white font-bold rounded-full hover:bg-sky-400 transition-all text-[11px] uppercase tracking-widest"
-                     >
-                       Re-Initiate
-                     </button>
-                     <Link 
-                       href="/#games"
-                       className="px-12 py-4 border border-white/10 text-white font-bold rounded-full hover:bg-white/5 transition-all text-[11px] uppercase tracking-widest"
-                     >
-                       Close Session
-                     </Link>
-                  </div>
-               </div>
-            </div>
-          )}
+                            return (
+                                <div key={skin.id} className={`p-8 rounded-[32px] border transition-all ${isSelected ? "bg-white/5 border-sky-500/50" : "bg-white/2 border-white/5 hover:border-white/10"}`}>
+                                    <div className="flex justify-between items-start mb-6">
+                                        <div className="flex flex-col gap-1">
+                                            <h3 className="text-lg font-bold text-white uppercase tracking-tight">{skin.name}</h3>
+                                            <p className="text-[10px] font-mono text-slate-500 leading-relaxed max-w-[180px]">{skin.desc}</p>
+                                        </div>
+                                        <div className="w-16 h-12 relative flex items-center justify-center">
+                                            <div 
+                                                className="w-8 h-8 rounded-full blur-xl absolute" 
+                                                style={{ backgroundColor: skin.glow }}
+                                            ></div>
+                                            <div 
+                                                className="w-6 h-6 border-2 relative z-10 rotate-45"
+                                                style={{ borderColor: skin.body, backgroundColor: skin.glow + "20" }}
+                                            ></div>
+                                        </div>
+                                    </div>
+
+                                    {isOwned ? (
+                                        <button 
+                                            onClick={(e) => { e.stopPropagation(); equipSkin(skin.id); }}
+                                            disabled={isSelected}
+                                            className={`w-full py-4 rounded-2xl text-[10px] font-mono uppercase tracking-[0.2em] transition-all ${isSelected ? "bg-sky-500 text-white cursor-default" : "bg-white/5 text-slate-300 hover:bg-white/10"}`}
+                                        >
+                                            {isSelected ? "Equipped" : "Selection Required"}
+                                        </button>
+                                    ) : (
+                                        <button 
+                                            onClick={(e) => { e.stopPropagation(); buySkin(skin); }}
+                                            disabled={!canBuy}
+                                            className={`w-full py-4 rounded-2xl text-[10px] font-mono uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 ${canBuy ? "bg-yellow-500 text-black font-bold hover:bg-yellow-400" : "bg-white/5 text-slate-600 cursor-not-allowed border-white/5"}`}
+                                        >
+                                            <span className="text-sm">⭐</span> {skin.cost} Credits
+                                        </button>
+                                    )}
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            )}
+
+            {gameState === "GAME_OVER" && (
+                <div className="absolute inset-0 bg-black/60 backdrop-blur-xl flex flex-col items-center justify-center p-12 text-center animate-[scaleIn_0.4s_ease-out]">
+                    <span className="text-[10px] font-mono text-red-500 uppercase tracking-[0.6em] mb-4">Signal Lost</span>
+                    <h2 className="text-5xl font-black text-white italic tracking-tighter mb-12 uppercase">Vessel Down</h2>
+                    
+                    <div className="grid grid-cols-2 gap-12 mb-16">
+                        <div className="flex flex-col">
+                            <span className="text-7xl font-black text-white">{score}</span>
+                            <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mt-2">Passed</span>
+                        </div>
+                        <div className="flex flex-col">
+                            <span className="text-7xl font-black text-yellow-400">+{sessionCredits}</span>
+                            <span className="text-[10px] font-mono text-yellow-600 uppercase tracking-widest mt-2">Earned</span>
+                        </div>
+                    </div>
+
+                    <div className="flex gap-4">
+                        <button className="px-14 py-5 bg-sky-500 text-white font-bold rounded-full hover:bg-sky-400 transition-all text-xs uppercase tracking-widest">Restart Sim</button>
+                        <button 
+                            onClick={(e) => { e.stopPropagation(); setGameState("HANGAR"); }}
+                            className="px-14 py-5 border border-white/10 text-white font-bold rounded-full hover:bg-white/10 transition-all text-xs uppercase tracking-widest"
+                        >
+                            Hangar
+                        </button>
+                    </div>
+                </div>
+            )}
+
         </div>
 
-        {/* Footer Hint */}
-        <div className="mt-12 text-center opacity-40">
-           <p className="text-[10px] font-mono text-slate-500 uppercase tracking-[0.4em]">Engine: Native Canvas 2D // Kinetic Physics v4.0</p>
-        </div>
-
-      </div>
     </div>
   );
 }
