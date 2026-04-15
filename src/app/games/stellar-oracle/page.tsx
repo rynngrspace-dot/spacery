@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { getOracleWisdom } from "./actions";
 
 type Step = "ENTRANCE" | "INPUT" | "ANALYZING" | "REVEAL";
 
@@ -99,6 +100,7 @@ export default function StellarOracle() {
   const [userInput, setUserInput] = useState("");
   const [enlightenment, setEnlightenment] = useState("");
   const [glowColor, setGlowColor] = useState("#a855f7"); // Default purple
+  const [isGenerating, setIsGenerating] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
   const [starsData, setStarsData] = useState<{width:string, height:string, top:string, left:string, delay:string, duration:string}[]>([]);
   
@@ -153,14 +155,29 @@ export default function StellarOracle() {
     setGlowColor(color);
   };
 
-  const startAnalysis = () => {
+  const startAnalysis = async () => {
     if (!userInput.trim()) return;
     setStep("ANALYZING");
-    analyzeMood();
+    setIsGenerating(true);
 
-    setTimeout(() => {
-      setStep("REVEAL");
-    }, 4000);
+    try {
+        const result = await getOracleWisdom(userInput, pilotName);
+        
+        if (result.success && result.wisdom) {
+            setEnlightenment(result.wisdom);
+            if (result.color) setGlowColor(result.color);
+        } else {
+            // Fallback to local logic if AI fails or key is missing
+            analyzeMood();
+        }
+    } catch (err) {
+        analyzeMood();
+    } finally {
+        setTimeout(() => {
+            setIsGenerating(false);
+            setStep("REVEAL");
+        }, 3000);
+    }
   };
 
   // GSAP Animations
@@ -279,10 +296,14 @@ export default function StellarOracle() {
           {step === "ANALYZING" && (
             <div className="flex flex-col items-center">
               <div className="w-48 h-1 bg-white/5 rounded-full overflow-hidden mb-8">
-                <div className="h-full bg-purple-500 animate-[loading_4s_linear]" />
+                <div className="h-full bg-linear-to-r from-purple-500 to-indigo-500 animate-[loading_3s_linear]" />
               </div>
-              <p className="text-purple-400 font-mono text-xs uppercase tracking-[0.6em] animate-pulse">Filtering Nebula Noise...</p>
-              <p className="text-slate-600 font-mono text-[9px] mt-4 uppercase tracking-[0.2em]">Synthesizing pilot call-sign with cosmic rays</p>
+              <p className="text-purple-400 font-mono text-xs uppercase tracking-[0.6em] animate-pulse">
+                {isGenerating ? "Transmitting to Central Core..." : "Filtering Nebula Noise..."}
+              </p>
+              <p className="text-slate-600 font-mono text-[9px] mt-4 uppercase tracking-[0.2em]">
+                {isGenerating ? "Synthesizing AI Response..." : "Calibrating Psychic Resonance..."}
+              </p>
             </div>
           )}
 
