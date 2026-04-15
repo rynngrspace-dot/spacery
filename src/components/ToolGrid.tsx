@@ -5,10 +5,14 @@ import Link from "next/link";
 import { TOOLS } from "@/data/tools";
 import Magnetic from "./Magnetic";
 
-export default function ToolGrid() {
+interface ToolGridProps {
+  limit?: number;
+}
+
+export default function ToolGrid({ limit }: ToolGridProps) {
   const container = useRef<HTMLDivElement>(null);
 
-  const featuredTools = [
+  let featuredTools = [
     TOOLS.find(t => t.slug === "image-compressor"),
     TOOLS.find(t => t.slug === "video-compressor"),
     TOOLS.find(t => t.slug === "pdf-compressor"),
@@ -16,6 +20,10 @@ export default function ToolGrid() {
     TOOLS.find(t => t.slug === "unit-converter"),
     TOOLS.find(t => t.slug === "image-filters"),
   ].filter(Boolean);
+
+  if (limit) {
+    featuredTools = featuredTools.slice(0, limit);
+  }
 
   useGSAP(() => {
     // ... animation logic remains same ...

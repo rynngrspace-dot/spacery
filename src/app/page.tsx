@@ -119,11 +119,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Tools Section */}
-      <ToolGrid />
-
       {/* Recreation Wing (Games) Section */}
       <GameGrid />
+
+      {/* Tools Section */}
+      <ToolGrid limit={3} />
 
       {/* Tech Stack Section */}
       <TechStack />

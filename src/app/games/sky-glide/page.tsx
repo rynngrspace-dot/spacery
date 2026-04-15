@@ -151,8 +151,8 @@ export default function SkyGlide() {
       const topH = Math.floor(Math.random() * (maxHeight - minHeight + 1)) + minHeight;
       pipes.current.push({ x: canvas.width, topHeight: topH, passed: false });
 
-      // Spawn Star sometimes
-      if (Math.random() > 0.4) {
+      // Spawn Star sometimes (reduced frequency)
+      if (Math.random() > 0.8) {
         stars.current.push({
             id: Math.random().toString(),
             x: canvas.width + 100,
@@ -397,7 +397,20 @@ export default function SkyGlide() {
                 <div className="absolute inset-0 bg-black/40 backdrop-blur-md flex flex-col items-center justify-center p-12 text-center">
                     <span className="text-[10px] font-mono text-sky-400 uppercase tracking-[0.6em] mb-4">Deep Space Protocol</span>
                     <h1 className="text-6xl md:text-7xl font-black text-white italic tracking-tighter mb-8 uppercase">Sky Glide</h1>
-                    <div className="flex gap-4">
+                    
+                    {/* Visual Tutorial */}
+                    <div className="flex justify-center gap-12 mb-12 animate-pulse">
+                        <div className="flex flex-col items-center gap-3">
+                            <div className="w-12 h-12 rounded-xl border border-white/20 flex items-center justify-center bg-white/5 font-mono text-[10px] text-sky-400 uppercase">SPC</div>
+                            <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">Jump</span>
+                        </div>
+                        <div className="flex flex-col items-center gap-3">
+                            <div className="w-12 h-12 rounded-xl border border-white/20 flex items-center justify-center bg-white/5 text-xl">🖱️</div>
+                            <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">Click</span>
+                        </div>
+                    </div>
+
+                    <div className="flex gap-4 justify-center">
                         <button className="px-14 py-5 bg-sky-500 text-white font-bold rounded-full hover:bg-sky-400 transition-all text-xs uppercase tracking-widest shadow-[0_0_40px_rgba(56,189,248,0.4)]">Launch Mission</button>
                         <button 
                             onClick={(e) => { e.stopPropagation(); setGameState("HANGAR"); }}
@@ -405,6 +418,10 @@ export default function SkyGlide() {
                         >
                             Open Hangar
                         </button>
+                    </div>
+
+                    <div className="mt-12">
+                        <Link href="/#games" onClick={(e) => e.stopPropagation()} className="text-[9px] font-mono text-slate-600 hover:text-sky-400 uppercase tracking-[0.4em] transition-colors">← Abandon Mission & Return to Bridge</Link>
                     </div>
                 </div>
             )}
