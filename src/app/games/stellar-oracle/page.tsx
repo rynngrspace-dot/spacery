@@ -8,95 +8,9 @@ import { getOracleWisdom } from "./actions";
 
 type Step = "ENTRANCE" | "INPUT" | "ANALYZING" | "REVEAL";
 
-const WISDOM_LIBRARY = {
-  positive: [
-    "You're doing amazing! Even the stars are noticing your hard work. Keep that momentum going.",
-    "Your energy is contagious. You're creating your own orbit of success right now.",
-    "The universe loves a winner, and right now, you're the main character of this galaxy.",
-    "Great things take time, but you're making it look easy. Your light is reaching further than you think.",
-    "Keep that smile! It's the brightest thing in the sector. You're on the right track.",
-    "Small wins lead to big journeys. Today was a victory, no matter how small it felt.",
-    "Your potential is infinite. This success is just one star in your growing constellation.",
-    "The way you handle things is inspiring. You've got that natural pilot's intuition.",
-    "Celebrate today! You've earned a moment of joy in this vast cosmos.",
-    "You are the sun of your own system today. Everything is looking bright.",
-    "Progress is progress. You're moving forward at light-speed!",
-    "The universe is high-fiving you right now. Can you feel the cosmic pulse?"
-  ],
-  negative: [
-    "Bad days are like black holes—they feel heavy, but they don't last forever. Take a deep breath.",
-    "It's okay to feel lost sometimes. Even the best pilots need a map. This is just a temporary detour.",
-    "You don't have to be perfect to be a star. Even stars have spots. Be kind to yourself today.",
-    "The void feels lonely sometimes, but remember you're part of a huge, connected system. You're not alone.",
-    "If things look dark, it's just so you can see the stars better. You'll find your way back soon.",
-    "Crying isn't a sign of weakness; it's a systems flush. Let it out, then restart your engines.",
-    "Whatever is weighing you down, remember that the stars are patient. This too shall pass.",
-    "You're allowed to have a bad day. Even the moon has its dark phases.",
-    "It takes a lot of courage to admit things are tough. You're stronger than you give yourself credit for.",
-    "Sometimes you have to drift to find your direction again. Don't rush the healing process.",
-    "The universe isn't testing you; it's just a bumpy asteroid field. You'll navigate through it.",
-    "Hold on tight. The turbulence is temporary, but your spirit is resilient."
-  ],
-  tired: [
-    "It's okay to hit the 'Snooze' button on life. Even orbits need a rest phase. You've done enough for today.",
-    "Your battery is low, and that's okay. Power down, recharge, and try again tomorrow. The stars will still be there.",
-    "Burnout is real. Don't try to fly on an empty tank. Take some time to just... drift.",
-    "Resting isn't quitting. It's tactical maintenance. Go get some real sleep, Pilot.",
-    "The universe is vast and patient. It can wait for you to feel better. Take your time.",
-    "You're not a machine. You're a pilot. And every pilot needs to come home and relax sometimes.",
-    "Silence is sometimes the best music. Let the quiet of the void help you recover.",
-    "Your mind needs a break from the constant solar flares of life. Peace out for a bit.",
-    "If you're too tired to fly, just stay in orbit. There's no rush to reach the next jump-gate.",
-    "You've been carrying the weight of a whole planet lately. Set it down for a while.",
-    "Dreams are where we rebuild our constellations. Sleep well and dream big.",
-    "The world can wait. Your peace of mind is the priority mission right now."
-  ],
-  angry: [
-    "I get it. That was unfair and you have every right to be mad. Space can be a harsh place.",
-    "Anger is just high-energy fuel. Don't let it burn you up; use it to power your next big move.",
-    "It's okay to scream into the void. It's big enough to take it. Let that heat out.",
-    "Someone or something crossed your path the wrong way. Don't let their gravity pull you down.",
-    "Venting is a safety protocol. Better to release the pressure now than to explode later.",
-    "Your fire is impressive, but don't let it scorch your own hull. Breathe through the heat.",
-    "The universe isn't همیشه fair, but you're strong enough to carve out your own justice.",
-    "Focus that rage into something brilliant. The brightest stars come from the most intense heat."
-  ],
-  mixed: [
-    "Feelings are complicated, like a binary star system pulling in two directions. It's okay to feel 'everything' at once.",
-    "You're sad, you're mad, you're tired—and that's okay. You contain galaxies of complexity.",
-    "A bittersweet orbit. You've achieved something great but at a heavy cost. Take a moment to process it all.",
-    "It's confusing when the heart signals 'Red' and 'Green' at the same time. Trust your gut, Pilot.",
-    "Mixed feelings are just a sign that you're experiencing life in high-definition. It's intense, but it's real.",
-    "You're navigating through a nebula of emotions right now. Don't worry about labeling it—just experience it.",
-    "The most beautiful nebulas are made of many different gases. Your mixed emotions are what make you unique.",
-    "Paradoxes are part of the cosmic design. You can be both strong and vulnerable at the same time."
-  ],
-  neutral: [
-    "Nothing major happened today? That's actually a win. Enjoy the quiet flight for once.",
-    "Stability is underrated. You're in a stable orbit, and that's a great place to be.",
-    "Just existing is a pretty big deal in a universe this large. You're doing just fine.",
-    "Take a moment to look around. The view is nice, even when nothing is happening.",
-    "Consistency is the secret to long-term flight. Today was a solid day of just... being you.",
-    "The stars are watching quietly. No news is good news in the deep void.",
-    "Sometimes 'average' is exactly what we need. A peaceful day among the stars.",
-    "Your frequency is steady and clear. A perfectly balanced transmission.",
-    "No solar flares, no asteroid storms. Just a smooth glide through the sector.",
-    "The universe is resting with you. Appreciate the simplicity of a quiet day.",
-    "You're grounded and steady. That's a powerful state to be in.",
-    "Quiet days build the foundation for heroic journeys. Enjoy the calm."
-  ]
-};
-
-const MOOD_KEYWORDS = {
-  positive: ["happy", "good", "great", "awesome", "love", "smile", "won", "success", "excited", "glad", "best", "proud", "amazing", "wonderful"],
-  negative: ["sad", "bad", "hate", "hurt", "fail", "lost", "broken", "lonely", "pain", "crying", "dark", "unhappy", "depressed", "sorry"],
-  tired: ["tired", "sleepy", "exhausted", "lazy", "bored", "drained", "weak", "slow", "heavy", "burnout", "sleep", "rest"],
-  angry: ["angry", "mad", "hate", "pissed", "annoyed", "unfair", "wrong", "shout", "rage", "furious", "stupid", "idiot"]
-};
 
 export default function StellarOracle() {
   const [step, setStep] = useState<Step>("ENTRANCE");
-  const [pilotName, setPilotName] = useState("");
   const [userInput, setUserInput] = useState("");
   const [enlightenment, setEnlightenment] = useState("");
   const [glowColor, setGlowColor] = useState("#a855f7"); // Default purple
@@ -108,11 +22,9 @@ export default function StellarOracle() {
   const oracleRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
-  // Initialize Name & Client-side logic
+  // Initialize Client-side logic
   useEffect(() => {
     setHasMounted(true);
-    const savedPilot = localStorage.getItem("sky-glide-pilot");
-    if (savedPilot) setPilotName(savedPilot);
 
     // Generate stars only on client to avoid hydration mismatch
     const newStars = [...Array(40)].map(() => ({
@@ -126,52 +38,25 @@ export default function StellarOracle() {
     setStarsData(newStars);
   }, []);
 
-  // Sentiment Analysis
-  const analyzeMood = () => {
-    const lowerInput = userInput.toLowerCase();
-    const detectedTags: string[] = [];
-
-    if (MOOD_KEYWORDS.positive.some(k => lowerInput.includes(k))) detectedTags.push("positive");
-    if (MOOD_KEYWORDS.negative.some(k => lowerInput.includes(k))) detectedTags.push("negative");
-    if (MOOD_KEYWORDS.tired.some(k => lowerInput.includes(k))) detectedTags.push("tired");
-    if (MOOD_KEYWORDS.angry.some(k => lowerInput.includes(k))) detectedTags.push("angry");
-
-    let mood: keyof typeof WISDOM_LIBRARY = "neutral";
-    let color = "#a855f7"; // default purple
-
-    if (detectedTags.length > 1) {
-        mood = "mixed";
-        color = "#f472b6"; // pink/mixed
-    } else if (detectedTags.length === 1) {
-        mood = detectedTags[0] as keyof typeof WISDOM_LIBRARY;
-        if (mood === "positive") color = "#2dd4bf";
-        if (mood === "negative") color = "#ef4444";
-        if (mood === "tired") color = "#3b82f6";
-        if (mood === "angry") color = "#f97316"; // orange
-    }
-
-    const messages = WISDOM_LIBRARY[mood];
-    setEnlightenment(messages[Math.floor(Math.random() * messages.length)]);
-    setGlowColor(color);
-  };
-
   const startAnalysis = async () => {
     if (!userInput.trim()) return;
     setStep("ANALYZING");
     setIsGenerating(true);
 
     try {
-        const result = await getOracleWisdom(userInput, pilotName);
+        const result = await getOracleWisdom(userInput);
         
         if (result.success && result.wisdom) {
             setEnlightenment(result.wisdom);
             if (result.color) setGlowColor(result.color);
         } else {
-            // Fallback to local logic if AI fails or key is missing
-            analyzeMood();
+            // No fallback: show specific failure message
+            setEnlightenment(result.message || "Star-link interrupted. The nebula is currently too thick to penetrate. Please re-establish the energy trace.");
+            setGlowColor("#334155"); // dim gray
         }
     } catch (err) {
-        analyzeMood();
+        setEnlightenment("Critical failure in the neural link gateway. High-level cosmic interference detected.");
+        setGlowColor("#ef4444"); // error red
     } finally {
         setTimeout(() => {
             setIsGenerating(false);
@@ -222,13 +107,8 @@ export default function StellarOracle() {
       <div className="relative z-10 w-full max-w-4xl flex flex-col items-center">
         
         {/* Navigation */}
-        <div className="w-full flex justify-between items-center mb-16 px-4">
-            <Link href="/#games" className="text-[10px] font-mono text-slate-500 hover:text-purple-400 uppercase tracking-[0.3em] transition-colors">← Return to Bridge</Link>
-            {pilotName && (
-              <div className="bg-purple-500/10 px-4 py-1.5 rounded-full border border-purple-500/20">
-                <span className="text-[10px] font-mono text-purple-400 uppercase tracking-widest">Pilot: {pilotName}</span>
-              </div>
-            )}
+        <div className="w-full flex justify-end items-center mb-16 px-4">
+            <Link href="/#games" className="text-[10px] font-mono text-slate-500 hover:text-purple-400 uppercase tracking-[0.3em] transition-colors">← Go Back</Link>
         </div>
 
         {/* The Oracle Visual */}
@@ -269,8 +149,8 @@ export default function StellarOracle() {
 
           {step === "INPUT" && (
             <div className="input-ui flex flex-col items-center">
-              <h2 className="text-2xl font-bold text-white mb-2 uppercase tracking-tight italic">Share your cycle</h2>
-              <p className="text-slate-500 font-mono text-[10px] mb-12 uppercase tracking-[0.2em]">Pilot {pilotName}, how does the void feel today?</p>
+              <h2 className="text-2xl font-bold text-white mb-2 uppercase tracking-tight italic">What's on your mind?</h2>
+              <p className="text-slate-500 font-mono text-[10px] mb-12 uppercase tracking-[0.2em]">Share your story with the void.</p>
               
               <div className="w-full relative group">
                 <textarea 
@@ -309,8 +189,8 @@ export default function StellarOracle() {
 
           {step === "REVEAL" && (
             <div className="flex flex-col items-center">
-              <span className="reveal-text text-[10px] font-mono text-slate-500 uppercase tracking-[0.6em] mb-4 opacity-0 scale-95">Transmission Received</span>
-              <h2 className="reveal-text text-3xl sm:text-4xl font-black text-white italic uppercase tracking-tighter mb-12 max-w-2xl leading-tight opacity-0 scale-95">
+              <span className="reveal-text text-[10px] font-mono text-slate-500 uppercase tracking-[0.4em] mb-4 opacity-0 scale-95">Message Decoded</span>
+              <h2 className="reveal-text text-xl sm:text-2xl font-black text-white italic uppercase tracking-tight mb-12 max-w-2xl leading-relaxed opacity-0 scale-95">
                 "{enlightenment}"
               </h2>
               
@@ -319,13 +199,13 @@ export default function StellarOracle() {
                   onClick={() => { setStep("INPUT"); setUserInput(""); setGlowColor("#a855f7"); }}
                   className="px-12 py-4 border border-white/10 text-white font-bold rounded-xl hover:bg-white/5 transition-all text-[10px] uppercase tracking-widest"
                 >
-                  New Transmission
+                  New Message
                 </button>
                 <Link 
                   href="/#games"
                   className="px-12 py-4 bg-white/5 text-slate-400 font-bold rounded-xl hover:bg-white/10 transition-all text-[10px] uppercase tracking-widest border border-white/5"
                 >
-                  Back to Bridge
+                  Go Back
                 </Link>
               </div>
             </div>
