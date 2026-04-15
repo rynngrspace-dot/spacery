@@ -35,6 +35,7 @@ export default function SkyGlide() {
   const birdVelocity = useRef(0);
   const pipes = useRef<Pipe[]>([]);
   const frameCount = useRef(0);
+  const scoreEffects = useRef<{ x: number, y: number, opacity: number }[]>([]);
 
   // Initialize High Score
   useEffect(() => {
@@ -46,6 +47,7 @@ export default function SkyGlide() {
     birdY.current = 250;
     birdVelocity.current = 0;
     pipes.current = [];
+    scoreEffects.current = [];
     frameCount.current = 0;
     setScore(0);
     setGameState("PLAYING");
@@ -122,8 +124,17 @@ export default function SkyGlide() {
       if (!pipe.passed && pipe.x + PIPE_WIDTH < 50) {
         pipe.passed = true;
         setScore(prev => prev + 1);
+        // Add score effect
+        scoreEffects.current.push({ x: 70, y: birdY.current, opacity: 1 });
       }
     });
+
+    // Update Score Effects
+    scoreEffects.current.forEach(effect => {
+      effect.y -= 1.5;
+      effect.opacity -= 0.02;
+    });
+    scoreEffects.current = scoreEffects.current.filter(e => e.opacity > 0);
 
     // Remove Off-screen Pipes
     pipes.current = pipes.current.filter(p => p.x > -PIPE_WIDTH);
@@ -202,6 +213,16 @@ export default function SkyGlide() {
       ctx.fillRect(pipe.x, pipe.topHeight - 4, PIPE_WIDTH, 4);
       ctx.fillRect(pipe.x, pipe.topHeight + PIPE_GAP, PIPE_WIDTH, 4);
       ctx.shadowBlur = 0;
+    });
+
+    // Draw Score Effects
+    scoreEffects.current.forEach(effect => {
+      ctx.save();
+      ctx.globalAlpha = effect.opacity;
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "bold 20px 'JetBrains Mono', monospace";
+      ctx.fillText("+1", effect.x, effect.y);
+      ctx.restore();
     });
 
   }, [gameState]);
