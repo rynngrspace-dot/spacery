@@ -3,18 +3,20 @@
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import Link from "next/link";
-
-const games = [
-  { slug: "sky-glide", title: "Sky Glide", desc: "Master the art of space flight. Navigate your vessel through the energy pillars.", icon: "🚀", isReady: true },
-  { slug: "stellar-oracle", title: "Stellar Oracle", desc: "Share your journey with the stars and receive celestial guidance.", icon: "🔮", isReady: true },
-  { slug: "space-typer", title: "Space Typer", desc: "Test your typing speed in a fast-paced environment. Accuracy is key.", icon: "⌨️", isReady: true },
-  { slug: "orbit-defense", title: "Orbit Defense", desc: "Protect the orbital station from incoming space debris.", icon: "🛰️", isReady: false },
-  { slug: "void-runner", title: "Void Runner", desc: "A fast-paced reflex game focused on traversal and timing.", icon: "🏃", isReady: false },
-];
+import { Link } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
 
 export default function GameGrid() {
+  const t = useTranslations("Games.grid");
   const container = useRef<HTMLDivElement>(null);
+
+  const games = [
+    { slug: "sky-glide", icon: "🚀", isReady: true },
+    { slug: "stellar-oracle", icon: "🔮", isReady: true },
+    { slug: "space-typer", icon: "⌨️", isReady: true },
+    { slug: "orbit-defense", icon: "🛰️", isReady: false },
+    { slug: "void-runner", icon: "🏃", isReady: false },
+  ];
 
   useGSAP(() => {
     // Stagger animate game cards
@@ -41,12 +43,12 @@ export default function GameGrid() {
       <div className="max-w-5xl w-full">
         <div className="mb-12 md:mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="text-center md:text-left">
-            <span className="text-[10px] font-mono text-purple-400 uppercase tracking-[0.3em] mb-4 block">Section: Games</span>
+            <span className="text-[10px] font-mono text-purple-400 uppercase tracking-[0.3em] mb-4 block">{t("section")}</span>
             <h2 className="text-3xl sm:text-5xl font-bold bg-linear-to-r from-purple-400 to-white bg-clip-text text-transparent">
-              Games & Experiments
+              {t("title")}
             </h2>
           </div>
-          <p className="text-slate-600 font-mono text-[9px] uppercase mb-2 tracking-[0.2em] text-center md:text-right">Play for free in the browser</p>
+          <p className="text-slate-600 font-mono text-[9px] uppercase mb-2 tracking-[0.2em] text-center md:text-right">{t("subtitle")}</p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
@@ -72,14 +74,14 @@ export default function GameGrid() {
               </div>
 
               <h3 className={`relative z-10 text-xl md:text-2xl font-bold mb-4 text-slate-100 ${game.isReady ? "group-hover:text-purple-400" : ""} transition-colors duration-300 uppercase tracking-tight`}>
-                {game.title}
+                {t(`games.${game.slug}.title`)}
               </h3>
               <p className="relative z-10 text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors duration-300 text-sm">
-                {game.desc}
+                {t(`games.${game.slug}.desc`)}
               </p>
               
               <div className={`relative z-10 mt-8 flex items-center text-[11px] font-mono uppercase tracking-widest transition-all duration-300 ${game.isReady ? "text-purple-500/70 group-hover:translate-x-2 group-hover:text-purple-400" : "text-slate-600"}`}>
-                {game.isReady ? "Play now" : "System Pending..."} <span className="ml-2">→</span>
+                {game.isReady ? t("playNow") : t("pending")} <span className="ml-2">→</span>
               </div>
             </Link>
           ))}

@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback, memo } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { useTranslations } from "next-intl";
 
 const SPACE_VOCAB = [
   "nebula", "supernova", "neutron", "pulsar", "galaxy", "quasar", "blackhole",
@@ -33,6 +34,9 @@ SelectiveChar.displayName = "SelectiveChar";
 // --- Main Page ---
 
 export default function SpaceTyper() {
+  const t = useTranslations("Games.space-typer");
+  const tc = useTranslations("Games.common");
+
   const [gameState, setGameState] = useState<GameState>("idle");
   const [duration, setDuration] = useState(30);
   const [timeLeft, setTimeLeft] = useState(30);
@@ -208,7 +212,7 @@ export default function SpaceTyper() {
         {/* Header / Mode Selection */}
         <div className={`flex flex-col md:flex-row justify-between items-center mb-16 gap-8 transition-all duration-500 ${gameState === 'playing' ? 'opacity-[0.05] blur-md pointer-events-none' : 'opacity-100'}`}>
           <Link href="/#games" className="text-xs font-mono text-slate-500 hover:text-purple-400 transition-colors uppercase tracking-[0.3em]">
-            ← Return to Bridge
+            {tc("bridge")}
           </Link>
           
           <div className="flex bg-[#0d0714]/60 backdrop-blur-xl border border-white/5 rounded-full p-1.5 pointer-events-auto">
@@ -235,15 +239,15 @@ export default function SpaceTyper() {
            {gameState === 'playing' && (
              <>
                <div className="flex items-baseline gap-2">
-                 <span className="text-[10px] text-slate-600 uppercase">Mission Clock</span>
+                 <span className="text-[10px] text-slate-600 uppercase">{t("clock")}</span>
                  <span className={`text-xl font-bold ${timeLeft < 10 ? 'text-red-500 animate-pulse' : 'text-purple-400'}`}>{timeLeft}s</span>
                </div>
                <div className="flex items-baseline gap-2">
-                 <span className="text-[10px] text-slate-600 uppercase">Input Velocity</span>
+                 <span className="text-[10px] text-slate-600 uppercase">{t("velocity")}</span>
                  <span className="text-xl font-bold text-white">{liveWpm} <span className="text-[10px] text-slate-500 opacity-50">WPM</span></span>
                </div>
                <div className="flex items-baseline gap-2">
-                 <span className="text-[10px] text-slate-600 uppercase">Transmission</span>
+                 <span className="text-[10px] text-slate-600 uppercase">{t("transmission")}</span>
                  <span className="text-xl font-bold text-slate-400">{Math.round((typedContent.length / targetText.length) * 100)}%</span>
                </div>
              </>
@@ -276,7 +280,7 @@ export default function SpaceTyper() {
           {/* Focus Warning */}
           {gameState === 'playing' && !isFocused && (
             <div className="absolute inset-0 z-30 flex items-center justify-center bg-[#010205]/20 backdrop-blur-[1px] cursor-pointer">
-              <span className="text-xs font-mono text-purple-400 animate-pulse tracking-widest uppercase px-6 py-3 rounded-full border border-purple-500/20 bg-[#0d0714]">Connection Interrupted: Click to Focus</span>
+              <span className="text-xs font-mono text-purple-400 animate-pulse tracking-widest uppercase px-6 py-3 rounded-full border border-purple-500/20 bg-[#0d0714]">{t("interrupted")}</span>
             </div>
           )}
 
@@ -287,7 +291,7 @@ export default function SpaceTyper() {
                 onClick={(e) => { e.stopPropagation(); startGame(); }}
                 className="group relative px-16 py-6 bg-purple-500 text-white font-bold rounded-full hover:bg-purple-400 transition-all hover:scale-105 shadow-[0_0_50px_rgba(168,85,247,0.4)] flex items-center gap-4"
               >
-                <span className="uppercase tracking-[0.3em] text-[11px]">Initiate Stream</span>
+                <span className="uppercase tracking-[0.3em] text-[11px]">{t("initiate")}</span>
                 <span className="group-hover:translate-x-1 transition-transform">→</span>
               </button>
             </div>
@@ -311,15 +315,15 @@ export default function SpaceTyper() {
           {/* Result Terminal */}
           {gameState === "ended" && (
              <div className="absolute inset-x-0 top-0 z-50 flex flex-col items-center justify-center p-12 bg-[#0d0714]/80 backdrop-blur-3xl rounded-[40px] border border-white/5 animate-[fadeUp_0.8s_forwards] shadow-[0_0_100px_rgba(168,85,247,0.1)]">
-                <span className="text-[10px] font-mono text-purple-500 uppercase tracking-[0.5em] mb-12 opacity-70">Transmission Finalized</span>
+                <span className="text-[10px] font-mono text-purple-500 uppercase tracking-[0.5em] mb-12 opacity-70">{t("finalized")}</span>
                 <div className="flex flex-wrap justify-center gap-12 md:gap-32 mb-16">
                   <div className="text-center group">
                     <div className="text-8xl font-black text-white group-hover:text-purple-400 transition-colors duration-500">{liveWpm}</div>
-                    <div className="text-[10px] font-mono text-slate-500 uppercase mt-4 tracking-widest">Final Velocity (WPM)</div>
+                    <div className="text-[10px] font-mono text-slate-500 uppercase mt-4 tracking-widest">{t("finalVelocity")} (WPM)</div>
                   </div>
                   <div className="text-center group">
                     <div className="text-8xl font-black text-white group-hover:text-purple-400 transition-colors duration-500">{accuracy}%</div>
-                    <div className="text-[10px] font-mono text-slate-500 mt-4 tracking-widest uppercase">Stream Accuracy</div>
+                    <div className="text-[10px] font-mono text-slate-500 mt-4 tracking-widest uppercase">{t("accuracy")}</div>
                   </div>
                 </div>
                 
@@ -328,13 +332,13 @@ export default function SpaceTyper() {
                     onClick={(e) => { e.stopPropagation(); generateContent(); }}
                     className="px-14 py-5 bg-purple-500 text-white font-bold rounded-full hover:bg-purple-400 transition-all hover:shadow-[0_0_30px_rgba(168,85,247,0.4)] uppercase tracking-widest text-[11px]"
                   >
-                    Reset Gear
+                    {t("reset")}
                   </button>
                   <Link 
                     href="/#games"
                     className="px-14 py-5 border border-white/10 text-white font-bold rounded-full hover:bg-white/5 transition-all text-[11px] uppercase tracking-widest"
                   >
-                    Close Log
+                    {t("close")}
                   </Link>
                 </div>
              </div>
@@ -344,7 +348,7 @@ export default function SpaceTyper() {
         {/* Footer Hint */}
         {gameState !== 'ended' && (
           <div className="text-center mt-12 text-[10px] font-mono text-slate-700 uppercase tracking-[0.4em]">
-            Escape: Quick Reset // Space: Standard Character
+            {t("hint")}
           </div>
         )}
       </div>

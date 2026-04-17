@@ -5,8 +5,10 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import Magnetic from "./Magnetic";
 import { getCoffeeCount, incrementCoffeeCount } from "@/app/actions/coffee";
+import { useTranslations } from "next-intl";
 
 export default function CoffeeButton() {
+  const t = useTranslations("Coffee");
   const [count, setCount] = useState<number | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -29,12 +31,10 @@ export default function CoffeeButton() {
     setIsAnimating(true);
 
     // BROWSER POLICY FRIENDLY AUDIO
-    // Create and play in the same event loop to avoid blockages
     try {
       const audio = new Audio("/assets/audio/hidup-jokowi.mp3");
       audio.play().catch((e) => {
         console.warn("Audio play failed:", e);
-        // Fallback for some browsers: try loading first
         audio.load();
         audio.play().catch(err => console.error("Second attempt failed:", err));
       });
@@ -78,7 +78,7 @@ export default function CoffeeButton() {
             ☕
           </div>
           <span className="relative z-10 text-xs font-bold uppercase tracking-[0.3em] text-slate-300 group-hover:text-sky-400 pb-1">
-            Click to Buzz
+            {t("buzz")}
           </span>
           
           {/* Decorative Border Glow */}
@@ -100,9 +100,9 @@ export default function CoffeeButton() {
         </div>
         <p className="text-[9px] font-mono text-slate-600 uppercase tracking-widest mt-1 italic text-center">
           {count !== null ? (
-            <>cups of java coffee synthesized <br /> <span className="opacity-40">(stay awake bruh..)</span></>
+            <>{t("synthesized")} <br /> <span className="opacity-40">{t("awake")}</span></>
           ) : (
-            "brewing deep space caffeine..."
+            t("loading")
           )}
         </p>
       </div>

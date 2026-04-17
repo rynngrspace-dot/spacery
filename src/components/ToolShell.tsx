@@ -1,10 +1,11 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { Tool } from "@/data/tools";
+import { useTranslations } from "next-intl";
 
 interface ToolShellProps {
   tool: Tool;
@@ -12,6 +13,9 @@ interface ToolShellProps {
 }
 
 export default function ToolShell({ tool, children }: ToolShellProps) {
+  const t = useTranslations("Tools.shell");
+  const td = useTranslations("ToolsData");
+
   useGSAP(() => {
     gsap.fromTo(".tool-header", 
       { opacity: 0, y: -20 },
@@ -35,14 +39,14 @@ export default function ToolShell({ tool, children }: ToolShellProps) {
               className="group flex items-center justify-center sm:justify-start gap-3 w-full sm:w-fit px-6 py-3 bg-white/5 border border-white/10 rounded-full text-[10px] font-mono text-slate-400 hover:text-sky-400 hover:border-sky-500/30 transition-all uppercase tracking-[0.2em]"
             >
               <span className="transition-transform group-hover:-translate-x-1">←</span>
-              <span>Back to Tools</span>
+              <span>{t("back")}</span>
             </Link>
             <div className="flex items-center gap-2 text-[9px] md:text-[10px] font-mono text-slate-600 uppercase tracking-widest ml-1 overflow-x-auto whitespace-nowrap pb-2 sm:pb-0 scrollbar-hide">
-              <span>Home</span>
+              <span>{t("home")}</span>
               <span className="opacity-30">/</span>
-              <span className="text-slate-400">Tools</span>
+              <span className="text-slate-400">{t("tools")}</span>
               <span className="opacity-30">/</span>
-              <span className="text-sky-400/80">{tool.title}</span>
+              <span className="text-sky-400/80">{td(`${tool.slug}.title`)}</span>
             </div>
           </div>
 
@@ -52,7 +56,7 @@ export default function ToolShell({ tool, children }: ToolShellProps) {
                 return (
                   <>
                     <div className={`w-2 h-2 rounded-full ${isFunctional ? "bg-sky-500 shadow-[0_0_8px_rgba(56,189,248,0.8)]" : "bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.8)] animate-pulse"}`}></div>
-                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-[0.2em]">Status: {isFunctional ? "Operational" : "Updating"}</span>
+                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-[0.2em]">{t("status")}: {isFunctional ? t("operational") : t("updating")}</span>
                   </>
                 );
              })()}
@@ -64,10 +68,10 @@ export default function ToolShell({ tool, children }: ToolShellProps) {
         {/* Tool Branding Header */}
         <div className="tool-header mb-12 md:mb-16 px-4 md:px-0">
           <h1 className="text-3xl md:text-6xl font-bold mb-4 bg-linear-to-r from-white via-slate-200 to-slate-500 bg-clip-text text-transparent">
-            {tool.title}
+            {td(`${tool.slug}.title`)}
           </h1>
           <p className="text-slate-400 text-base md:text-lg max-w-2xl leading-relaxed">
-            {tool.desc}
+            {td(`${tool.slug}.desc`)}
           </p>
         </div>
 
@@ -84,16 +88,16 @@ export default function ToolShell({ tool, children }: ToolShellProps) {
         {/* Technical Metadata Footer for the Lab */}
         <div className="tool-header mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
            <div className="p-6 rounded-2xl bg-white/2 border border-white/5">
-              <span className="block text-[10px] font-mono text-sky-500 uppercase tracking-widest mb-3">Privacy & Security</span>
-              <p className="text-[11px] text-slate-500 leading-relaxed font-mono">End-to-end encryption. All processing happens locally in your browser. No data is stored on our servers.</p>
+              <span className="block text-[10px] font-mono text-sky-500 uppercase tracking-widest mb-3">{t("privacy.title")}</span>
+              <p className="text-[11px] text-slate-500 leading-relaxed font-mono">{t("privacy.desc")}</p>
            </div>
            <div className="p-6 rounded-2xl bg-white/2 border border-white/5">
-              <span className="block text-[10px] font-mono text-sky-500 uppercase tracking-widest mb-3">System Performance</span>
-              <p className="text-[11px] text-slate-500 leading-relaxed font-mono">Powered by native browser APIs for maximum speed and efficiency. High performance mode active.</p>
+              <span className="block text-[10px] font-mono text-sky-500 uppercase tracking-widest mb-3">{t("performance.title")}</span>
+              <p className="text-[11px] text-slate-500 leading-relaxed font-mono">{t("performance.desc")}</p>
            </div>
            <div className="p-6 rounded-2xl bg-white/2 border border-white/5">
-              <span className="block text-[10px] font-mono text-sky-500 uppercase tracking-widest mb-3">Technical Support</span>
-              <p className="text-[11px] text-slate-500 leading-relaxed font-mono">Part of the Spacery open-source utility suite. Certified stable for production environments.</p>
+              <span className="block text-[10px] font-mono text-sky-500 uppercase tracking-widest mb-3">{t("support.title")}</span>
+              <p className="text-[11px] text-slate-500 leading-relaxed font-mono">{t("support.desc")}</p>
            </div>
         </div>
 

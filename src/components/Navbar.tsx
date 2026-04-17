@@ -1,20 +1,23 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { useLenis } from "lenis/react";
 import Magnetic from "./Magnetic";
-
-const navLinks = [
-  { name: "Home", href: "/" },
-  { name: "Blog", href: "/blog" },
-  { name: "About", href: "/about" },
-];
+import { useTranslations } from "next-intl";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function Navbar() {
+  const t = useTranslations("Navbar");
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const lenis = useLenis();
+
+  const navLinks = [
+    { name: t("home"), href: "/" },
+    { name: t("blog"), href: "/chat" },
+    { name: t("about"), href: "/about" },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,7 +29,7 @@ export default function Navbar() {
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     setIsMenuOpen(false);
-    if (href.startsWith("/#") && window.location.pathname === "/") {
+    if (href.startsWith("/#") && (window.location.pathname === "/id" || window.location.pathname === "/en" || window.location.pathname === "/")) {
       e.preventDefault();
       const targetId = href.replace("/", "");
       lenis?.scrollTo(targetId, {
@@ -52,30 +55,37 @@ export default function Navbar() {
             Spacery
           </Link>
 
-          {/* Desktop Links */}
+          {/* Desktop Links & Switcher */}
           <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <Magnetic key={link.name}>
-                <Link 
-                  href={link.href}
-                  onClick={(e) => handleNavClick(e, link.href)}
-                  className="text-sm font-mono text-slate-400 hover:text-sky-400 transition-colors duration-300 uppercase tracking-widest"
-                >
-                  {link.name}
-                </Link>
-              </Magnetic>
-            ))}
+            <div className="flex items-center gap-6 mr-4 border-r border-white/10 pr-6">
+              {navLinks.map((link) => (
+                <Magnetic key={link.name}>
+                  <Link 
+                    href={link.href}
+                    onClick={(e) => handleNavClick(e, link.href)}
+                    className="text-sm font-mono text-slate-400 hover:text-sky-400 transition-colors duration-300 uppercase tracking-widest"
+                  >
+                    {link.name}
+                  </Link>
+                </Magnetic>
+              ))}
+            </div>
+            
+            <LanguageSwitcher />
           </div>
 
-          {/* Mobile Menu Toggle */}
-          <div 
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden flex h-8 w-8 flex-col justify-center items-center cursor-pointer group z-110"
-            aria-label="Toggle Menu"
-          >
-            <div className={`h-[2px] w-6 bg-sky-400 rounded-full transition-all duration-300 ${isMenuOpen ? "rotate-45 translate-y-[2px]" : "mb-1.5"}`}></div>
-            <div className={`h-[2px] w-6 bg-white rounded-full transition-all duration-300 ${isMenuOpen ? "-rotate-45 translate-y-0" : ""}`}></div>
-            <div className={`h-[2px] w-6 bg-sky-400 rounded-full transition-all duration-300 mt-1.5 ${isMenuOpen ? "hidden" : ""}`}></div>
+          {/* Mobile Menu Toggle & Switcher */}
+          <div className="flex items-center gap-4 md:hidden z-110">
+            <LanguageSwitcher />
+            <div 
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="flex h-8 w-8 flex-col justify-center items-center cursor-pointer group"
+              aria-label="Toggle Menu"
+            >
+              <div className={`h-[2px] w-6 bg-sky-400 rounded-full transition-all duration-300 ${isMenuOpen ? "rotate-45 translate-y-[2px]" : "mb-1.5"}`}></div>
+              <div className={`h-[2px] w-6 bg-white rounded-full transition-all duration-300 ${isMenuOpen ? "-rotate-45 translate-y-0" : ""}`}></div>
+              <div className={`h-[2px] w-6 bg-sky-400 rounded-full transition-all duration-300 mt-1.5 ${isMenuOpen ? "hidden" : ""}`}></div>
+            </div>
           </div>
         </div>
       </nav>

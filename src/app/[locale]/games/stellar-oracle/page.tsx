@@ -1,15 +1,18 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { getOracleWisdom } from "./actions";
+import { useTranslations } from "next-intl";
 
 type Step = "ENTRANCE" | "INPUT" | "ANALYZING" | "REVEAL";
 
-
 export default function StellarOracle() {
+  const t = useTranslations("Games.stellar-oracle");
+  const tc = useTranslations("Games.common");
+  
   const [step, setStep] = useState<Step>("ENTRANCE");
   const [userInput, setUserInput] = useState("");
   const [enlightenment, setEnlightenment] = useState("");
@@ -19,8 +22,6 @@ export default function StellarOracle() {
   const [starsData, setStarsData] = useState<{width:string, height:string, top:string, left:string, delay:string, duration:string}[]>([]);
   
   const containerRef = useRef<HTMLDivElement>(null);
-  const oracleRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
 
   // Initialize Client-side logic
   useEffect(() => {
@@ -50,7 +51,6 @@ export default function StellarOracle() {
             setEnlightenment(result.wisdom);
             if (result.color) setGlowColor(result.color);
         } else {
-            // No fallback: show specific failure message
             setEnlightenment(result.message || "Star-link interrupted. The nebula is currently too thick to penetrate. Please re-establish the energy trace.");
             setGlowColor("#334155"); // dim gray
         }
@@ -108,7 +108,7 @@ export default function StellarOracle() {
         
         {/* Navigation */}
         <div className="w-full flex justify-end items-center mb-16 px-4">
-            <Link href="/#games" className="text-[10px] font-mono text-slate-500 hover:text-purple-400 uppercase tracking-[0.3em] transition-colors">← Go Back</Link>
+            <Link href="/#games" className="text-[10px] font-mono text-slate-500 hover:text-purple-400 uppercase tracking-[0.3em] transition-colors">{tc("back")}</Link>
         </div>
 
         {/* The Oracle Visual */}
@@ -132,35 +132,34 @@ export default function StellarOracle() {
           
           {step === "ENTRANCE" && (
             <div className="flex flex-col items-center">
-              <span className="oracle-text text-[10px] font-mono text-purple-400 uppercase tracking-[0.6em] mb-4 opacity-0 translate-y-4">Celestial Consciousness</span>
-              <h1 className="oracle-text text-5xl sm:text-7xl font-black text-white italic tracking-tighter mb-8 uppercase opacity-0 translate-y-4">Stellar Oracle</h1>
+              <span className="oracle-text text-[10px] font-mono text-purple-400 uppercase tracking-[0.6em] mb-4 opacity-0 translate-y-4">{t("consciousness")}</span>
+              <h1 className="oracle-text text-5xl sm:text-7xl font-black text-white italic tracking-tighter mb-8 uppercase opacity-0 translate-y-4">{t("title")}</h1>
               <p className="oracle-text text-slate-400 font-mono text-xs max-w-lg mb-12 leading-relaxed opacity-0 translate-y-4">
-                The stars have observed your journey since the dawn of time. They sense the ripples of your experiences. 
-                Are you ready to share your frequency with the void?
+                {t("description")}
               </p>
               <button 
                 onClick={() => setStep("INPUT")}
                 className="z-100 oracle-text px-16 py-5 bg-white text-black font-black rounded-2xl hover:bg-purple-400 hover:text-white transition-all text-xs uppercase tracking-widest shadow-[0_20px_40px_-10px_rgba(255,255,255,0.2)] opacity-0 translate-y-4"
               >
-                Commune with Wisdom
+                {t("commune")}
               </button>
             </div>
           )}
 
           {step === "INPUT" && (
             <div className="input-ui flex flex-col items-center">
-              <h2 className="text-2xl font-bold text-white mb-2 uppercase tracking-tight italic">What's on your mind?</h2>
-              <p className="text-slate-500 font-mono text-[10px] mb-12 uppercase tracking-[0.2em]">Share your story with the void.</p>
+              <h2 className="text-2xl font-bold text-white mb-2 uppercase tracking-tight italic">{t("mind")}</h2>
+              <p className="text-slate-500 font-mono text-[10px] mb-12 uppercase tracking-[0.2em]">{t("share")}</p>
               
               <div className="w-full relative group">
                 <textarea 
                   value={userInput}
                   onChange={(e) => setUserInput(e.target.value)}
-                  placeholder="I am feeling... today was..."
+                  placeholder={t("placeholder")}
                   className="w-full min-h-[200px] bg-white/2 border border-white/10 rounded-[32px] p-8 text-white font-mono text-sm focus:outline-none focus:border-purple-500/50 transition-all backdrop-blur-3xl resize-none"
                   autoFocus
                 />
-                <div className="absolute bottom-6 right-6 text-[9px] font-mono text-slate-600 uppercase tracking-widest">Signal strength: {userInput.length > 50 ? "High" : "Low"}</div>
+                <div className="absolute bottom-6 right-6 text-[9px] font-mono text-slate-600 uppercase tracking-widest">{t("signal")}: {userInput.length > 50 ? t("strengthHigh") : t("strengthLow")}</div>
               </div>
 
               <button 
@@ -168,7 +167,7 @@ export default function StellarOracle() {
                 disabled={userInput.length < 5}
                 className="mt-12 px-16 py-5 bg-purple-600 text-white font-black rounded-2xl hover:bg-purple-500 transition-all text-xs uppercase tracking-widest shadow-[0_20px_40px_-10px_rgba(168,85,247,0.4)] disabled:opacity-30 disabled:cursor-not-allowed"
               >
-                Analyze Energy Trace
+                {t("analyze")}
               </button>
             </div>
           )}
@@ -179,17 +178,17 @@ export default function StellarOracle() {
                 <div className="h-full bg-linear-to-r from-purple-500 to-indigo-500 animate-[loading_3s_linear]" />
               </div>
               <p className="text-purple-400 font-mono text-xs uppercase tracking-[0.6em] animate-pulse">
-                {isGenerating ? "Transmitting to Central Core..." : "Filtering Nebula Noise..."}
+                {isGenerating ? t("transmitting") : t("filtering")}
               </p>
               <p className="text-slate-600 font-mono text-[9px] mt-4 uppercase tracking-[0.2em]">
-                {isGenerating ? "Synthesizing AI Response..." : "Calibrating Psychic Resonance..."}
+                {isGenerating ? t("synthesizing") : t("calibrating")}
               </p>
             </div>
           )}
 
           {step === "REVEAL" && (
             <div className="flex flex-col items-center">
-              <span className="reveal-text text-[10px] font-mono text-slate-500 uppercase tracking-[0.4em] mb-4 opacity-0 scale-95">Message Decoded</span>
+              <span className="reveal-text text-[10px] font-mono text-slate-500 uppercase tracking-[0.4em] mb-4 opacity-0 scale-95">{t("decoded")}</span>
               <h2 className="reveal-text text-xl sm:text-2xl font-black text-white italic uppercase tracking-tight mb-12 max-w-2xl leading-relaxed opacity-0 scale-95">
                 "{enlightenment}"
               </h2>
@@ -199,13 +198,13 @@ export default function StellarOracle() {
                   onClick={() => { setStep("INPUT"); setUserInput(""); setGlowColor("#a855f7"); }}
                   className="px-12 py-4 border border-white/10 text-white font-bold rounded-xl hover:bg-white/5 transition-all text-[10px] uppercase tracking-widest"
                 >
-                  New Message
+                  {t("newMessage")}
                 </button>
                 <Link 
                   href="/#games"
                   className="px-12 py-4 bg-white/5 text-slate-400 font-bold rounded-xl hover:bg-white/10 transition-all text-[10px] uppercase tracking-widest border border-white/5"
                 >
-                  Go Back
+                  {tc("back")}
                 </Link>
               </div>
             </div>

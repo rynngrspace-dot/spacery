@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import Link from "next/link";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
+import { Link } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
 
 // --- Game Constants (Base Values) ---
 const GRAVITY = 0.25;
@@ -24,50 +23,53 @@ interface Skin {
   desc: string;
 }
 
-const SKINS: Skin[] = [
-  { id: "default", name: "Standard Mk.I", cost: 0, body: "#ffffff", glow: "#38bdf8", flame: "#38bdf8", desc: "Reliable scouting vessel. Standard issue." },
-  { id: "neon", name: "Neon Strike", cost: 50, body: "#00f2ff", glow: "#00f2ff", flame: "#00f2ff", desc: "Equipped with high-intensity plasma emitters." },
-  { id: "specter", name: "Void Specter", cost: 150, body: "#a855f7", glow: "#ffffff", flame: "#a855f7", desc: "Phase-shifted hull for deep void traversal." },
-  { id: "crimson", name: "Crimson Fury", cost: 800, body: "#ef4444", glow: "#f59e0b", flame: "#991b1b", desc: "Aggressive frame designed for high-risk maneuvers." },
-  { id: "solar", name: "Solar Flare", cost: 500, body: "#f59e0b", glow: "#ef4444", flame: "#ffffff", desc: "Forged in the heart of a dying star." },
-  { id: "hyperion", name: "Hyperion Eclipse", cost: 2500, body: "#111111", glow: "#ffffff", flame: "#06b6d4", desc: "Experimental stealth tech. The pinnacle of airframes." },
-];
-
 type GameState = "START" | "PLAYING" | "GAME_OVER" | "HANGAR";
-
-const MOTIVATIONS = [
-  "Even gravity is laughing at that maneuver.",
-  "That meteor just wanted a high-five. You gave it your whole ship.",
-  "Don't worry, those pillars have zero respect for personal space.",
-  "A great pilot isn't one who never crashes, but one who follows their dreams... into a wall.",
-  "Were you trying to phase through that? Spoiler: Physics says no.",
-  "Mission Control is officially sending tissues via emergency drone.",
-  "The other astronauts are asking: 'What exactly was the plan there?'",
-  "Space is infinite, yet you found the one thing to hit. Impressive!",
-  "Try again. That pillar is getting a bit too smug.",
-  "We have plenty of backup jets. It's just your ego that's in critical condition.",
-  "Gravity: 1, Pilot: 0. Don't worry, it's just a temporary lead!",
-  "The Captain suggests checking your eye prescription.",
-  "That pylon is currently celebrating its victory. Reclaim your honor!",
-  "Don't be sad. That pillar was always a bit of a jerk anyway.",
-  "Was that a new tactical maneuver? Oh, wait... no, just a regular crash.",
-  "Your flight recorder just filed for early retirement.",
-  "I've seen better flight paths from a confused pigeon.",
-  "Is the joystick upside down? Just checking for a friend.",
-  "That was a masterpiece of unintentional destruction.",
-  "Technically, you successfully stopped. Just... very abruptly.",
-  "The insurance company just blocked our number.",
-  "If you were trying to paint the energy beam with your hull, mission accomplished.",
-  "You're making the vacuum of space look surprisingly crowded.",
-  "Even the stars are blinking in disbelief right now.",
-  "Look on the bright side: you're creating a lot of jobs for the repair crew."
-];
 
 interface Pipe { x: number; topHeight: number; passed: boolean; }
 interface Star { x: number; y: number; collected: boolean; id: string; }
 interface Meteor { x: number; y: number; vx: number; vy: number; size: number; rotation: number; dr: number; }
 
 export default function SkyGlide() {
+  const t = useTranslations("Games.sky-glide");
+  const tc = useTranslations("Games.common");
+  
+  const SKINS: Skin[] = [
+    { id: "default", name: "Standard Mk.I", cost: 0, body: "#ffffff", glow: "#38bdf8", flame: "#38bdf8", desc: "Reliable scouting vessel. Standard issue." },
+    { id: "neon", name: "Neon Strike", cost: 50, body: "#00f2ff", glow: "#00f2ff", flame: "#00f2ff", desc: "Equipped with high-intensity plasma emitters." },
+    { id: "specter", name: "Void Specter", cost: 150, body: "#a855f7", glow: "#ffffff", flame: "#a855f7", desc: "Phase-shifted hull for deep void traversal." },
+    { id: "crimson", name: "Crimson Fury", cost: 800, body: "#ef4444", glow: "#f59e0b", flame: "#991b1b", desc: "Aggressive frame designed for high-risk maneuvers." },
+    { id: "solar", name: "Solar Flare", cost: 500, body: "#f59e0b", glow: "#ef4444", flame: "#ffffff", desc: "Forged in the heart of a dying star." },
+    { id: "hyperion", name: "Hyperion Eclipse", cost: 2500, body: "#111111", glow: "#ffffff", flame: "#06b6d4", desc: "Experimental stealth tech. The pinnacle of airframes." },
+  ];
+
+  const MOTIVATIONS = [
+    "Even gravity is laughing at that maneuver.",
+    "That meteor just wanted a high-five. You gave it your whole ship.",
+    "Don't worry, those pillars have zero respect for personal space.",
+    "A great pilot isn't one who never crashes, but one who follows their dreams... into a wall.",
+    "Were you trying to phase through that? Spoiler: Physics says no.",
+    "Mission Control is officially sending tissues via emergency drone.",
+    "The other astronauts are asking: 'What exactly was the plan there?'",
+    "Space is infinite, yet you found the one thing to hit. Impressive!",
+    "Try again. That pillar is getting a bit too smug.",
+    "We have plenty of backup jets. It's just your ego that's in critical condition.",
+    "Gravity: 1, Pilot: 0. Don't worry, it's just a temporary lead!",
+    "The Captain suggests checking your eye prescription.",
+    "That pylon is currently celebrating its victory. Reclaim your honor!",
+    "Don't be sad. That pillar was always a bit of a jerk anyway.",
+    "Was that a new tactical maneuver? Oh, wait... no, just a regular crash.",
+    "Your flight recorder just filed for early retirement.",
+    "I've seen better flight paths from a confused pigeon.",
+    "Is the joystick upside down? Just checking for a friend.",
+    "That was a masterpiece of unintentional destruction.",
+    "Technically, you successfully stopped. Just... very abruptly.",
+    "The insurance company just blocked our number.",
+    "If you were trying to paint the energy beam with your hull, mission accomplished.",
+    "You're making the vacuum of space look surprisingly crowded.",
+    "Even the stars are blinking in disbelief right now.",
+    "Look on the bright side: you're creating a lot of jobs for the repair crew."
+  ];
+
   const [gameState, setGameState] = useState<GameState>("START");
   const [score, setScore] = useState(0);
   const [level, setLevel] = useState(1);
@@ -100,7 +102,6 @@ export default function SkyGlide() {
   const jumpSound = useRef<HTMLAudioElement | null>(null);
   const failSound = useRef<HTMLAudioElement | null>(null);
 
-
   const selectedSkin = SKINS.find(s => s.id === selectedSkinId) || SKINS[0];
 
   // Initialize Data
@@ -127,7 +128,6 @@ export default function SkyGlide() {
     jumpSound.current = new Audio("/assets/audio/jump.mp3");
     failSound.current = new Audio("/assets/audio/fahhh.mp3");
   }, []);
-
 
   const savePilotName = () => {
     if (tempName.trim()) {
@@ -165,7 +165,6 @@ export default function SkyGlide() {
       resetGame();
     }
   }, [gameState, resetGame]);
-
 
   const buySkin = (skin: Skin) => {
     if (credits >= skin.cost && !ownedSkins.includes(skin.id)) {
@@ -213,7 +212,6 @@ export default function SkyGlide() {
         setGameState("GAME_OVER");
         return;
     }
-
 
     frameCount.current++;
 
@@ -294,7 +292,6 @@ export default function SkyGlide() {
             setGameState("GAME_OVER");
         }
     });
-
 
     pipes.current = pipes.current.filter(p => p.x > -100);
     stars.current = stars.current.filter(s => s.x > -100 && !s.collected);
@@ -377,11 +374,9 @@ export default function SkyGlide() {
     const handleResize = () => {
       const isMobile = window.innerWidth < 640;
       if (isMobile) {
-        // Mobile: 9:12 aspect -> 600x800 internal res
         canvas.width = 600;
         canvas.height = 800;
       } else {
-        // Desktop: 16:10 aspect -> 800x500 internal res
         canvas.width = 800;
         canvas.height = 500;
       }
@@ -406,7 +401,6 @@ export default function SkyGlide() {
       setCredits(finalCredits);
       localStorage.setItem("sky-glide-credits", finalCredits.toString());
       
-      // Pick random motivation
       const randomMsg = MOTIVATIONS[Math.floor(Math.random() * MOTIVATIONS.length)];
       setCurrentMotivation(randomMsg);
     }
@@ -417,14 +411,14 @@ export default function SkyGlide() {
         
         {/* HUD: Persistent Header */}
         <div className="w-full max-w-4xl flex justify-between items-center mb-6 sm:mb-12 animate-[fadeIn_0.8s]">
-            <Link href="/#games" className="text-[9px] sm:text-[10px] font-mono text-slate-500 hover:text-sky-400 uppercase tracking-[0.2em] sm:tracking-[0.3em] transition-colors truncate">← Bridge</Link>
+            <Link href="/#games" className="text-[9px] sm:text-[10px] font-mono text-slate-500 hover:text-sky-400 uppercase tracking-[0.2em] sm:tracking-[0.3em] transition-colors truncate">{tc("bridge")}</Link>
             <div className="flex gap-4 sm:gap-12 bg-black/40 px-4 sm:px-8 py-2 sm:py-4 rounded-full border border-white/5 backdrop-blur-xl shrink-0">
                 <div className="text-center">
-                    <p className="text-[7px] sm:text-[8px] font-mono text-slate-600 uppercase mb-0.5 sm:mb-1">Pilot</p>
-                    <p className="text-sm sm:text-lg font-bold text-sky-400 tracking-wider truncate max-w-[80px] sm:max-w-[120px]">{pilotName || "Unknown"}</p>
+                    <p className="text-[7px] sm:text-[8px] font-mono text-slate-600 uppercase mb-0.5 sm:mb-1">{tc("pilot")}</p>
+                    <p className="text-sm sm:text-lg font-bold text-sky-400 tracking-wider truncate max-w-[80px] sm:max-w-[120px]">{pilotName || tc("unknown")}</p>
                 </div>
                 <div className="text-center border-l border-white/5 pl-4 sm:pl-12">
-                    <p className="text-[7px] sm:text-[8px] font-mono text-slate-600 uppercase mb-0.5 sm:mb-1">Credits</p>
+                    <p className="text-[7px] sm:text-[8px] font-mono text-slate-600 uppercase mb-0.5 sm:mb-1">{tc("credits")}</p>
                     <p className="text-sm sm:text-xl font-bold text-yellow-500 tracking-wider sm:tracking-widest">{credits.toLocaleString()}</p>
                 </div>
             </div>
@@ -441,8 +435,8 @@ export default function SkyGlide() {
             {showLevelUp && (
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-50 px-4">
                   <div className="text-center animate-[scaleIn_0.5s_ease-out_forwards]">
-                      <h2 className="text-3xl sm:text-5xl font-black text-white italic uppercase tracking-tighter drop-shadow-[0_0_20px_#38bdf8]">Sector Advanced</h2>
-                      <p className="text-sky-400 font-mono text-[10px] sm:text-xs uppercase tracking-[0.3em] sm:tracking-[0.4em] mt-2">Level {level} Engaged</p>
+                      <h2 className="text-3xl sm:text-5xl font-black text-white italic uppercase tracking-tighter drop-shadow-[0_0_20px_#38bdf8]">{t("sectorAdvanced")}</h2>
+                      <p className="text-sky-400 font-mono text-[10px] sm:text-xs uppercase tracking-[0.3em] sm:tracking-[0.4em] mt-2">{t("levelEngaged", {level})}</p>
                   </div>
               </div>
             )}
@@ -452,16 +446,16 @@ export default function SkyGlide() {
                 <div className="absolute inset-x-0 top-0 p-4 sm:p-10 flex justify-between items-start pointer-events-none z-10">
                     <div className="flex flex-col gap-1 sm:gap-2">
                         <div className="flex flex-col">
-                            <span className="text-[8px] sm:text-[10px] font-mono text-slate-600 uppercase tracking-widest">Score</span>
+                            <span className="text-[8px] sm:text-[10px] font-mono text-slate-600 uppercase tracking-widest">{tc("score")}</span>
                             <span className="text-3xl sm:text-5xl font-black text-white drop-shadow-2xl leading-none">{score}</span>
                         </div>
                         <div className="px-2 sm:px-3 py-0.5 sm:py-1 bg-sky-500/10 border border-sky-500/20 rounded-full w-fit">
-                            <span className="text-[7px] sm:text-[8px] font-mono text-sky-400 uppercase tracking-widest font-bold">Lvl {level}</span>
+                            <span className="text-[7px] sm:text-[8px] font-mono text-sky-400 uppercase tracking-widest font-bold">{tc("level")} {level}</span>
                         </div>
                     </div>
                     <div className="flex flex-col items-end shrink-0">
                         <div className="flex items-center gap-2 sm:gap-3 bg-yellow-500/10 border border-yellow-500/20 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full backdrop-blur-md">
-                           <span className="text-[8px] sm:text-[10px] font-mono text-yellow-500 uppercase tracking-widest">Star</span>
+                           <span className="text-[8px] sm:text-[10px] font-mono text-yellow-500 uppercase tracking-widest">{t("stars")}</span>
                            <span className="text-sm sm:text-lg font-bold text-yellow-400 leading-none">{sessionCredits}</span>
                         </div>
                     </div>
@@ -472,39 +466,39 @@ export default function SkyGlide() {
             {gameState === "START" && (
                 <div className="absolute inset-0 bg-black/40 backdrop-blur-md flex flex-col items-center justify-center p-6 sm:p-12 text-center z-40">
                     <span className="text-[8px] sm:text-[10px] font-mono text-sky-400 uppercase tracking-[0.4em] sm:tracking-[0.6em] mb-2 sm:mb-4">
-                      {pilotName ? `Welcome Back, Pilot ${pilotName}` : "Deep Space Protocol"}
+                      {pilotName ? t("welcome", {name: pilotName}) : t("protocol")}
                     </span>
-                    <h1 className="text-4xl sm:text-7xl font-black text-white italic tracking-tighter mb-8 sm:mb-12 uppercase">Sky Glide</h1>
+                    <h1 className="text-4xl sm:text-7xl font-black text-white italic tracking-tighter mb-8 sm:mb-12 uppercase">{t("title")}</h1>
                     
                     <div className="hidden sm:flex justify-center gap-12 mb-12 opacity-80 scale-90 sm:scale-100">
                         <div className="flex flex-col items-center gap-3">
                             <div className="w-12 h-12 rounded-xl border border-white/20 flex items-center justify-center bg-white/5 font-mono text-[10px] text-sky-400">SPC</div>
-                            <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">Jump</span>
+                            <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">{t("jump")}</span>
                         </div>
                         <div className="flex flex-col items-center gap-3">
                             <div className="w-12 h-12 rounded-xl border border-white/20 flex items-center justify-center bg-white/5 text-xl">🖱️</div>
-                            <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">Click</span>
+                            <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest">{t("click")}</span>
                         </div>
                     </div>
-                    <p className="sm:hidden text-[9px] font-mono text-sky-400/60 uppercase tracking-widest mb-8 animate-pulse text-center">Tap screen to jump</p>
+                    <p className="sm:hidden text-[9px] font-mono text-sky-400/60 uppercase tracking-widest mb-8 animate-pulse text-center">{t("tapToJump")}</p>
 
                     <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto px-10 sm:px-0">
                         <button 
                           onClick={(e) => { e.stopPropagation(); resetGame(); }}
                           className="w-full sm:w-auto px-10 sm:px-14 py-4 sm:py-5 bg-sky-500 text-white font-bold rounded-full hover:bg-sky-400 transition-all text-xs uppercase tracking-widest shadow-[0_0_40px_rgba(56,189,248,0.4)]"
                         >
-                          Launch
+                          {t("launch")}
                         </button>
                         <button 
                             onClick={(e) => { e.stopPropagation(); setGameState("HANGAR"); }}
                             className="w-full sm:w-auto px-10 sm:px-14 py-4 sm:py-5 border border-white/10 text-white font-bold rounded-full hover:bg-white/10 transition-all text-xs uppercase tracking-widest backdrop-blur-md"
                         >
-                            Hangar
+                            {t("hangar")}
                         </button>
                     </div>
 
                     <div className="mt-8 sm:mt-12">
-                        <Link href="/#games" className="text-[8px] sm:text-[9px] font-mono text-slate-500 hover:text-sky-400 uppercase tracking-[0.3em] sm:tracking-[0.4em] transition-colors py-2 block">← Return to Bridge</Link>
+                        <Link href="/#games" className="text-[8px] sm:text-[9px] font-mono text-slate-500 hover:text-sky-400 uppercase tracking-[0.3em] sm:tracking-[0.4em] transition-colors py-2 block">{t("return")}</Link>
                     </div>
                 </div>
             )}
@@ -513,7 +507,7 @@ export default function SkyGlide() {
             {gameState === "HANGAR" && (
                 <div className="absolute inset-0 bg-[#0d0714]/95 backdrop-blur-3xl flex flex-col p-6 sm:p-12 overflow-y-auto z-40 custom-scrollbar">
                     <div className="flex justify-between items-center mb-6 sm:mb-12 sticky top-0 bg-[#0d0714]/95 py-2 z-10">
-                        <h2 className="text-xl sm:text-3xl font-black text-white uppercase tracking-tighter italic">Hangar</h2>
+                        <h2 className="text-xl sm:text-3xl font-black text-white uppercase tracking-tighter italic">{t("hangar")}</h2>
                         <button 
                             onClick={(e) => { e.stopPropagation(); setGameState("START"); }}
                             className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all"
@@ -547,7 +541,7 @@ export default function SkyGlide() {
                                             disabled={isSelected}
                                             className={`w-full py-3 sm:py-4 rounded-xl sm:rounded-2xl text-[8px] sm:text-[10px] font-mono uppercase tracking-[0.2em] transition-all ${isSelected ? "bg-sky-500 text-white cursor-default" : "bg-white/5 text-slate-300 hover:bg-white/10"}`}
                                         >
-                                            {isSelected ? "Active" : "Select"}
+                                            {isSelected ? t("active") : t("select")}
                                         </button>
                                     ) : (
                                         <button 
@@ -568,8 +562,8 @@ export default function SkyGlide() {
             {/* GAME OVER */}
             {gameState === "GAME_OVER" && (
                 <div className="absolute inset-0 bg-black/70 backdrop-blur-xl flex flex-col items-center justify-center p-6 sm:p-12 text-center animate-[scaleIn_0.4s_ease-out] z-40">
-                    <span className="text-[8px] sm:text-[10px] font-mono text-red-500 uppercase tracking-widest mb-2">Signal Lost</span>
-                    <h2 className="text-3xl sm:text-5xl font-black text-white italic tracking-tighter mb-2 sm:mb-4 uppercase">Down</h2>
+                    <span className="text-[8px] sm:text-[10px] font-mono text-red-500 uppercase tracking-widest mb-2">{t("signalLost")}</span>
+                    <h2 className="text-3xl sm:text-5xl font-black text-white italic tracking-tighter mb-2 sm:mb-4 uppercase">{t("gameOver")}</h2>
                     
                     <p className="text-xs sm:text-sm font-mono text-slate-400 mb-6 bg-slate-400/5 px-6 py-3 rounded-2xl italic">
                       "{currentMotivation}"
@@ -577,19 +571,19 @@ export default function SkyGlide() {
 
                     <div className="flex flex-col items-center gap-2 mb-8 sm:mb-10">
                       <div className="px-3 py-1 bg-sky-500/20 rounded-full backdrop-blur-md border border-sky-500/30">
-                          <span className="text-[8px] sm:text-[10px] font-mono text-sky-400 uppercase tracking-widest font-bold font-mono">Lvl reached: {level}</span>
+                          <span className="text-[8px] sm:text-[10px] font-mono text-sky-400 uppercase tracking-widest font-bold font-mono">{tc("level")} {tc("score")}: {level}</span>
                       </div>
-                      <span className="text-[10px] font-mono text-slate-500 uppercase tracking-[0.2em]">Pilot: {pilotName}</span>
+                      <span className="text-[10px] font-mono text-slate-500 uppercase tracking-[0.2em]">{tc("pilot")}: {pilotName}</span>
                     </div>
                     
                     <div className="grid grid-cols-2 gap-8 sm:gap-12 mb-10 sm:mb-16">
                         <div className="flex flex-col">
-                            <span className="text-4xl sm:text-7xl font-black text-white leading-none">{score}</span>
+                            <span className="text-4xl sm:text-77xl font-black text-white leading-none">{score}</span>
                             <span className="text-[8px] sm:text-[10px] font-mono text-slate-500 uppercase tracking-widest mt-1.5 sm:mt-2 font-mono">Pillars</span>
                         </div>
                         <div className="flex flex-col">
                             <span className="text-4xl sm:text-7xl font-black text-yellow-500 leading-none">+{sessionCredits}</span>
-                            <span className="text-[8px] sm:text-[10px] font-mono text-yellow-600 uppercase tracking-widest mt-1.5 sm:mt-2 font-mono">Credits</span>
+                            <span className="text-[8px] sm:text-[10px] font-mono text-yellow-600 uppercase tracking-widest mt-1.5 sm:mt-2 font-mono">{tc("credits")}</span>
                         </div>
                     </div>
 
@@ -598,13 +592,13 @@ export default function SkyGlide() {
                           onClick={(e) => { e.stopPropagation(); resetGame(); }}
                           className="w-full sm:w-auto px-10 sm:px-14 py-4 sm:py-5 bg-sky-500 text-white font-bold rounded-full hover:bg-sky-400 transition-all text-[10px] sm:text-xs uppercase tracking-widest"
                         >
-                          Retry
+                          {t("retry")}
                         </button>
                         <button 
                             onClick={(e) => { e.stopPropagation(); setGameState("HANGAR"); }}
                             className="w-full sm:w-auto px-10 sm:px-14 py-4 sm:py-5 border border-white/10 text-white font-bold rounded-full hover:bg-white/10 transition-all text-[10px] sm:text-xs uppercase tracking-widest"
                         >
-                            Hangar
+                            {t("hangar")}
                         </button>
                     </div>
                 </div>
@@ -614,13 +608,13 @@ export default function SkyGlide() {
               <div className="absolute inset-0 bg-[#0d0714] backdrop-blur-2xl flex flex-col items-center justify-center p-8 text-center z-[100] animate-[fadeIn_0.5s]">
                 <div className="w-full max-w-sm">
                   <span className="text-[10px] font-mono text-sky-400 uppercase tracking-[0.5em] mb-4 block">Central Registry</span>
-                  <h2 className="text-3xl font-black text-white italic uppercase tracking-tighter mb-8">Identify Pilot</h2>
+                  <h2 className="text-3xl font-black text-white italic uppercase tracking-tighter mb-8">{t("identify")}</h2>
                   <div className="relative mb-8">
                     <input 
                       type="text" 
                       value={tempName}
                       onChange={(e) => setTempName(e.target.value)}
-                      placeholder="Enter Callsign..."
+                      placeholder={t("callsign")}
                       className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-mono text-sm focus:outline-none focus:border-sky-500/50 transition-all text-center uppercase tracking-widest"
                       onKeyDown={(e) => e.key === "Enter" && savePilotName()}
                       autoFocus
@@ -631,10 +625,10 @@ export default function SkyGlide() {
                     disabled={!tempName.trim()}
                     className="w-full py-5 bg-sky-500 text-white font-bold rounded-2xl hover:bg-sky-400 transition-all text-xs uppercase tracking-widest shadow-[0_0_40px_rgba(56,189,248,0.3)] disabled:opacity-30 disabled:cursor-not-allowed"
                   >
-                    Authorize Call-Sign
+                    {t("authorize")}
                   </button>
                   <p className="mt-8 text-[9px] font-mono text-slate-600 uppercase tracking-widest leading-relaxed">
-                    Identity will be encoded into the galaxy registry for future sorting.
+                    {t("registry")}
                   </p>
                 </div>
               </div>

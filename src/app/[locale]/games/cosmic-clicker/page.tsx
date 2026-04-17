@@ -1,17 +1,21 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-
-const UPGRADES = [
-  { id: "miner", name: "Auto-Miner", basePrice: 15, baseFps: 1, desc: "A simple drone to pick up space dust." },
-  { id: "collector", name: "Star Collector", basePrice: 100, baseFps: 5, desc: "Harvests raw energy from distant stars." },
-  { id: "swarm", name: "Dyson Swarm", basePrice: 500, baseFps: 25, desc: "A network of mirrors surrounding the sun." },
-];
+import { useTranslations } from "next-intl";
 
 export default function CosmicClicker() {
+  const t = useTranslations("Games.cosmic-clicker");
+  const tc = useTranslations("Games.common");
+
+  const UPGRADES = [
+    { id: "miner", name: t("upgrades.miner.name"), basePrice: 15, baseFps: 1, desc: t("upgrades.miner.desc") },
+    { id: "collector", name: t("upgrades.collector.name"), basePrice: 100, baseFps: 5, desc: t("upgrades.collector.desc") },
+    { id: "swarm", name: t("upgrades.swarm.name"), basePrice: 500, baseFps: 25, desc: t("upgrades.swarm.desc") },
+  ];
+
   const [matter, setMatter] = useState(0);
   const [fps, setFps] = useState(0); // Flow per second (Dark Matter)
   const [inventory, setInventory] = useState<{ [key: string]: number }>({
@@ -88,7 +92,7 @@ export default function CosmicClicker() {
     });
   };
 
-  const buyUpgrade = (u: typeof UPGRADES[0]) => {
+  const buyUpgrade = (u: any) => {
     const currentPrice = Math.floor(u.basePrice * Math.pow(1.15, inventory[u.id] || 0));
     if (matter >= currentPrice) {
       setMatter(prev => prev - currentPrice);
@@ -114,16 +118,16 @@ export default function CosmicClicker() {
         {/* Left Side: The Core */}
         <div className="flex-1 flex flex-col items-center justify-center">
           <Link href="/#games" className="self-start text-sm font-mono text-slate-500 hover:text-purple-400 transition-colors uppercase tracking-widest mb-12">
-            ← Return to Bridge
+            {tc("bridge")}
           </Link>
           
           <div className="text-center mb-12">
-            <h1 className="text-sm font-mono text-purple-400 uppercase tracking-[0.4em] mb-4">Dark Matter Reserves</h1>
+            <h1 className="text-sm font-mono text-purple-400 uppercase tracking-[0.4em] mb-4">{t("reserves")}</h1>
             <div className="text-6xl md:text-8xl font-black text-white tracking-tighter">
               {Math.floor(matter).toLocaleString()}
             </div>
             <div className="text-lg font-mono text-slate-500 mt-2">
-              Generating <span className="text-purple-400">+{fps}</span> per second
+              {t("generating")} <span className="text-purple-400">+{fps}</span> {t("perSecond")}
             </div>
           </div>
 
@@ -135,7 +139,7 @@ export default function CosmicClicker() {
              {/* Inner glow */}
              <div className="absolute inset-4 rounded-full border-2 border-white/10 animate-pulse" />
              <div className="absolute inset-0 flex items-center justify-center text-white/20 text-xs font-mono uppercase tracking-widest group-hover:text-white/40">
-               Click to Mine
+               {t("clickToMine")}
              </div>
           </div>
         </div>
@@ -143,7 +147,7 @@ export default function CosmicClicker() {
         {/* Right Side: Upgrades */}
         <div className="w-full md:w-96 flex flex-col gap-6 bg-[#0d0714]/40 backdrop-blur-2xl border border-white/5 p-8 rounded-[32px]">
           <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-            Equipment <span className="text-xs font-mono text-slate-500 tracking-tighter">Upgrades available</span>
+            {t("equipment")} <span className="text-xs font-mono text-slate-500 tracking-tighter">{t("upgradesAvailable")}</span>
           </h2>
           
           <div className="flex flex-col gap-4">
@@ -165,7 +169,7 @@ export default function CosmicClicker() {
                 >
                   <div className="flex justify-between items-center mb-1">
                     <span className="font-bold text-white">{u.name}</span>
-                    <span className="text-xs font-mono text-slate-500 uppercase">Owned: {count}</span>
+                    <span className="text-xs font-mono text-slate-500 uppercase">{t("owned")}: {count}</span>
                   </div>
                   <p className="text-xs text-slate-400 mb-4">{u.desc}</p>
                   <div className="flex justify-between items-center">
@@ -179,7 +183,7 @@ export default function CosmicClicker() {
 
           <div className="mt-auto pt-8 text-center">
              <div className="text-[10px] font-mono text-slate-600 uppercase tracking-widest">
-               Game auto-saves every 5 seconds
+               {t("autoSave")}
              </div>
           </div>
         </div>

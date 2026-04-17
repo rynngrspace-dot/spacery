@@ -1,0 +1,339 @@
+{
+  "Index": {
+    "title": "Spacery | Laboratorium Digital",
+    "description": "Selamat datang di lab digital rahasia saya. Sini liat-liat modul web buatan saya yang kencang, estetik, dan kadang agak ajaib.",
+    "explore": "Lihat-Lihat Modul",
+    "about": "Siapa Saya?"
+  },
+  "Navbar": {
+    "home": "Home",
+    "blog": "Chat",
+    "about": "Tentang Saya"
+  },
+  "Greeting": {
+    "sequence": [
+      "Spacery Digital Lab",
+      "Mendesain untuk web modern",
+      "Fokus pada performa & estetika",
+      "Selamat datang, Penjelajah."
+    ]
+  },
+  "Tools": {
+    "title": "Gudang Modul Ajaib",
+    "initiate": "Gaskeun!",
+    "viewAll": "Buka Gudang Rahasia",
+    "archive": {
+      "title": "Arsip Lab Rahasia",
+      "description": "Kumpulan penemuan aneh dari lab kami. Pilih kategori buat nyari alat yang kamu butuhin buat misi hari ini.",
+      "return": "Balik ke jembatan utama",
+      "empty": "Nggak ada apa-apa di sektor ini. Coba geser dikit."
+    },
+    "shell": {
+      "back": "Balik ke Rak Alat",
+      "home": "Beranda",
+      "tools": "Alat",
+      "status": "Status",
+      "operational": "Aktif & Berisik",
+      "updating": "Lagi Dandan",
+      "privacy": {
+        "title": "Privasi Aman Bos",
+        "desc": "Data kamu aman. Semuanya diproses di browser kamu sendiri. Kami nggak simpan apa-apa, apalagi pacar orang."
+      },
+      "performance": {
+        "title": "Ngebut Abis",
+        "desc": "Pake teknologi terbaru biar sat-set-wat-wet. Mode turbo lagi aktif!"
+      },
+      "support": {
+        "title": "Bantuan Robot",
+        "desc": "Ini sirkuit terbuka (Open Source). Udah dicek berkali-kali sama droids kami, dijamin stabil."
+      }
+    }
+  },
+  "ToolsData": {
+    "image-compressor": {
+      "title": "Kompresor Gambar",
+      "desc": "Perkecil ukuran gambar kamu biar nggak keberatan massa saat terbang."
+    },
+    "image-filters": {
+      "title": "Filter Gambar",
+      "desc": "Kasih bumbu visual: hitam putih, terang, atau burem biar estetik."
+    },
+    "image-resizer": {
+      "title": "Pengecil Ukuran",
+      "desc": "Ubah dimensi tanpa bikin gambar gepeng. Nggak ada muka lonjong di sini."
+    },
+    "image-cropper": {
+      "title": "Pemotong Tepi",
+      "desc": "Buang bagian yang nggak penting dan fokus ke objek utama."
+    },
+    "svg-optimizer": {
+      "title": "Diet SVG",
+      "desc": "Bikin file vektor kamu langsing biar web makin kenceng."
+    },
+    "image-converter": {
+      "title": "Tukang Ganti Format",
+      "desc": "Ganti-ganti antar JPG, PNG, dan WEBP sesuka hati di browser."
+    },
+    "video-compressor": {
+      "title": "Kompresor Video",
+      "desc": "Bikin video kamu ramping buat dikirim ke galaksi sebelah."
+    },
+    "video-cutter": {
+      "title": "Penembak Adegan",
+      "desc": "Potong video dengan presisi bedah. Sisakan bagian yang terbaik aja."
+    },
+    "video-to-gif": {
+      "title": "Pembuat GIF",
+      "desc": "Ubah video jadi koleksi meme atau animasi loop yang ikonik."
+    },
+    "video-muter": {
+      "title": "Protokol Hening",
+      "desc": "Hapus suara video secara instan. Sstt, kita lagi butuh ketenangan."
+    },
+    "pdf-compressor": {
+      "title": "PDF Crusher",
+      "desc": "Lipat PDF kamu sekecil mungkin biar muat di kantong antariksa."
+    },
+    "pdf-merge": {
+      "title": "Lem PDF",
+      "desc": "Tempel banyak dokumen jadi satu kesatuan yang rapi dan kuat."
+    },
+    "image-to-pdf": {
+      "title": "Pembungkus PDF",
+      "desc": "Bungkus gambar-gambar kamu jadi satu file PDF yang cakep."
+    },
+    "docx-compressor": {
+      "title": "Penciut Dokumen Word",
+      "desc": "Kecilin ukuran file Word biar nggak menuh-menuhin bagasi transmisi."
+    },
+    "json-formatter": {
+      "title": "Perapi JSON",
+      "desc": "Bikin data JSON yang berantakan jadi rapi kayak barisan robot."
+    },
+    "css-minifier": {
+      "title": "Penghancur Kode CSS",
+      "desc": "Remas CSS kamu sampe jadi satu baris logika aja biar makin enteng."
+    },
+    "base64-converter": {
+      "title": "Cincin Kode Base64",
+      "desc": "Ubah teks jadi kode rahasia atau sebaliknya buat transmisi senyap."
+    },
+    "cosmic-password": {
+      "title": "Pembuat Benteng",
+      "desc": "Bikin password yang saking kuatnya, robot paling pinter pun males nebaknya."
+    },
+    "case-converter": {
+      "title": "Penukar Huruf",
+      "desc": "Ganti gaya tulisan: HURUF BESAR, huruf kecil, atau apa pun versinya."
+    },
+    "url-pulse-checker": {
+      "title": "Perapi Link",
+      "desc": "Rapikan link panjang yang berantakan jadi enak diliat pas dikirim."
+    },
+    "reading-refiner": {
+      "title": "Penglihatan Bionik",
+      "desc": "Hack otak kamu biar baca lebih cepet pake metode bolding otomatis."
+    },
+    "regex-tester": {
+      "title": "Teka-teki Pola RegEx",
+      "desc": "Tes Regular Expression kamu di sini. Nggak usah tebak-tebakan lagi."
+    },
+    "random-choice-maker": {
+      "title": "Penentu Nasib",
+      "desc": "Biar alam semesta yang milih. Masukin list, terus biarkan void yang nentuin."
+    },
+    "unit-converter": {
+      "title": "Unit Swapper",
+      "desc": "Ubah satuan apa aja, dari inci sampai tahun cahaya, secara instan."
+    },
+    "age-calculator": {
+      "title": "Pelacak Waktu Hidup",
+      "desc": "Udah berapa detik ya kamu mengorbit matahari? Cek presisinya di sini."
+    },
+    "discount-calculator": {
+      "title": "Pencari Diskon Galaksi",
+      "desc": "itung diskon pas lagi ada sale galaksi biar dompet nggak bolong."
+    },
+    "currency-converter": {
+      "title": "Penukar Cuan",
+      "desc": "Lihat nilai tukar mata uang dunia secara real-time biar nggak rugi bandar."
+    },
+    "color-palette": {
+      "title": "Pelukis Nuansa Warna",
+      "desc": "Bikin kombinasi warna yang cantik buat proyek kamu selanjutnya."
+    },
+    "qr-generator": {
+      "title": "Pembuat Kotak Ajaib QR",
+      "desc": "Bikin QR Code buat transmisi data instan ke perangkat lain."
+    },
+    "glassmorphism-generator": {
+      "title": "Pembuat Kaca Buram",
+      "desc": "Desain UI kaca buram yang estetik pake kode CSS live."
+    },
+    "color-extractor": {
+      "title": "Droid Pengambil Warna",
+      "desc": "Ambil kode warna hex dari gambar apa aja dalam sekejap."
+    }
+  },
+  "Coffee": {
+    "buzz": "Kasih Asupan Kopi",
+    "synthesized": "Cangkir kopi jawa berhasil diseduh!",
+    "awake": "(nyawa tambahan nih...)",
+    "loading": "Lagi grinding biji kopi luar angkasa..."
+  },
+  "About": {
+    "title": "Sosok di Balik Layar",
+    "dossier": "Data Personel: #001",
+    "description": "Cuma manusia biasa yang kelamaan natap layar sampai matanya kotak. Saya hobi bikin barang-barang web yang kencang, estetik, dan kadang ada cuma karena... ya kenapa nggak? Selamat datang di sudut mungil saya di jagat raya.",
+    "sayHello": "SAPA SAYA",
+    "stats": {
+      "hustle": {
+        "label": "Kerjaan Utama",
+        "value": "Pakar pengolah kopi jadi kode ajaib."
+      },
+      "orbit": {
+        "label": "Koordinat Saat Ini",
+        "value": "Bumi (WIB / GMT+7)"
+      },
+      "status": {
+        "label": "Status Sinyal",
+        "value": "Lagi nyari proyek seru buat dikerjain!"
+      }
+    }
+  },
+  "Bot": {
+    "title": "Terminal Spacery",
+    "placeholder": "Kirim pesan... (tag @spacery buat manggil AI)",
+    "tagRequired": "Kamu harus tag @spacery biar dibalas.",
+    "detecting": "Mencari sinyal masuk...",
+    "location": "Lokasi Terdeteksi",
+    "unknownLocation": "Sektor Tidak Diketahui",
+    "typing": "Spacery lagi mikirin jawaban...",
+    "clear": "Hapus Log Transmisi"
+  },
+  "TechStack": {
+    "title": "Gudang Senjata Teknologi",
+    "comingSoon": "Masih Dibungkus",
+    "descriptions": {
+      "frontend": "Bikin tampilan web yang kokoh, kencang, dan tahan banting pake framework modern."
+    }
+  },
+  "Contact": {
+    "title": "Markas Spacery",
+    "description": "Lab digital buat kamu yang berani tampil beda dan suka eksperimen. 🛸",
+    "copyright": "© 2026 LABORATORIUM SPACERY. DIBUAT DENGAN CINTA DAN KOPI."
+  },
+  "Games": {
+    "common": {
+      "bridge": "← Jembatan Utama",
+      "pilot": "Pilot",
+      "credits": "Koin",
+      "score": "Skor",
+      "level": "Lvl",
+      "highScore": "Skor Terbaik",
+      "back": "← Balik Kanan",
+      "unknown": "Nggak Kenal"
+    },
+    "grid": {
+      "title": "Mainan & Eksperimen",
+      "subtitle": "Main gratis, nggak perlu bayar pakai koin bintang.",
+      "section": "Sektor: Hiburan",
+      "playNow": "Gas Mainkan",
+      "pending": "Lagi Maintenance...",
+      "games": {
+        "sky-glide": { "title": "Sky Glide", "desc": "Belajar jadi pilot andal. Lewati pilar energi tanpa nabrak (kalau bisa)." },
+        "stellar-oracle": { "title": "Stellar Oracle", "desc": "Curhat sama bintang. Siapa tahu dikasih petunjuk masa depan." },
+        "space-typer": { "title": "Space Typer", "desc": "Seberapa cepat jarimu? Ketik kata-kata antariksa sebelum waktunya habis." },
+        "orbit-defense": { "title": "Orbit Defense", "desc": "Jaga stasiun kita dari serbuan sampah angkasa yang nyasar." },
+        "void-runner": { "title": "Void Runner", "desc": "Lari di kehampaan. Uji refleksmu biar nggak ketinggalan roket." }
+      }
+    },
+    "sky-glide": {
+      "title": "Sky Glide",
+      "protocol": "Protokol Terbang Rendah",
+      "welcome": "Halo Lagi, Kapten {name}",
+      "sectorAdvanced": "Sektor Baru Terbuka!",
+      "levelEngaged": "Level {level} Siap!",
+      "stars": "Bintang",
+      "jump": "Loncat",
+      "click": "Klik",
+      "tapToJump": "Ketuk buat loncat tinggi",
+      "launch": "Meluncur!",
+      "hangar": "Garasi",
+      "return": "Balik ke Markas",
+      "gameOver": "Aduh, Nabrak!",
+      "signalLost": "Sinyal Buyar",
+      "retry": "Coba Lagi Ah",
+      "identify": "Siapa Namamu?",
+      "callsign": "Ketik nama panggilan...",
+      "authorize": "Otorisasi Pilot",
+      "registry": "Nama kamu bakal dicatat di buku tamu galaksi. Jangan pake nama samaran aneh-aneh ya.",
+      "active": "Aktif",
+      "select": "Pilih"
+    },
+    "stellar-oracle": {
+      "title": "Stellar Oracle",
+      "consciousness": "Kesadaran Galaksi",
+      "description": "Bintang-bintang udah liatin kamu dari dulu (nggak seram kok). Mereka tahu rahasiamu. Mau curhat sama alam semesta?",
+      "commune": "Curhat Sama Oracle",
+      "mind": "Lagi galau apa hari ini?",
+      "share": "Tumpahkan semua beban pikiranmu di sini...",
+      "placeholder": "Ketik di sini...",
+      "signal": "Sinyal Wifi Galaksi",
+      "strengthLow": "Lagi Lemot",
+      "strengthHigh": "Lagi Ngebut",
+      "analyze": "Mari Kita Analisa",
+      "transmitting": "Ngirim sinyal ke pusat...",
+      "filtering": "Lagi singkirin debu antariksa...",
+      "synthesizing": "Lagi mikir keras... sabar ya...",
+      "calibrating": "Nyamain frekuensi otak...",
+      "decoded": "Pesan dari Alam Semesta",
+      "newMessage": "Tanya Lagi"
+    },
+    "cosmic-clicker": {
+      "title": "Cosmic Clicker",
+      "reserves": "Stok Materi Gelap",
+      "generating": "Lagi Nambang",
+      "perSecond": "per detik",
+      "clickToMine": "Klik Buat Nambang",
+      "equipment": "Hardware",
+      "upgradesAvailable": "Ada Barang Baru!",
+      "owned": "Punya",
+      "autoSave": "Tenang, progresmu direkam alien tiap 5 detik.",
+      "upgrades": {
+        "miner": {
+          "name": "Drone Penambang",
+          "desc": "Robot mungil buat mungutin debu antariksa."
+        },
+        "collector": {
+          "name": "Penyedot Bintang",
+          "desc": "Nyedot makin banyak energi dari bintang tetangga."
+        },
+        "swarm": {
+          "name": "Pasukan Dyson",
+          "desc": "Jaringan cermin raksasa buat kuasai energi matahari."
+        }
+      }
+    },
+    "space-typer": {
+      "title": "Papan Ketik Galaksi",
+      "clock": "Sisa Waktu",
+      "velocity": "Kecepatan Jari",
+      "transmission": "Progres",
+      "interrupted": "Koneksi Putus! Klik biar fokus lagi.",
+      "initiate": "Mulai Mengetik",
+      "finalized": "Transmisi Berhasil Dikirim",
+      "finalVelocity": "Kecepatan Akhir",
+      "accuracy": "Thumb Accuracy",
+      "reset": "Ulangi Lagi",
+      "close": "Tutup Log",
+      "hint": "Escape: Reset Cepat // Space: Spasi Normal"
+    }
+  },
+  "Construction": {
+    "title": "Lagi Rekalibrasi",
+    "desc": "Robot montir kami lagi benerin kabel yang korslet buat modul {category}. Sabar ya, mereka lagi pusing nyari baut yang ilang.",
+    "returnArchives": "Balik ke Arsip",
+    "backToBridge": "Balik ke Jembatan Utama"
+  }
+}

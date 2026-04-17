@@ -4,8 +4,10 @@ import React, { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Magnetic from "./Magnetic";
+import { useTranslations } from "next-intl";
 
 export default function Contact() {
+  const t = useTranslations("Contact");
   const container = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
@@ -29,15 +31,15 @@ export default function Contact() {
     <footer id="contact" ref={container} className="relative z-10 w-full py-20 md:py-32 px-3 md:px-8 flex flex-col items-center border-t border-white/5 bg-[#010205]">
       <div className="max-w-4xl w-full text-center contact-content">
         <h2 className="text-4xl sm:text-6xl font-bold mb-8 bg-linear-to-r from-white to-slate-500 bg-clip-text text-transparent">
-          Spacery Laboratory
+          {t("title")}
         </h2>
         <p className="text-slate-400 text-lg mb-16 max-w-2xl mx-auto">
-          Experimental digital foundry for the curious and the brave. 🛸
+          {t("description")}
         </p>
 
         <div className="mt-20 pt-16 border-t border-white/5 w-full flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="text-sm font-mono text-slate-500 tracking-wider">
-            © 2026 SPACERY LABORATORY. ALL RIGHTS RESERVED.
+            {t("copyright")}
           </div>
         </div>
       </div>

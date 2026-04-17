@@ -3,15 +3,17 @@
 import React, { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-
-const posts = [
-  { id: 1, date: "2026.04.13", title: "Initializing Phase 7: The Shared Ticker", excerpt: "Exploring the synchronization of Lenis and GSAP for ultra-high-performance web animations." },
-  { id: 2, date: "2026.04.10", title: "Bento Grids in Space", excerpt: "How to organize complex data into modular, responsive scientific research interfaces." },
-  { id: 3, date: "2026.04.05", title: "The Psychology of Glassmorphism", excerpt: "Depth, transparency, and the tactile feeling of futuristic digital laboratories." },
-];
+import { useTranslations } from "next-intl";
 
 export default function BlogPage() {
+  const t = useTranslations("Blog");
   const container = useRef<HTMLDivElement>(null);
+
+  const posts = [
+    { id: 1, date: "2026.04.13", title: t("posts.p1.title"), excerpt: t("posts.p1.excerpt") },
+    { id: 2, date: "2026.04.10", title: t("posts.p2.title"), excerpt: t("posts.p2.excerpt") },
+    { id: 3, date: "2026.04.05", title: t("posts.p3.title"), excerpt: t("posts.p3.excerpt") },
+  ];
 
   useGSAP(() => {
     gsap.fromTo(".blog-card", 
@@ -31,13 +33,13 @@ export default function BlogPage() {
       <div className="max-w-4xl w-full">
         <div className="mb-20 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
-            <span className="text-xs font-mono text-sky-500 uppercase tracking-[0.3em] mb-4 block">Archive: Transmission Logs</span>
+            <span className="text-xs font-mono text-sky-500 uppercase tracking-[0.3em] mb-4 block">{t("archive")}</span>
             <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-white to-slate-500 bg-clip-text text-transparent">
-              Space Snacks & Brain Dumps
+              {t("title")}
             </h1>
           </div>
           <div className="text-right">
-            <span className="text-sm font-mono text-slate-500 uppercase">Sector 7-G / Experimental</span>
+            <span className="text-sm font-mono text-slate-500 uppercase">{t("sector")}</span>
           </div>
         </div>
 
@@ -49,7 +51,7 @@ export default function BlogPage() {
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                 <span className="text-sm font-mono text-sky-500/60 uppercase tracking-widest">{post.date}</span>
                 <div className="h-px flex-1 bg-white/5 hidden md:block mx-8" />
-                <span className="text-xs font-mono text-slate-500 uppercase">Status: Published</span>
+                <span className="text-xs font-mono text-slate-500 uppercase">{t("status")}</span>
               </div>
 
               <h2 className="text-3xl font-bold text-white mb-6 group-hover:text-sky-400 transition-colors duration-300">
@@ -61,7 +63,7 @@ export default function BlogPage() {
               </p>
 
               <div className="flex items-center gap-2 text-sm font-mono text-slate-500 group-hover:text-white transition-colors duration-300 uppercase tracking-widest">
-                Read full transmission <span>→</span>
+                {t("readMore")} <span>→</span>
               </div>
             </div>
           ))}

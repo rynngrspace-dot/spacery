@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useLenis } from "lenis/react";
+import { useTranslations } from "next-intl";
 import GreetingTyping from "@/components/GreetingTyping";
 import ToolGrid from "@/components/ToolGrid";
 import Magnetic from "@/components/Magnetic";
@@ -9,9 +10,10 @@ import TechStack from "@/components/TechStack";
 import Contact from "@/components/Contact";
 import GameGrid from "@/components/GameGrid";
 import CoffeeButton from "@/components/CoffeeButton";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 
 export default function Home() {
+  const t = useTranslations("Index");
   const lenis = useLenis();
   const heroRef = useRef<HTMLDivElement>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -94,7 +96,7 @@ export default function Home() {
           <GreetingTyping />
           
           <p className="relative z-10 mx-auto mb-10 max-w-[90%] text-lg font-normal leading-relaxed text-slate-400 opacity-0 animate-[fadeUp_0.8s_cubic-bezier(0.16,1,0.3,1)_0.6s_forwards]">
-            Welcome to my digital space. I build tools that are fast, functional, and well-designed. Scroll down to see the latest collection!
+            {t("description")}
           </p>
           
           <div className="relative z-10 flex flex-col items-center justify-center gap-5 sm:flex-row opacity-0 animate-[fadeUp_0.8s_cubic-bezier(0.16,1,0.3,1)_0.8s_forwards]">
@@ -103,7 +105,7 @@ export default function Home() {
                 onClick={handleScrollToTools}
                 className="group relative flex items-center gap-3 overflow-hidden rounded-full bg-sky-500 px-8 py-4 text-sm font-bold text-white transition-all hover:bg-sky-400 hover:shadow-[0_0_30px_rgba(56,189,248,0.4)]"
               >
-                <span>Explore Tools</span>
+                <span>{t("explore")}</span>
                 <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
               </button>
             </Magnetic>
@@ -113,7 +115,7 @@ export default function Home() {
                 href="/about"
                 className="px-8 py-4 text-sm font-semibold text-slate-300 hover:text-white transition-colors"
               >
-                About Me
+                {t("about")}
               </Link>
             </Magnetic>
           </div>

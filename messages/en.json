@@ -1,0 +1,339 @@
+{
+  "Index": {
+    "title": "Spacery | Digital Laboratory",
+    "description": "Welcome to my secret digital lair. I build fast, pretty, and occasionally weird web stuff for the curious souls.",
+    "explore": "Poke Around",
+    "about": "Who Am I?"
+  },
+  "Navbar": {
+    "home": "Home",
+    "blog": "Chat",
+    "about": "About-Me"
+  },
+  "Greeting": {
+    "sequence": [
+      "Spacery Digital Lab",
+      "Designing for the modern web",
+      "Focused on performance & aesthetics",
+      "Welcome, Explorer."
+    ]
+  },
+  "Tools": {
+    "title": "The Gadget Shack",
+    "initiate": "Let's Go!",
+    "viewAll": "Open the Secret Stash",
+    "archive": {
+      "title": "Lab Archives",
+      "description": "A collection of weird things I've built. Pick a category to find the specific tool you need for your mission today.",
+      "return": "Back to the bridge",
+      "empty": "Nothing here. Try moving a bit to the left."
+    },
+    "shell": {
+      "back": "Back to the Shelf",
+      "home": "Home",
+      "tools": "Tools",
+      "status": "Status",
+      "operational": "Alive & Kicking",
+      "updating": "Getting a Polish",
+      "privacy": {
+        "title": "Privacy (We're Cool)",
+        "desc": "Your data stays with you. Everything is processed right in your browser. We don't keep anything—definitely not your secrets."
+      },
+      "performance": {
+        "title": "Stupidly Fast",
+        "desc": "Built with the latest tech so it goes zoom. Turbo mode is definitely on!"
+      },
+      "support": {
+        "title": "Robot Help",
+        "desc": "Part of the Spacery open-source family. Double-checked by my droids for maximum stability."
+      }
+    }
+  },
+  "ToolsData": {
+    "image-compressor": {
+      "title": "Image Squeezer",
+      "desc": "Shrink your images so they don't take up too much space-mass."
+    },
+    "image-filters": {
+      "title": "Vibe Filters",
+      "desc": "Add some visual spice: black/white, bright, or blurry for that aesthetic look."
+    },
+    "image-resizer": {
+      "title": "Aspect Resizer",
+      "desc": "Change dimensions while keeping things in proportion. No squashed faces here."
+    },
+    "image-cropper": {
+      "title": "Edge Trimmer",
+      "desc": "Cut out the noise and focus on what matters in your visuals."
+    },
+    "svg-optimizer": {
+      "title": "SVG Diet",
+      "desc": "Strip away the bloat from your vector files for a faster web."
+    },
+    "image-converter": {
+      "title": "Format Shifter",
+      "desc": "Switch between JPG, PNG, and WEBP like a galactic changeling."
+    },
+    "video-compressor": {
+      "title": "Video Shrinker",
+      "desc": "High-efficiency diet for your heavy video files."
+    },
+    "video-cutter": {
+      "title": "Scene Sniper",
+      "desc": "Trim your footage with surgical precision. Only the best parts survive."
+    },
+    "video-to-gif": {
+      "title": "GIF-inator",
+      "desc": "Turn your clips into looping pieces of internet history."
+    },
+    "video-muter": {
+      "title": "Silence Protocol",
+      "desc": "Remove audio tracks instantly. Shhh, we're working here."
+    },
+    "pdf-compressor": {
+      "title": "PDF Crusher",
+      "desc": "Fold your PDFs until they're small enough to fit in a pocket dimension."
+    },
+    "pdf-merge": {
+      "title": "PDF Glue",
+      "desc": "Stick multiple documents together into one consolidated masterpiece."
+    },
+    "image-to-pdf": {
+      "title": "Paper-izer",
+      "desc": "Wrap your images into a shiny new PDF document."
+    },
+    "docx-compressor": {
+      "title": "Word Shrinker",
+      "desc": "Minimize document mass for faster galactic delivery."
+    },
+    "json-formatter": {
+      "title": "JSON Untangler",
+      "desc": "Make messy JSON data look like a neat row of robots."
+    },
+    "css-minifier": {
+      "title": "Code Crusher",
+      "desc": "Squeeze your CSS until it's as small as a single line of logic."
+    },
+    "base64-converter": {
+      "title": "Decoder Ring",
+      "desc": "Convert strings to Base64 and back. Top-secret data only."
+    },
+    "cosmic-password": {
+      "title": "Fortress Maker",
+      "desc": "Generate passwords so strong even a supercomputer would give up."
+    },
+    "case-converter": {
+      "title": "Case Swapper",
+      "desc": "Switch between UPPERCASE, lowercase, and everything in between."
+    },
+    "url-pulse-checker": {
+      "title": "Link Untangler",
+      "desc": "Clean up those long, messy URLs into something decent."
+    },
+    "reading-refiner": {
+      "title": "Bionic Vision",
+      "desc": "Hack your brain to read faster by bolding the start of every word."
+    },
+    "regex-tester": {
+      "title": "Pattern Puzzler",
+      "desc": "Live feedback for your Regular Expressions. No more guessing."
+    },
+    "random-choice-maker": {
+      "title": "Fate Decider",
+      "desc": "Let the void choose. Pick a random item from your list."
+    },
+    "unit-converter": {
+      "title": "Unit Swapper",
+      "desc": "Convert anything from inches to light-years in a blink."
+    },
+    "age-calculator": {
+      "title": "Time Tracker",
+      "desc": "Exactly how many seconds have you been orbiting the sun?"
+    },
+    "discount-calculator": {
+      "title": "Deal Finder",
+      "desc": "Calculate savings during galactic sales. Don't overpay for that rocket."
+    },
+    "currency-converter": {
+      "title": "Money Shifter",
+      "desc": "Swap between currencies with live exchange rates from across the globe."
+    },
+    "color-palette": {
+      "title": "Vibe Painter",
+      "desc": "Generate beautiful color schemes for your next big project."
+    },
+    "qr-generator": {
+      "title": "Code Square Maker",
+      "desc": "Create high-quality QR codes for instant data beaming."
+    },
+    "glassmorphism-generator": {
+      "title": "Frosted Glass Maker",
+      "desc": "Design gorgeous frosty UI components with live CSS code."
+    },
+    "color-extractor": {
+      "title": "Color Picker Droid",
+      "desc": "Grab the exact hex codes from any image instantly."
+    }
+  },
+  "Coffee": {
+    "buzz": "Feed Calibration",
+    "synthesized": "Cups of space java brewed!",
+    "awake": "(stay awake bruh..)",
+    "loading": "Grinding deep space beans..."
+  },
+  "About": {
+    "title": "The Guy Behind the Screen",
+    "dossier": "Personnel Dossier: #001",
+    "description": "Just a human who spent way too long staring at glowing rectangles until my eyes turned square. I like building things that are fast, shiny, and exist just because... why not? Welcome to my little corner of the void.",
+    "sayHello": "SAY HELLO",
+    "stats": {
+      "hustle": {
+        "label": "Main Hustle",
+        "value": "Expert at turning coffee into magic code."
+      },
+      "orbit": {
+        "label": "Current Coordinates",
+        "value": "Earth (WIB / GMT+7)"
+      },
+      "status": {
+        "label": "Signal Status",
+        "value": "Looking for cool stuff to build!"
+      }
+    }
+  },
+  "Bot": {
+    "title": "Spacery Terminal",
+    "placeholder": "Send a transmission... (tag @spacery to trigger AI)",
+    "tagRequired": "You must tag @spacery for a response.",
+    "detecting": "Scanning for incoming signal...",
+    "location": "Detected Location",
+    "unknownLocation": "Unknown Sector",
+    "typing": "Spacery is synthesizing a response...",
+    "clear": "Clear Transmission Log"
+  },
+  "TechStack": {
+    "title": "My Tech Arsenal",
+    "comingSoon": "Still in the Wrapper",
+    "descriptions": {
+      "frontend": "Building tough, fast, and pretty interfaces with modern frameworks."
+    }
+  },
+  "Contact": {
+    "title": "Spacery HQ",
+    "description": "Experimental digital lair for people who like to push buttons. 🛸",
+    "copyright": "© 2026 SPACERY LABORATORY. BUIDL WITH LOVE & COFFEE."
+  },
+  "Games": {
+    "common": {
+      "bridge": "← The Bridge",
+      "pilot": "Pilot",
+      "credits": "Coins",
+      "score": "Score",
+      "level": "Lvl",
+      "highScore": "Best Yet",
+      "back": "← Fall Back",
+      "unknown": "Who?"
+    },
+    "grid": {
+      "title": "Toys & Experiments",
+      "subtitle": "Play for free. No star-coins required.",
+      "section": "Sector: Fun",
+      "playNow": "Let's Play",
+      "pending": "Maintenance in Progress...",
+      "games": {
+        "sky-glide": { "title": "Sky Glide", "desc": "Learn to fly. Navigate through energy poles without crashing (hopefully)." },
+        "stellar-oracle": { "title": "Stellar Oracle", "desc": "Vent to the stars. They might actually Have an answer." },
+        "space-typer": { "title": "Space Typer", "desc": "How fast are your thumbs? Type cosmic words before the clock runs out." },
+        "orbit-defense": { "title": "Orbit Defense", "desc": "Protect our station from stray space junk flying around." },
+        "void-runner": { "title": "Void Runner", "desc": "Running in the void. Test your reflexes before you miss the rocket." }
+      }
+    },
+    "sky-glide": {
+      "title": "Sky Glide",
+      "protocol": "Low Flight Protocol",
+      "welcome": "Hey Again, Captain {name}",
+      "sectorAdvanced": "New Sector Unlocked!",
+      "levelEngaged": "Level {level} Ready!",
+      "stars": "Stars",
+      "jump": "Jump",
+      "click": "Click",
+      "tapToJump": "Tap to jump high",
+      "launch": "Launch!",
+      "hangar": "Garage",
+      "return": "Back to HQ",
+      "gameOver": "Ouch, That Hurt!",
+      "signalLost": "Signal Lost",
+      "retry": "One More Time",
+      "identify": "What's Your Name?",
+      "callsign": "Type your nickname...",
+      "authorize": "Authorize Pilot",
+      "registry": "Your name will be etched into the galaxy guestbook. No weird aliases, please.",
+      "active": "Active",
+      "select": "Select"
+    },
+    "stellar-oracle": {
+      "title": "Stellar Oracle",
+      "consciousness": "Galactic Vibes",
+      "description": "The stars have observed your journey since the dawn of time (not in a creepy way, I promise). Want to vent to the universe?",
+      "commune": "Chat with Oracle",
+      "mind": "What's bothering you today?",
+      "share": "Dump all your brain-noise here...",
+      "placeholder": "Type here...",
+      "signal": "Galactic Wifi",
+      "strengthLow": "Lagging",
+      "strengthHigh": "Full Speed",
+      "analyze": "Let's Peer Into the Void",
+      "transmitting": "Sending signal to base...",
+      "filtering": "Clearing the nebula dust...",
+      "synthesizing": "Thinking really hard... please wait...",
+      "calibrating": "Syncing brain frequencies...",
+      "decoded": "Message from the Universe",
+      "newMessage": "Ask Again"
+    },
+    "cosmic-clicker": {
+      "title": "Cosmic Clicker",
+      "reserves": "Dark Matter Stash",
+      "generating": "Mining",
+      "perSecond": "per sec",
+      "clickToMine": "Click to Mine",
+      "equipment": "Hardware",
+      "upgradesAvailable": "New Shiny Stuff!",
+      "owned": "Got",
+      "autoSave": "Don't worry, aliens record your progress every 5 seconds.",
+      "upgrades": {
+        "miner": {
+          "name": "Mining Drone",
+          "desc": "A tiny robot to pick up cosmic dust."
+        },
+        "collector": {
+          "name": "Star Sucker",
+          "desc": "Sucks even more energy from neighboring stars."
+        },
+        "swarm": {
+          "name": "Dyson Swarm",
+          "desc": "A giant mirror network to capture sun-power."
+        }
+      }
+    },
+    "space-typer": {
+      "title": "Galactic Keyboard",
+      "clock": "Time Left",
+      "velocity": "Finger Speed",
+      "transmission": "Progress",
+      "interrupted": "Connection Lost! Click to refocus.",
+      "initiate": "Start Stream",
+      "finalized": "Transmission Successfully Sent",
+      "finalVelocity": "End Speed",
+      "accuracy": "Thumb Accuracy",
+      "reset": "Try Again",
+      "close": "Close Log",
+      "hint": "Escape: Quick Reset // Space: Normal Space"
+    }
+  },
+  "Construction": {
+    "title": "Under Recalibration",
+    "desc": "Maintenance droids are currently duct-taping the logic circuits for the {category} module. Hang tight while they find where they dropped the wrench.",
+    "returnArchives": "Back to Archive",
+    "backToBridge": "Back to Bridge"
+  }
+}

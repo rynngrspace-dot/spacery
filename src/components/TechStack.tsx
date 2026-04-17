@@ -3,16 +3,18 @@
 import React, { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-
-const skills = [
-  { name: "Frontend", items: ["React", "Next.js", "Tailwind CSS", "TypeScript"], size: "large", icon: "⚛️" },
-  { name: "Animations", items: ["GSAP", "Framer Motion", "Lenis"], size: "medium", icon: "✨" },
-  { name: "Laboratory Tools", items: ["Node.js", "File API", "Wasm"], size: "medium", icon: "🧪" },
-  { name: "Exploration", items: ["Three.js", "Creative Coding"], size: "small", icon: "🚀" },
-];
+import { useTranslations } from "next-intl";
 
 export default function TechStack() {
+  const t = useTranslations("TechStack");
   const container = useRef<HTMLDivElement>(null);
+
+  const skills = [
+    { name: "Frontend", items: ["React", "Next.js", "Tailwind CSS", "TypeScript"], size: "large", icon: "⚛️" },
+    { name: "Animations", items: ["GSAP", "Framer Motion", "Lenis"], size: "medium", icon: "✨" },
+    { name: "Laboratory Tools", items: ["Node.js", "File API", "Wasm"], size: "medium", icon: "🧪" },
+    { name: "Exploration", items: ["Three.js", "Creative Coding"], size: "small", icon: "🚀" },
+  ];
 
   useGSAP(() => {
     gsap.fromTo(".stack-card", 
@@ -37,7 +39,7 @@ export default function TechStack() {
     <section id="stack" ref={container} className="relative z-10 w-full min-h-screen py-20 md:py-32 px-3 md:px-8 flex flex-col items-center bg-grid overflow-x-hidden">
       <div className="max-w-5xl w-full">
         <h2 className="text-3xl sm:text-5xl font-bold mb-12 md:mb-16 text-center bg-linear-to-r from-sky-300 to-white bg-clip-text text-transparent px-4 uppercase tracking-tighter">
-          The Tech I Crash-Landed With
+          {t("title")}
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 md:gap-6 h-auto md:h-[600px]">
@@ -46,7 +48,7 @@ export default function TechStack() {
             <div>
               <div className="text-3xl md:text-4xl mb-4">{skills[0].icon}</div>
               <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">{skills[0].name}</h3>
-              <p className="text-slate-400 mb-8 text-sm md:text-base">Building robust, high-performance user interfaces with modern frameworks.</p>
+              <p className="text-slate-400 mb-8 text-sm md:text-base">{t("descriptions.frontend")}</p>
             </div>
             <div className="flex flex-wrap gap-2 md:gap-3">
               {skills[0].items.map(item => (
@@ -82,7 +84,7 @@ export default function TechStack() {
           {/* Small Card */}
           <div className="stack-card md:col-span-1 md:row-span-1 bg-linear-to-br from-sky-500/20 to-transparent backdrop-blur-xl border border-sky-400/20 rounded-[24px] p-8 flex flex-col justify-center items-center group hover:border-sky-400/50 transition-all duration-500 text-center">
             <div className="text-3xl mb-2">{skills[3].icon}</div>
-            <h3 className="text-lg font-bold text-white uppercase tracking-tighter italic">Coming Soon</h3>
+            <h3 className="text-lg font-bold text-white uppercase tracking-tighter italic">{t("comingSoon")}</h3>
           </div>
         </div>
       </div>

@@ -1,15 +1,21 @@
+"use client";
+
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { TOOLS } from "@/data/tools";
 import Magnetic from "./Magnetic";
+import { useTranslations } from "next-intl";
 
 interface ToolGridProps {
   limit?: number;
 }
 
 export default function ToolGrid({ limit }: ToolGridProps) {
+  const t = useTranslations("Tools");
+  // We'll also need a way to translate tool titles/descs, usually via a specific namespace
+  const td = useTranslations("ToolsData"); 
   const container = useRef<HTMLDivElement>(null);
 
   let featuredTools = [
@@ -26,7 +32,6 @@ export default function ToolGrid({ limit }: ToolGridProps) {
   }
 
   useGSAP(() => {
-    // ... animation logic remains same ...
     gsap.fromTo(".tools-title", 
       { y: 50, opacity: 0 },
       {
@@ -78,7 +83,7 @@ export default function ToolGrid({ limit }: ToolGridProps) {
     <section id="tools" ref={container} className="relative z-10 w-full py-20 md:py-32 px-4 md:px-8 flex flex-col items-center overflow-x-hidden">
       <div className="max-w-6xl w-full">
         <h2 className="tools-title text-3xl sm:text-5xl font-bold mb-12 md:mb-16 text-center bg-linear-to-r from-sky-300 to-white bg-clip-text text-transparent underline decoration-sky-500/20 underline-offset-8">
-          Featured Laboratories
+          {t("title")}
         </h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
@@ -92,14 +97,14 @@ export default function ToolGrid({ limit }: ToolGridProps) {
               </div>
 
               <h3 className="relative z-10 text-xl md:text-2xl font-bold mb-4 text-slate-100 group-hover:text-sky-400 transition-colors duration-300">
-                {tool.title}
+                {td(`${tool.slug}.title`)}
               </h3>
               <p className="relative z-10 text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors duration-300 text-sm">
-                {tool.desc}
+                {td(`${tool.slug}.desc`)}
               </p>
               
               <div className="relative z-10 mt-8 md:mt-10 flex items-center text-[10px] md:text-[11px] font-mono text-sky-500/70 uppercase tracking-[0.2em] group-hover:translate-x-2 group-hover:text-sky-400 transition-all duration-500">
-                Initiate Module <span className="ml-3 transition-transform group-hover:scale-125">→</span>
+                {t("initiate")} <span className="ml-3 transition-transform group-hover:scale-125">→</span>
               </div>
             </Link>
           ))}
@@ -112,7 +117,7 @@ export default function ToolGrid({ limit }: ToolGridProps) {
               className="group relative px-12 py-5 bg-white/5 border border-white/10 rounded-full text-white text-sm font-bold uppercase tracking-[0.3em] overflow-hidden transition-all hover:bg-white/10 hover:border-sky-500/50 hover:shadow-[0_0_40px_rgba(56,189,248,0.2)]"
             >
               <div className="absolute inset-0 bg-linear-to-r from-sky-500/0 via-sky-500/10 to-sky-500/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-              View All Modules
+              {t("viewAll")}
             </Link>
           </Magnetic>
         </div>

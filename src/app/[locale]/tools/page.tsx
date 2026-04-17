@@ -1,14 +1,17 @@
 "use client";
 
 import React, { useState, useRef } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { TOOLS, ToolCategory } from "@/data/tools";
+import { useTranslations } from "next-intl";
 
 const CATEGORIES: ("All" | ToolCategory)[] = ["All", "Imaging", "Motion", "Documents", "Data", "Calculations"];
 
 export default function ToolsArchive() {
+  const t = useTranslations("Tools");
+  const td = useTranslations("ToolsData");
   const [activeCategory, setActiveCategory] = useState<"All" | ToolCategory>("All");
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -43,15 +46,15 @@ export default function ToolsArchive() {
       <div className="max-w-6xl w-full archive-header">
         <div className="mb-8 md:mb-12">
             <Link href="/" className="text-[9px] md:text-[10px] font-mono text-slate-600 hover:text-sky-400 transition-colors uppercase tracking-[0.4em] ml-1">
-              ← Return to bridge
+              {t("archive.return")}
             </Link>
         </div>
 
         <h1 className="text-4xl md:text-7xl font-bold mb-6 bg-linear-to-r from-sky-300 via-white to-sky-100 bg-clip-text text-transparent px-1">
-          The Archives
+          {t("archive.title")}
         </h1>
         <p className="text-slate-400 text-base md:text-lg max-w-2xl mb-12 md:mb-16 leading-relaxed px-1">
-          A comprehensive database of every laboratory module. Filter by category to initialize specific mission-critical utilities.
+          {t("archive.description")}
         </p>
 
         {/* Filter Navigation - Scrollable on Mobile */}
@@ -89,14 +92,14 @@ export default function ToolsArchive() {
                 </div>
 
                 <h3 className="relative z-10 text-xl font-bold mb-3 text-slate-100 group-hover:text-sky-400 transition-colors duration-300">
-                  {tool.title}
+                  {td(`${tool.slug}.title`)}
                 </h3>
                 <p className="relative z-10 text-slate-400 leading-relaxed text-sm group-hover:text-slate-300 transition-colors duration-300">
-                  {tool.desc}
+                  {td(`${tool.slug}.desc`)}
                 </p>
                 
                 <div className="relative z-10 mt-8 flex items-center text-[10px] font-mono text-sky-500/70 uppercase tracking-[0.2em] group-hover:translate-x-2 group-hover:text-sky-400 transition-all duration-500">
-                  Deploy Module <span className="ml-3 transition-transform group-hover:scale-125">→</span>
+                  {t("initiate")} <span className="ml-3 transition-transform group-hover:scale-125">→</span>
                 </div>
               </Link>
            ))}
@@ -105,7 +108,7 @@ export default function ToolsArchive() {
         {/* Empty State */}
         {filteredTools.length === 0 && (
           <div className="py-32 text-center text-slate-600 font-mono uppercase tracking-widest animate-pulse">
-            No modules found in this sector.
+            {t("archive.empty")}
           </div>
         )}
       </div>

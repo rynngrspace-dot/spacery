@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useRef } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { useTranslations } from "next-intl";
 
 interface UnderConstructionProps {
   title: string;
@@ -12,6 +13,7 @@ interface UnderConstructionProps {
 }
 
 export default function UnderConstruction({ title, category, status = "Off-Line" }: UnderConstructionProps) {
+  const t = useTranslations("Construction");
   const containerRef = useRef<HTMLDivElement>(null);
   const gearRef = useRef<HTMLDivElement>(null);
 
@@ -53,12 +55,11 @@ export default function UnderConstruction({ title, category, status = "Off-Line"
         </div>
         
         <h2 className="text-2xl md:text-3xl font-bold text-white mb-4 uppercase tracking-tighter">
-          {title} Under Recalibration
+          {title} {t("title")}
         </h2>
         
         <p className="text-sm font-mono text-slate-500 leading-relaxed mb-10">
-          Our engineering droids are currently synthesising the logic circuits for the <span className="text-sky-400">{category || "requested"}</span> module. 
-          Signal stability is expected within the next hardware refresh cycle.
+          {t("desc", { category: category || "requested" })}
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -66,13 +67,13 @@ export default function UnderConstruction({ title, category, status = "Off-Line"
               href="/tools"
               className="px-8 py-3 bg-white/5 border border-white/10 text-white font-bold rounded-xl hover:bg-white/10 transition-all text-[10px] font-mono uppercase tracking-widest"
             >
-              Return to Archives
+              {t("returnArchives")}
             </Link>
             <Link 
               href="/"
               className="px-8 py-3 bg-sky-500 text-white font-bold rounded-xl hover:bg-sky-400 transition-all text-[10px] font-mono uppercase tracking-widest shadow-[0_0_20px_rgba(56,189,248,0.3)]"
             >
-              Back to Bridge
+              {t("backToBridge")}
             </Link>
         </div>
       </div>
