@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Link } from "@/i18n/routing";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { supabase } from "@/lib/supabase";
@@ -20,6 +20,7 @@ interface Message {
 export default function ChatPage() {
   const t = useTranslations("Bot");
   const tc = useTranslations("Games.common");
+  const locale = useLocale();
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
@@ -155,18 +156,29 @@ export default function ChatPage() {
     setIsTyping(true);
     try {
       // 2. Trigger Server Action (Saves to DB & Gets Response)
-      const result = await askSpaceryBot(userMessage, savedLocation);
+      const result = await askSpaceryBot(userMessage, savedLocation, locale);
       
       if (result.success && result.botResponded) {
-        // OPTIMISTIC BOT RESPONSE: Show it immediately!
-        // This ensures the user sees the answer even if Realtime is broken.
-        setMessages(prev => [...prev, {
-          id: "opt-bot-" + Date.now(),
-          text: result.message || "",
-          sender: "bot",
-          location: "[Spacery Laboratory]",
-          timestamp: new Date()
-        }]);
+        setMessages(prev => {
+          // ANTI-DUPLICATION CHECK:
+          // In some cases (especially mobile), Realtime might have already delivered the message.
+          // If a bot message with the same text already exists, don't add it again.
+          const isAlreadyThere = prev.some(m => 
+            m.sender === "bot" && 
+            m.text === result.message &&
+            !m.id.startsWith("opt-") // If it doesn't have 'opt-', it's the real one from DB
+          );
+
+          if (isAlreadyThere) return prev;
+
+          return [...prev, {
+            id: "opt-bot-" + Date.now(),
+            text: result.message || "",
+            sender: "bot",
+            location: "[Spacery Laboratory]",
+            timestamp: new Date()
+          }];
+        });
       }
     } catch (error) {
        console.error("Transmission failed:", error);
@@ -180,7 +192,12 @@ export default function ChatPage() {
   };
 
   return (
-    <main ref={containerRef} className="min-h-screen bg-[#010205] pt-32 pb-12 px-4 md:px-8 flex flex-col items-center">
+    <main ref={containerRef} className="min-h-screen bg-[#010205] pt-24 md:pt-32 pb-12 px-4 md:px-8 flex flex-col items-center">
+      {/* Bot Usage Hint */}
+      <div className="mb-4 text-[10px] font-mono uppercase tracking-[0.2em] text-sky-400/40 animate-pulse text-center">
+        {t("botHint")}
+      </div>
+
       <div className="chat-container w-full max-w-4xl flex flex-col h-[75vh] bg-[#060b19]/40 backdrop-blur-2xl border border-white/5 rounded-3xl overflow-hidden shadow-2xl relative">
         
         {/* Terminal Header */}
@@ -233,7 +250,23 @@ export default function ChatPage() {
                       : "bg-white/5 border border-white/10 text-slate-300 rounded-tl-none"
                   }`}
                 >
-                  {msg.text}
+                  <span className="text-sm leading-relaxed whitespace-pre-wrap break-words">
+                    {msg.text.split(/(\/\w+[\/\w.-]*[a-zA-Z0-9/]|https?:\/\/[^\s]+[a-zA-Z0-9/])/g).map((part, i) => {
+                      if (part.startsWith('/') || part.startsWith('http')) {
+                        return (
+                          <a 
+                            key={i} 
+                            href={part} 
+                            target={part.startsWith('http') ? "_blank" : "_self"}
+                            className="text-sky-400 underline underline-offset-4 hover:text-sky-300 transition-colors font-bold decoration-sky-400/30"
+                          >
+                            {part}
+                          </a>
+                        );
+                      }
+                      return <span key={i}>{part}</span>;
+                    })}
+                  </span>
                 </div>
                 {msg.location && (
                   <span className="mt-1 text-[9px] font-mono text-sky-500/50 uppercase tracking-widest">
@@ -265,7 +298,7 @@ export default function ChatPage() {
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               placeholder={t("placeholder")}
-              className="w-full bg-white/5 border border-white/10 rounded-full px-8 py-4 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:border-sky-500/50 focus:bg-white/10 transition-all font-mono"
+              className="w-full bg-white/5 border border-white/10 rounded-full pl-6 pr-14 py-4 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:border-sky-500/50 focus:bg-white/10 transition-all font-mono"
             />
             <button 
               type="submit"

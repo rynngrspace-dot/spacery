@@ -203,12 +203,13 @@
   },
   "Bot": {
     "title": "Terminal Spacery",
-    "placeholder": "Kirim pesan... (tag @spacery buat manggil AI)",
+    "placeholder": "Kirim pesan... (tag @spacery untuk hubungi Bot)",
     "tagRequired": "Kamu harus tag @spacery biar dibalas.",
     "detecting": "Mencari sinyal masuk...",
     "location": "Lokasi Terdeteksi",
     "unknownLocation": "Sektor Tidak Diketahui",
     "typing": "Spacery lagi mikirin jawaban...",
+    "botHint": "Tag @spacery untuk berbicara dengan Spacery Bot",
     "clear": "Hapus Log Transmisi"
   },
   "TechStack": {

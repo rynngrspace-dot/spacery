@@ -203,12 +203,13 @@
   },
   "Bot": {
     "title": "Spacery Terminal",
-    "placeholder": "Send a transmission... (tag @spacery to trigger AI)",
+    "placeholder": "Send a transmission... (tag @spacery to contact Bot)",
     "tagRequired": "You must tag @spacery for a response.",
     "detecting": "Scanning for incoming signal...",
     "location": "Detected Location",
     "unknownLocation": "Unknown Sector",
     "typing": "Spacery is synthesizing a response...",
+    "botHint": "Tag @spacery to speak with Spacery Bot",
     "clear": "Clear Transmission Log"
   },
   "TechStack": {
