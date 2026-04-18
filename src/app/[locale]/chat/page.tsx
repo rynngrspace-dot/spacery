@@ -21,46 +21,93 @@ export default function ChatPage() {
   const t = useTranslations("Bot");
   const tc = useTranslations("Games.common");
   const locale = useLocale();
+  
+  // State Hooks
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [connStatus, setConnStatus] = useState<"connecting" | "online" | "offline" | "error">("connecting");
+  
+  // Ref Hooks
   const scrollRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll on new messages
+  // 1. Auto-scroll Hook
   useEffect(() => {
-    if (scrollRef.current) {
+    if (scrollRef.current && !isLoading) {
       const viewport = scrollRef.current;
-      requestAnimationFrame(() => {
+      const scrollTimeout = setTimeout(() => {
         viewport.scrollTo({
           top: viewport.scrollHeight,
-          behavior: 'smooth'
+          behavior: messages.length <= 50 ? 'auto' : 'smooth'
         });
-      });
+      }, 50);
+      return () => clearTimeout(scrollTimeout);
     }
-  }, [messages, isTyping]);
+  }, [messages, isTyping, isLoading]);
 
-  // Load history, Detect Location, and Subscribe to Realtime
+  // 2. Initial Setup Hook
   useEffect(() => {
-    // 1. Fetch History
     const loadHistory = async () => {
-      const history = await getChatHistory();
-      setMessages(history);
+      setIsLoading(true);
+      try {
+        const history = await getChatHistory();
+        setMessages(history);
+      } finally {
+        setTimeout(() => setIsLoading(false), 800);
+      }
     };
     loadHistory();
 
-    // 2. Client-side Geolocation
+    // 2. Client-side High-Precision Geolocation
     const detectLocation = async () => {
-       try {
-         const res = await fetch("https://ipapi.co/json/");
-         const data = await res.json();
-         if (data.city && data.country_name) {
-           localStorage.setItem("spacery_location", `[${data.city}, ${data.country_name}]`);
+       const fallbackIPLocation = async () => {
+         try {
+           const res = await fetch("https://ipapi.co/json/");
+           const data = await res.json();
+           if (data.city && data.country_name) {
+             localStorage.setItem("spacery_location", `[${data.city}, ${data.country_name}]`);
+           }
+         } catch (e) {
+           console.warn("IP Fallback location detection failed.");
          }
-       } catch (e) {
-         console.warn("Location detection failed.");
+       };
+
+       if (!navigator.geolocation) {
+         await fallbackIPLocation();
+         return;
        }
+
+       navigator.geolocation.getCurrentPosition(
+         async (position) => {
+           try {
+             const { latitude, longitude } = position.coords;
+             // BigDataCloud Free Client-side Reverse Geocoding
+             const res = await fetch(
+               `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=${locale}`
+             );
+             const data = await res.json();
+             
+             // Prioritize neighborhood/locality or city
+             const area = data.locality || data.city || data.principalSubdivision;
+             const country = data.countryName;
+             
+             if (area && country) {
+               localStorage.setItem("spacery_location", `[${area}, ${country}]`);
+             } else {
+               await fallbackIPLocation();
+             }
+           } catch (e) {
+             await fallbackIPLocation();
+           }
+         },
+         async (err) => {
+           console.warn("GPS Permission denied or unavailable. Using IP fallback.");
+           await fallbackIPLocation();
+         },
+         { timeout: 10000 }
+       );
     };
     detectLocation();
 
@@ -87,12 +134,10 @@ export default function ChatPage() {
             };
 
             setMessages((prev) => {
-              // 1. Check for exact ID match
+    
               if (prev.some((m) => m.id === formattedMsg.id)) return prev;
 
-              // 2. Check for Optimistic Match (Deduplication)
-              // If we find a message from the same sender with the same text
-              // that was added recently (marked with 'opt-'), replace it.
+   
               const optIndex = prev.findIndex(m => 
                 m.id.startsWith("opt-") && 
                 m.sender === formattedMsg.sender && 
@@ -101,11 +146,11 @@ export default function ChatPage() {
 
               if (optIndex !== -1) {
                 const newArr = [...prev];
-                newArr[optIndex] = formattedMsg; // Replace optimistic with real
+                newArr[optIndex] = formattedMsg; 
                 return newArr;
               }
 
-              // 3. Otherwise, append normally
+        
               return [...prev, formattedMsg];
             });
           }
@@ -155,18 +200,16 @@ export default function ChatPage() {
 
     setIsTyping(true);
     try {
-      // 2. Trigger Server Action (Saves to DB & Gets Response)
+     
       const result = await askSpaceryBot(userMessage, savedLocation, locale);
       
       if (result.success && result.botResponded) {
         setMessages(prev => {
-          // ANTI-DUPLICATION CHECK:
-          // In some cases (especially mobile), Realtime might have already delivered the message.
-          // If a bot message with the same text already exists, don't add it again.
+    
           const isAlreadyThere = prev.some(m => 
             m.sender === "bot" && 
             m.text === result.message &&
-            !m.id.startsWith("opt-") // If it doesn't have 'opt-', it's the real one from DB
+            !m.id.startsWith("opt-") 
           );
 
           if (isAlreadyThere) return prev;
@@ -229,7 +272,19 @@ export default function ChatPage() {
           className="flex-1 overflow-y-auto overflow-x-hidden p-6 flex flex-col gap-6 custom-scrollbar scroll-smooth"
           style={{ maxHeight: "calc(75vh - 120px)" }}
         >
-          {messages.length === 0 ? (
+          {isLoading ? (
+            <div className="flex flex-col items-center justify-center h-full text-sky-400 font-mono text-center px-8">
+              <div className="w-12 h-12 mb-6 relative">
+                 <div className="absolute inset-0 border-2 border-sky-500/20 rounded-full"></div>
+                 <div className="absolute inset-0 border-t-2 border-sky-500 rounded-full animate-spin"></div>
+                 <div className="absolute inset-2 border-r-2 border-sky-400/50 rounded-full animate-spin-reverse opacity-50"></div>
+              </div>
+              <p className="text-[10px] uppercase tracking-[0.3em] animate-pulse">
+                Establishing uplink... <br />
+                <span className="opacity-40">Decrypting lab frequencies</span>
+              </p>
+            </div>
+          ) : messages.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-slate-600 font-mono text-center px-8">
               <div className="text-4xl mb-4 opacity-20">📡</div>
               <p className="text-xs uppercase tracking-[0.2em] max-w-xs leading-loose">
@@ -337,6 +392,13 @@ export default function ChatPage() {
         @keyframes scanline {
           0% { transform: translateY(-100%); }
           100% { transform: translateY(100%); }
+        }
+        @keyframes spin-reverse {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(-360deg); }
+        }
+        .animate-spin-reverse {
+          animation: spin-reverse 1.5s linear infinite;
         }
         .scanline::after {
           content: "";

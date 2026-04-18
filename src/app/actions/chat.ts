@@ -7,8 +7,7 @@ export async function getChatHistory() {
     const { data, error } = await supabase
       .from("messages")
       .select("*")
-      .order("created_at", { ascending: true })
-      .limit(50);
+      .order("created_at", { ascending: true });
 
     if (error) {
        console.error("Error fetching chat history:", error);
