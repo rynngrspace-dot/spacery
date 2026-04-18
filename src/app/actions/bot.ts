@@ -7,17 +7,27 @@ import { supabase } from "@/lib/supabase";
  * Detects location silently using Vercel Edge Headers.
  * No external API calls.
  */
-async function getClientLocation() {
+async function getClientLocation(locale: string = "en") {
   const headersList = await headers();
   
   const city = headersList.get("x-vercel-ip-city") || "Unknown City";
-  const country = headersList.get("x-vercel-ip-country") || "Earth";
+  const countryCode = headersList.get("x-vercel-ip-country");
+  
+  let country = "Earth";
+  if (countryCode) {
+    try {
+      const regionNames = new Intl.DisplayNames([locale], { type: "region" });
+      country = regionNames.of(countryCode) || "Earth";
+    } catch (e) {
+      country = countryCode;
+    }
+  }
   
   return { city, country };
 }
 
 export async function askSpaceryBot(message: string, clientLocation?: string, locale: string = "en") {
-  const { city, country } = await getClientLocation();
+  const { city, country } = await getClientLocation(locale);
   const serverLocation = `[${city}, ${country}]`;
   
   // Only use client-provided location if it's a real tag (not a placeholder).

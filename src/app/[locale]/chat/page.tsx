@@ -139,7 +139,7 @@ export default function ChatPage() {
 
     // Optimistic UI for User
     const tempId = "opt-" + Date.now();
-    const savedLocation = "[Detecting...]";
+    const savedLocation = "";
     
     setMessages(prev => [...prev, {
       id: tempId,
@@ -274,7 +274,7 @@ export default function ChatPage() {
                     })}
                   </span>
                 </div>
-                {msg.location && (
+                {msg.location && msg.location !== "" && (
                   <span className="mt-1 text-[9px] font-mono text-sky-500/50 uppercase tracking-widest">
                     {msg.location}
                   </span>
