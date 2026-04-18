@@ -60,56 +60,7 @@ export default function ChatPage() {
     };
     loadHistory();
 
-    // 2. Client-side High-Precision Geolocation
-    const detectLocation = async () => {
-       const fallbackIPLocation = async () => {
-         try {
-           const res = await fetch("https://ipapi.co/json/");
-           const data = await res.json();
-           if (data.city && data.country_name) {
-             localStorage.setItem("spacery_location", `[${data.city}, ${data.country_name}]`);
-           }
-         } catch (e) {
-           console.warn("IP Fallback location detection failed.");
-         }
-       };
-
-       if (!navigator.geolocation) {
-         await fallbackIPLocation();
-         return;
-       }
-
-       navigator.geolocation.getCurrentPosition(
-         async (position) => {
-           try {
-             const { latitude, longitude } = position.coords;
-             // BigDataCloud Free Client-side Reverse Geocoding
-             const res = await fetch(
-               `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=${locale}`
-             );
-             const data = await res.json();
-             
-             // Prioritize neighborhood/locality or city
-             const area = data.locality || data.city || data.principalSubdivision;
-             const country = data.countryName;
-             
-             if (area && country) {
-               localStorage.setItem("spacery_location", `[${area}, ${country}]`);
-             } else {
-               await fallbackIPLocation();
-             }
-           } catch (e) {
-             await fallbackIPLocation();
-           }
-         },
-         async (err) => {
-           console.warn("GPS Permission denied or unavailable. Using IP fallback.");
-           await fallbackIPLocation();
-         },
-         { timeout: 10000 }
-       );
-    };
-    detectLocation();
+    // 3. Realtime Subscription
 
     // 3. Realtime Subscription
     let channel: any;
@@ -188,7 +139,7 @@ export default function ChatPage() {
 
     // Optimistic UI for User
     const tempId = "opt-" + Date.now();
-    const savedLocation = localStorage.getItem("spacery_location") || "[Neo-Jakarta, Digital Realm]";
+    const savedLocation = "[Detecting...]";
     
     setMessages(prev => [...prev, {
       id: tempId,

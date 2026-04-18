@@ -4,46 +4,26 @@ import { headers } from "next/headers";
 import { supabase } from "@/lib/supabase";
 
 /**
- * Fetches user location based on IP.
- * Priority: Vercel Headers > ipapi.co (fallback)
+ * Detects location silently using Vercel Edge Headers.
+ * No external API calls.
  */
 async function getClientLocation() {
   const headersList = await headers();
   
-  // 1. Try Vercel Geoloc Headers
-  const vercelCity = headersList.get("x-vercel-ip-city");
-  const vercelCountry = headersList.get("x-vercel-ip-country");
+  const city = headersList.get("x-vercel-ip-city") || "Unknown City";
+  const country = headersList.get("x-vercel-ip-country") || "Earth";
   
-  if (vercelCity && vercelCountry) {
-    return { city: vercelCity, country: vercelCountry };
-  }
-
-  // 2. Fallback to external API (ipapi.co)
-  const clientIp = headersList.get("x-forwarded-for")?.split(",")[0].trim();
-  
-  if (clientIp && clientIp !== "::1" && clientIp !== "127.0.0.1") {
-    try {
-      const res = await fetch(`https://ipapi.co/${clientIp}/json/`, { next: { revalidate: 3600 } });
-      const data = await res.json();
-      if (data.city && data.country_name) {
-        return { city: data.city, country: data.country_name };
-      }
-    } catch (e) {
-      console.warn("Location fallback API failed:", e);
-    }
-  }
-
-  // 3. Mock for Local Dev / Unknown
-  return { city: "Neo-Jakarta", country: "Digital Realm" };
+  return { city, country };
 }
 
 export async function askSpaceryBot(message: string, clientLocation?: string, locale: string = "en") {
   const { city, country } = await getClientLocation();
   const serverLocation = `[${city}, ${country}]`;
   
-  // Use client-provided location if available (better for local dev), 
-  // otherwise fallback to server detection.
-  const locationTag = clientLocation || serverLocation;
+  // Only use client-provided location if it's a real tag (not a placeholder).
+  // Otherwise, fallback to Vercel's server-side detection.
+  const isPlaceholder = !clientLocation || clientLocation === "[Detecting...]" || clientLocation === "[Locating...]";
+  const locationTag = isPlaceholder ? serverLocation : clientLocation;
   
   const cleanMessage = message.replace(/@spacery/gi, "").trim();
   const hasTag = /@spacery/i.test(message);
