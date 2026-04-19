@@ -5,5 +5,12 @@ export default createMiddleware(routing);
 
 export const config = {
   // Match only internationalized pathnames
-  matcher: ['/', '/(id|en)/:path*', '/((?!api|_next|_vercel|.*\\..*).*)']
+  matcher: [
+    // Skip all internal paths (_next, _vercel, api)
+    // Skip all files (sitemap.xml, robots.txt, etc.)
+    '/((?!api|_next|_vercel|sitemap\\.xml|robots\\.xml|robots\\.txt|.*\\..*).*)',
+    // Optional: Only run on root or localized paths
+    '/',
+    '/(id|en)/:path*'
+  ]
 };
