@@ -52,127 +52,127 @@
   "ToolsData": {
     "image-compressor": {
       "title": "Kompresor Gambar",
-      "desc": "Perkecil ukuran gambar kamu biar nggak keberatan massa saat terbang."
+      "desc": "Mengecilkan ukuran file tanpa merusak kualitas visual. Cocok buat foto resolusi tinggi yang hobi makan penyimpanan (atau ruang-waktu)."
     },
     "image-filters": {
       "title": "Filter Gambar",
-      "desc": "Kasih bumbu visual: hitam putih, terang, atau burem biar estetik."
+      "desc": "Terapkan efek sinematik dan peningkatan visual. Karena setiap foto berhak tampil menawan sebelum dikirim ke kehampaan."
     },
     "image-resizer": {
       "title": "Pengecil Ukuran",
-      "desc": "Ubah dimensi tanpa bikin gambar gepeng. Nggak ada muka lonjong di sini."
+      "desc": "Sesuaikan dimensi gambar dengan ukuran yang Anda butuhkan. Ubah ukuran dengan presisi agar tidak melar seperti lubang hitam."
     },
     "image-cropper": {
       "title": "Pemotong Tepi",
-      "desc": "Buang bagian yang nggak penting dan fokus ke objek utama."
+      "desc": "Potong dan bingkai gambar Anda dengan akurasi piksel. Buang gangguan latar belakang lebih cepat dari laser menembus debu bintang."
     },
     "svg-optimizer": {
-      "title": "Diet SVG",
-      "desc": "Bikin file vektor kamu langsing biar web makin kenceng."
+      "title": "Pengoptimal SVG",
+      "desc": "Bersihkan dan perkecil jalur vektor untuk performa tinggi. Memberikan diet ketat pada file SVG Anda yang keberatan massa."
     },
     "image-converter": {
-      "title": "Tukang Ganti Format",
-      "desc": "Ganti-ganti antar JPG, PNG, dan WEBP sesuka hati di browser."
+      "title": "Konverter Gambar",
+      "desc": "Ganti format antara JPG, PNG, dan WEBP secara instan. Ubah identitas gambar lebih cepat dari pengubah wujud galaksi."
     },
     "video-compressor": {
       "title": "Kompresor Video",
-      "desc": "Bikin video kamu ramping buat dikirim ke galaksi sebelah."
+      "desc": "Perkecil ukuran file video agar mudah dibagikan tanpa merusak alur cerita. Bikin video 4K jadi ringan buat dikirim lewat sinyal lemah."
     },
     "video-cutter": {
-      "title": "Penembak Adegan",
-      "desc": "Potong video dengan presisi bedah. Sisakan bagian yang terbaik aja."
+      "title": "Pemotong Video",
+      "desc": "Potong klip dengan presisi milidetik. Simpan bagian terbaik saja; buang yang membosankan seperti laporan misi yang bertele-tele."
     },
     "video-to-gif": {
-      "title": "Pembuat GIF",
-      "desc": "Ubah video jadi koleksi meme atau animasi loop yang ikonik."
+      "title": "Konverter Video ke GIF",
+      "desc": "Ubah klip video menjadi animasi loop yang ringan. Ciptakan potongan sejarah internet dalam satu putaran abadi."
     },
     "video-muter": {
-      "title": "Protokol Hening",
-      "desc": "Hapus suara video secara instan. Sstt, kita lagi butuh ketenangan."
+      "title": "Penghilang Suara Video",
+      "desc": "Hapus trek audio dari video Anda secara instan. Sempurna saat \"hening\" adalah satu-satunya syarat misi."
     },
     "pdf-compressor": {
-      "title": "PDF Crusher",
-      "desc": "Lipat PDF kamu sekecil mungkin biar muat di kantong antariksa."
+      "title": "Kompresor PDF",
+      "desc": "Perkecil dan optimalkan dokumen PDF untuk pengiriman cepat. Cukup mungil buat disimpan dalam dimensi saku."
     },
     "pdf-merge": {
-      "title": "Lem PDF",
-      "desc": "Tempel banyak dokumen jadi satu kesatuan yang rapi dan kuat."
+      "title": "Penggabung PDF",
+      "desc": "Satukan banyak dokumen menjadi satu file yang terorganisir. Gabungkan tanpa perlu belepotan lem antariksa beneran."
     },
     "image-to-pdf": {
-      "title": "Pembungkus PDF",
-      "desc": "Bungkus gambar-gambar kamu jadi satu file PDF yang cakep."
+      "title": "Konverter Gambar ke PDF",
+      "desc": "Bungkus aset visual Anda menjadi dokumen PDF profesional. Merapikan foto-foto Anda dalam paket digital yang cantik."
     },
     "docx-compressor": {
-      "title": "Penciut Dokumen Word",
-      "desc": "Kecilin ukuran file Word biar nggak menuh-menuhin bagasi transmisi."
+      "title": "Kompresor Dokumen Word",
+      "desc": "Optimalkan file Microsoft Word agar lebih mudah dibagikan. Ringankan beban tumpukan berkas birokrasi galaksi Anda."
     },
     "json-formatter": {
       "title": "Perapi JSON",
-      "desc": "Bikin data JSON yang berantakan jadi rapi kayak barisan robot."
+      "desc": "Percantik atau perkecil struktur data JSON Anda. Ubah kode berantakan jadi barisan droid yang tertata rapi."
     },
     "css-minifier": {
-      "title": "Penghancur Kode CSS",
-      "desc": "Remas CSS kamu sampe jadi satu baris logika aja biar makin enteng."
+      "title": "Pengecil CSS",
+      "desc": "Hapus spasi dan komentar dari stylesheet Anda. Remas kode Anda menjadi satu baris logika berkinerja tinggi."
     },
     "base64-converter": {
-      "title": "Cincin Kode Base64",
-      "desc": "Ubah teks jadi kode rahasia atau sebaliknya buat transmisi senyap."
+      "title": "Konverter Base64",
+      "desc": "Encode atau decode data menjadi string yang aman untuk URL. Terjemahkan rahasia Anda ke dalam dialek digital universal."
     },
     "cosmic-password": {
-      "title": "Pembuat Benteng",
-      "desc": "Bikin password yang saking kuatnya, robot paling pinter pun males nebaknya."
+      "title": "Pembuat Kata Sandi",
+      "desc": "Buat kata sandi acak yang aman secara kriptografi. Saking kuatnya, alien telepati pun bakal pusing menebak nama kucing Anda."
     },
     "case-converter": {
-      "title": "Penukar Huruf",
-      "desc": "Ganti gaya tulisan: HURUF BESAR, huruf kecil, atau apa pun versinya."
+      "title": "Pengubah Huruf",
+      "desc": "Tukar antara HURUF BESAR, huruf kecil, dan camelCase. Format transmisi Anda agar mudah dibaca oleh markas pusat."
     },
     "url-pulse-checker": {
-      "title": "Perapi Link",
-      "desc": "Rapikan link panjang yang berantakan jadi enak diliat pas dikirim."
+      "title": "Encoder & Decoder URL",
+      "desc": "Bersihkan URL yang berantakan untuk link yang lebih aman. Mengurai benang kusut spageti internet yang panjang."
     },
     "reading-refiner": {
-      "title": "Penglihatan Bionik",
-      "desc": "Hack otak kamu biar baca lebih cepet pake metode bolding otomatis."
+      "title": "Alat Baca Bionik",
+      "desc": "Tingkatkan fokus dan kecepatan baca dengan menebalkan awal kata. Hack otak Anda untuk konsumsi data berkecepatan tinggi."
     },
     "regex-tester": {
-      "title": "Teka-teki Pola RegEx",
-      "desc": "Tes Regular Expression kamu di sini. Nggak usah tebak-tebakan lagi."
+      "title": "Penguji RegEx",
+      "desc": "Debug Regular Expression dengan pencocokan pola waktu nyata. Intip matriks dan temukan alasan kenapa logika Anda mogok."
     },
     "random-choice-maker": {
-      "title": "Penentu Nasib",
-      "desc": "Biar alam semesta yang milih. Masukin list, terus biarkan void yang nentuin."
+      "title": "Penentu Pilihan Acak",
+      "desc": "Biarkan takdir yang memilihkan item dari daftar Anda. Biarkan void yang pusing agar Anda bisa santai."
     },
     "unit-converter": {
-      "title": "Unit Swapper",
-      "desc": "Ubah satuan apa aja, dari inci sampai tahun cahaya, secara instan."
+      "title": "Konverter Satuan",
+      "desc": "Terjemahkan ukuran antara skala standar dan astronomi. Dari milimeter ke megaparsec hanya dalam satu kedipan mata."
     },
     "age-calculator": {
-      "title": "Pelacak Waktu Hidup",
-      "desc": "Udah berapa detik ya kamu mengorbit matahari? Cek presisinya di sini."
+      "title": "Kalkulator Umur",
+      "desc": "Tentukan usia Anda dengan presisi sampai hitungan hari. Sudah berapa kali Anda mengorbit matahari? (Jangan merasa tua dulu)."
     },
     "discount-calculator": {
-      "title": "Pencari Diskon Galaksi",
-      "desc": "itung diskon pas lagi ada sale galaksi biar dompet nggak bolong."
+      "title": "Kalkulator Diskon",
+      "desc": "Hitung harga akhir dan total penghematan saat belanja. Jangan sampai kemahalan beli bahan bakar roket lagi."
     },
     "currency-converter": {
-      "title": "Penukar Cuan",
-      "desc": "Lihat nilai tukar mata uang dunia secara real-time biar nggak rugi bandar."
+      "title": "Konverter Mata Uang",
+      "desc": "Cek nilai tukar waktu nyata untuk perdagangan global. Tukar cuan Anda lebih cepat dari pedagang bintang lokal."
     },
     "color-palette": {
-      "title": "Pelukis Nuansa Warna",
-      "desc": "Bikin kombinasi warna yang cantik buat proyek kamu selanjutnya."
+      "title": "Pembuat Palet Warna",
+      "desc": "Ciptakan kombinasi warna yang harmonis untuk misi desain Anda. Mewarnai kehampaan dengan kode hex yang indah."
     },
     "qr-generator": {
-      "title": "Pembuat Kotak Ajaib QR",
-      "desc": "Bikin QR Code buat transmisi data instan ke perangkat lain."
+      "title": "Pembuat Kode QR",
+      "desc": "Buat kode QR berkualitas tinggi untuk pengiriman data instan. Kotak logika untuk para penjelajah yang penasaran."
     },
     "glassmorphism-generator": {
-      "title": "Pembuat Kaca Buram",
-      "desc": "Desain UI kaca buram yang estetik pake kode CSS live."
+      "title": "Pembuat Glassmorphism",
+      "desc": "Desain komponen UI kaca buram dengan kode CSS langsung. Tampilan beku untuk stasiun luar angkasa yang canggih."
     },
     "color-extractor": {
-      "title": "Droid Pengambil Warna",
-      "desc": "Ambil kode warna hex dari gambar apa aja dalam sekejap."
+      "title": "Ekstraktor Warna",
+      "desc": "Ambil kode hex dominan dari gambar apa pun seketika. Menyedot warna langsung dari nebula (atau sekadar file JPG)."
     }
   },
   "Coffee": {

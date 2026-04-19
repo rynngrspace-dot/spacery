@@ -51,128 +51,128 @@
   },
   "ToolsData": {
     "image-compressor": {
-      "title": "Image Squeezer",
-      "desc": "Shrink your images so they don't take up too much space-mass."
+      "title": "Image Compressor",
+      "desc": "Reduces file size while maintaining visual quality. Perfect for when your high-res photos are eating too much disk space (or space-time)."
     },
     "image-filters": {
-      "title": "Vibe Filters",
-      "desc": "Add some visual spice: black/white, bright, or blurry for that aesthetic look."
+      "title": "Image Filters",
+      "desc": "Apply cinematic effects and visual enhancements. Because every photo deserves a glow-up before being sent into the void."
     },
     "image-resizer": {
-      "title": "Aspect Resizer",
-      "desc": "Change dimensions while keeping things in proportion. No squashed faces here."
+      "title": "Image Resizer",
+      "desc": "Scale your visuals to the exact dimensions you need. Resize with precision, so your images aren't as stretched as a black hole's event horizon."
     },
     "image-cropper": {
-      "title": "Edge Trimmer",
-      "desc": "Cut out the noise and focus on what matters in your visuals."
+      "title": "Image Cropper",
+      "desc": "Trim and frame your images with pixel-perfect accuracy. Cut out the background noise faster than a laser through stardust."
     },
     "svg-optimizer": {
-      "title": "SVG Diet",
-      "desc": "Strip away the bloat from your vector files for a faster web."
+      "title": "SVG Optimizer",
+      "desc": "Clean and minify vector paths for high-speed performance. Putting your heavy SVG files on a strict data-diet."
     },
     "image-converter": {
-      "title": "Format Shifter",
-      "desc": "Switch between JPG, PNG, and WEBP like a galactic changeling."
+      "title": "Image Converter",
+      "desc": "Swiftly switch between JPG, PNG, and WEBP formats. Change image identities faster than a galactic shapeshifter."
     },
     "video-compressor": {
-      "title": "Video Shrinker",
-      "desc": "High-efficiency diet for your heavy video files."
+      "title": "Video Compressor",
+      "desc": "Shrink video files for easier sharing without losing the plot. Making your 4K footage light enough for a low-bandwidth probe."
     },
     "video-cutter": {
-      "title": "Scene Sniper",
-      "desc": "Trim your footage with surgical precision. Only the best parts survive."
+      "title": "Video Cutter",
+      "desc": "Trim clips with millisecond precision. Keep only the best scenes; truncate the boring ones like a mission report."
     },
     "video-to-gif": {
-      "title": "GIF-inator",
-      "desc": "Turn your clips into looping pieces of internet history."
+      "title": "Video to GIF Converter",
+      "desc": "Transform clips into lightweight, looping animations. Create bits of internet history one loop at a time."
     },
     "video-muter": {
-      "title": "Silence Protocol",
-      "desc": "Remove audio tracks instantly. Shhh, we're working here."
+      "title": "Video Muter",
+      "desc": "Strip audio tracks from your videos instantly. Perfect for when silence is the only mission requirement."
     },
     "pdf-compressor": {
-      "title": "PDF Crusher",
-      "desc": "Fold your PDFs until they're small enough to fit in a pocket dimension."
+      "title": "PDF Compressor",
+      "desc": "Compress and optimize PDF documents for rapid transmission. Small enough to fit in a pocket dimension."
     },
     "pdf-merge": {
-      "title": "PDF Glue",
-      "desc": "Stick multiple documents together into one consolidated masterpiece."
+      "title": "PDF Merger",
+      "desc": "Consolidate multiple documents into a single, organized file. Stick them together without the mess of actual cosmic glue."
     },
     "image-to-pdf": {
-      "title": "Paper-izer",
-      "desc": "Wrap your images into a shiny new PDF document."
+      "title": "Image to PDF Converter",
+      "desc": "Bundle your visual assets into a professional PDF document. Wrapping your photos in a neat digital package."
     },
     "docx-compressor": {
-      "title": "Word Shrinker",
-      "desc": "Minimize document mass for faster galactic delivery."
+      "title": "Word Document Compressor",
+      "desc": "Efficiently optimize Microsoft Word files for sharing. Lighten the load of your intergalactic paperwork."
     },
     "json-formatter": {
-      "title": "JSON Untangler",
-      "desc": "Make messy JSON data look like a neat row of robots."
+      "title": "JSON Formatter",
+      "desc": "Prettify or minify your JSON data structures. Turn your messy code into a neat row of well-behaved droids."
     },
     "css-minifier": {
-      "title": "Code Crusher",
-      "desc": "Squeeze your CSS until it's as small as a single line of logic."
+      "title": "CSS Minifier",
+      "desc": "Strip whitespace and comments from your stylesheets. Crush your code into a high-performance single line of logic."
     },
     "base64-converter": {
-      "title": "Decoder Ring",
-      "desc": "Convert strings to Base64 and back. Top-secret data only."
+      "title": "Base64 Converter",
+      "desc": "Encode or decode data into clean, URL-safe strings. Translate your secrets into universal digital dialect."
     },
     "cosmic-password": {
-      "title": "Fortress Maker",
-      "desc": "Generate passwords so strong even a supercomputer would give up."
+      "title": "Password Generator",
+      "desc": "Create cryptographically secure, random passwords. So strong even a telepathic alien couldn't guess your pet's name."
     },
     "case-converter": {
-      "title": "Case Swapper",
-      "desc": "Switch between UPPERCASE, lowercase, and everything in between."
+      "title": "Text Case Converter",
+      "desc": "Swap between UPPERCASE, lowercase, and camelCase. Format your transmissions for maximum clarity."
     },
     "url-pulse-checker": {
-      "title": "Link Untangler",
-      "desc": "Clean up those long, messy URLs into something decent."
+      "title": "URL Encoder & Decoder",
+      "desc": "Clean up messy URLs for safer, prettier links. Untangling long strings of internet spaghetti."
     },
     "reading-refiner": {
-      "title": "Bionic Vision",
-      "desc": "Hack your brain to read faster by bolding the start of every word."
+      "title": "Bionic Reading Tool",
+      "desc": "Enhance focus and speed by bolding the start of every word. Hack your brain for high-speed data consumption."
     },
     "regex-tester": {
-      "title": "Pattern Puzzler",
-      "desc": "Live feedback for your Regular Expressions. No more guessing."
+      "title": "RegEx Tester",
+      "desc": "Debug Regular Expressions with real-time Pattern matching. No more guessing why your logic broke—peek into the matrix."
     },
     "random-choice-maker": {
-      "title": "Fate Decider",
-      "desc": "Let the void choose. Pick a random item from your list."
+      "title": "Random Choice Maker",
+      "desc": "Let fate decide—randomly pick an item from your list. Let the void choose so you don't have to."
     },
     "unit-converter": {
-      "title": "Unit Swapper",
-      "desc": "Convert anything from inches to light-years in a blink."
+      "title": "Unit Converter",
+      "desc": "Translate measurements between standard and astronomical scales. From millimeters to megaparsecs in a single blink."
     },
     "age-calculator": {
-      "title": "Time Tracker",
-      "desc": "Exactly how many seconds have you been orbiting the sun?"
+      "title": "Age Calculator",
+      "desc": "Determine your exact age down to the day. Exactly how many times have you orbited the sun? (Don't feel too old)."
     },
     "discount-calculator": {
-      "title": "Deal Finder",
-      "desc": "Calculate savings during galactic sales. Don't overpay for that rocket."
+      "title": "Discount Calculator",
+      "desc": "Calculate final prices and total savings during sales. Don't overpay for that rocket fuel ever again."
     },
     "currency-converter": {
-      "title": "Money Shifter",
-      "desc": "Swap between currencies with live exchange rates from across the globe."
+      "title": "Currency Converter",
+      "desc": "Check real-time exchange rates for global commerce. Swap your coins faster than local star-traders."
     },
     "color-palette": {
-      "title": "Vibe Painter",
-      "desc": "Generate beautiful color schemes for your next big project."
+      "title": "Color Palette Generator",
+      "desc": "Create harmonious color schemes for your design missions. Painting the void with beautiful hex codes."
     },
     "qr-generator": {
-      "title": "Code Square Maker",
-      "desc": "Create high-quality QR codes for instant data beaming."
+      "title": "QR Code Generator",
+      "desc": "Generate high-quality QR codes for instant data beaming. A square of logic for the curious traveler."
     },
     "glassmorphism-generator": {
-      "title": "Frosted Glass Maker",
-      "desc": "Design gorgeous frosty UI components with live CSS code."
+      "title": "Glassmorphism Generator",
+      "desc": "Design frosted glass UI components with live CSS output. Frosted visuals for the most sophisticated space stations."
     },
     "color-extractor": {
-      "title": "Color Picker Droid",
-      "desc": "Grab the exact hex codes from any image instantly."
+      "title": "Color Extractor",
+      "desc": "Pick dominant hex codes from any image instantly. Sucking the color right out of a nebula (or a JPG)."
     }
   },
   "Coffee": {
