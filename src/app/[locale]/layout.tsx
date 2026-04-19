@@ -30,7 +30,7 @@ export async function generateMetadata({params}: {params: Promise<{locale: strin
       template: `%s | ${t('title')}`
     },
     verification: {
-      google: "e7_Fp6RI0cbAjk9lb6RLEj8VTmEaVDktOFRTMzhCiCM",
+      google: "5SPQlTe3GyIPZsj4yOKLHqto11DE_fVND0hg6edpHpo",
     },
     description: t('description'),
     keywords: ["free online tools", "image compressor", "pdf to word", "png to jpg", "video editor online", "developer tools", "spacery"],
