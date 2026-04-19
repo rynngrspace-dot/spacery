@@ -21,13 +21,13 @@ export default function GreetingTyping() {
   ];
 
   return (
-    <h2 className="mb-8 font-mono text-xl sm:text-2xl font-medium tracking-[1px] text-sky-400 h-8 flex items-center justify-center opacity-0 animate-[fadeUp_0.8s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards]">
+    <h1 className="mb-8 font-mono text-xl sm:text-2xl font-medium tracking-[1px] text-sky-400 h-8 flex items-center justify-center opacity-0 animate-[fadeUp_0.8s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards]">
       <TypeAnimation
         sequence={sequence}
         wrapper="span"
         speed={50}
         repeat={Infinity}
       />
-    </h2>
+    </h1>
   );
 }
