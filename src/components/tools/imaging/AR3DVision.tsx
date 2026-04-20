@@ -152,8 +152,14 @@ export default function AR3DVision() {
         <Canvas 
           ref={canvasRef}
           shadows 
-          dpr={[1, 2]} 
-          gl={{ preserveDrawingBuffer: true, alpha: true }}
+          dpr={1} 
+          gl={{ 
+            preserveDrawingBuffer: true, 
+            alpha: true,
+            shadowMapType: 1,
+            powerPreference: "high-performance",
+            antialias: false
+          }}
         >
           <Suspense fallback={null}>
             <PerspectiveCamera makeDefault position={[0, 0, 5]} fov={45} />
