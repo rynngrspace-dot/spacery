@@ -14,7 +14,7 @@ import {
 } from "@react-three/drei";
 import { useTranslations } from "next-intl";
 
-// Sample models from Khronos / Google
+// Home Staging Catalog
 const MODELS = [
   { 
     name: "Modern Chair", 
@@ -22,9 +22,19 @@ const MODELS = [
     scale: 2.5
   },
   { 
-    name: "Astronaut", 
-    url: "https://raw.githubusercontent.com/google/model-viewer/master/packages/shared-assets/models/Astronaut.glb",
-    scale: 1.5
+    name: "Luxury Sofa", 
+    url: "https://raw.githubusercontent.com/google/model-viewer/master/packages/shared-assets/models/Sofa.glb",
+    scale: 0.05 // Google's sofa model often has large world coordinates
+  },
+  { 
+    name: "Antique Lantern", 
+    url: "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/main/2.0/Lanterne/glTF-Binary/Lanterne.glb",
+    scale: 2.0
+  },
+  { 
+    name: "Cactus Flower", 
+    url: "https://raw.githubusercontent.com/google/model-viewer/master/packages/shared-assets/models/Cactus.glb",
+    scale: 4.0
   }
 ];
 
@@ -32,7 +42,7 @@ function Model({ url, scale }: { url: string; scale: number }) {
   const { scene } = useGLTF(url);
   return (
     <Float speed={1.5} rotationIntensity={0.5} floatIntensity={0.5}>
-      <primitive object={scene} scale={scale} />
+      <primitive object={scene} scale={[scale, scale, scale]} />
     </Float>
   );
 }
@@ -44,16 +54,24 @@ export default function AR3DVision() {
   const [isRealityMode, setIsRealityMode] = useState(false);
   const [stream, setStream] = useState<MediaStream | null>(null);
   
+  // Zoom & Hardware Controls
+  const [zoom, setZoom] = useState(1);
+  const [zoomRange, setZoomRange] = useState({ min: 1, max: 1 });
+  const [isZoomSupported, setIsZoomSupported] = useState(false);
+  
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const videoTrackRef = useRef<MediaStreamTrack | null>(null);
 
   const toggleRealityMode = async () => {
     if (isRealityMode) {
       if (stream) {
         stream.getTracks().forEach(track => track.stop());
         setStream(null);
+        videoTrackRef.current = null;
       }
       setIsRealityMode(false);
+      setIsZoomSupported(false);
     } else {
       // Check for Secure Context / MediaDevices availability
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
@@ -62,17 +80,26 @@ export default function AR3DVision() {
       }
 
       try {
-        // More flexible constraints to support both mobile and desktop
         const constraints = {
           video: { 
             facingMode: { ideal: "environment" },
-            width: { ideal: 1280 },
-            height: { ideal: 720 }
+            width: { ideal: 1920 }, // Prefer higher res for staging
+            height: { ideal: 1080 }
           }
         };
         
-        console.log("Requesting camera with constraints:", constraints);
         const newStream = await navigator.mediaDevices.getUserMedia(constraints);
+        const track = newStream.getVideoTracks()[0];
+        videoTrackRef.current = track;
+
+        // Check for zoom capabilities (Chromium based typically)
+        // @ts-ignore - getCapabilities is not in standard TS lib yet
+        const capabilities = track.getCapabilities?.() || {};
+        if (capabilities.zoom) {
+          setIsZoomSupported(true);
+          setZoomRange({ min: capabilities.zoom.min, max: capabilities.zoom.max });
+          setZoom(capabilities.zoom.min);
+        }
         
         setStream(newStream);
         if (videoRef.current) {
@@ -81,20 +108,18 @@ export default function AR3DVision() {
         setIsRealityMode(true);
       } catch (err) {
         console.error("Camera access failed:", err);
-        // Fallback for very basic cameras
-        if (err instanceof Error && (err.name === 'OverconstrainedError' || err.name === 'NotFoundError')) {
-          try {
-             const basicStream = await navigator.mediaDevices.getUserMedia({ video: true });
-             setStream(basicStream);
-             if (videoRef.current) videoRef.current.srcObject = basicStream;
-             setIsRealityMode(true);
-             return;
-          } catch (retryErr) {
-             console.error("Retry failed:", retryErr);
-          }
-        }
-        alert(`Camera access failed: ${err instanceof Error ? err.name : "Unknown Error"}. Please ensure you have granted permissions and no other app is using the camera.`);
+        alert(`Camera access failed: ${err instanceof Error ? err.name : "Unknown Error"}.`);
       }
+    }
+  };
+
+  const handleZoomChange = (value: number) => {
+    setZoom(value);
+    if (videoTrackRef.current) {
+      // @ts-ignore
+      videoTrackRef.current.applyConstraints({
+        advanced: [{ zoom: value }]
+      }).catch(err => console.error("Zoom apply failed:", err));
     }
   };
 
@@ -245,27 +270,48 @@ export default function AR3DVision() {
            {/* Navigation Hint */}
            <div className="bg-[#010205]/60 border border-white/10 px-6 py-2 rounded-full backdrop-blur-xl">
               <span className="text-[9px] font-mono text-slate-300 uppercase tracking-[0.3em]">
-                {isRealityMode ? 'Place object in your room' : 'Drag to rotate // Scroll to zoom'}
+                {isRealityMode ? 'Place furniture in your room' : 'Drag to rotate // Scroll to zoom'}
               </span>
            </div>
 
            {/* Model Selector */}
-           <div className="pointer-events-auto flex items-center gap-3 p-2 bg-[#060b19]/80 backdrop-blur-2xl border border-white/10 rounded-3xl">
+           <div className="pointer-events-auto flex items-center gap-2 p-1.5 bg-[#060b19]/80 backdrop-blur-2xl border border-white/10 rounded-[28px] max-w-full overflow-x-auto no-scrollbar">
               {MODELS.map((model, idx) => (
                 <button
                   key={idx}
                   onClick={() => setActiveModelIndex(idx)}
-                  className={`px-6 py-3 rounded-2xl text-[10px] font-mono transition-all duration-300 uppercase tracking-widest ${
+                  className={`whitespace-nowrap px-5 py-2.5 rounded-2xl text-[9px] font-mono transition-all duration-300 uppercase tracking-widest ${
                     activeModelIndex === idx 
                     ? "bg-sky-500 text-white shadow-[0_0_20px_rgba(56,189,248,0.3)]" 
                     : "text-slate-400 hover:bg-white/5 hover:text-white"
                   }`}
                 >
-                  {model.name.split(' ')[0]}
+                  {model.name}
                 </button>
               ))}
            </div>
         </div>
+
+        {/* Zoom Control Overlay - Floating Vertical Slider */}
+        {isRealityMode && isZoomSupported && (
+          <div className="absolute right-6 top-1/2 -translate-y-1/2 flex flex-col items-center gap-4 pointer-events-auto bg-[#010205]/40 backdrop-blur-xl border border-white/10 p-4 rounded-full group/zoom">
+            <span className="text-[9px] font-mono text-sky-400 font-bold">Z</span>
+            <div className="h-40 w-8 relative flex items-center justify-center">
+              <input 
+                type="range"
+                min={zoomRange.min}
+                max={zoomRange.max}
+                step={0.1}
+                value={zoom}
+                onChange={(e) => handleZoomChange(parseFloat(e.target.value))}
+                className="absolute w-40 -rotate-90 appearance-none bg-transparent cursor-pointer
+                  [&::-webkit-slider-runnable-track]:bg-white/10 [&::-webkit-slider-runnable-track]:rounded-full [&::-webkit-slider-runnable-track]:h-1
+                  [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:bg-sky-500 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:-mt-[6px] [&::-webkit-slider-thumb]:shadow-[0_0_10px_rgba(56,189,248,0.5)]"
+              />
+            </div>
+            <span className="text-[9px] font-mono text-slate-400">{zoom.toFixed(1)}x</span>
+          </div>
+        )}
       </div>
 
       {/* Overlay Glows */}
