@@ -116,10 +116,9 @@ export default function AR3DVision() {
   const handleZoomChange = (value: number) => {
     setZoom(value);
     if (videoTrackRef.current) {
-      // @ts-ignore
       videoTrackRef.current.applyConstraints({
         advanced: [{ zoom: value }]
-      }).catch(err => console.error("Zoom apply failed:", err));
+      } as any).catch(err => console.error("Zoom apply failed:", err));
     }
   };
 
