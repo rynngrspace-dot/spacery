@@ -93,7 +93,7 @@ export default function AR3DVision() {
              console.error("Retry failed:", retryErr);
           }
         }
-        alert("Camera access failed. Please ensure you have granted permissions and no other app is using the camera.");
+        alert(`Camera access failed: ${err instanceof Error ? err.name : "Unknown Error"}. Please ensure you have granted permissions and no other app is using the camera.`);
       }
     }
   };
