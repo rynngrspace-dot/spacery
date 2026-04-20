@@ -151,7 +151,7 @@ export default function AR3DVision() {
       <div className={`absolute inset-0 z-10 ${isRealityMode ? 'bg-transparent' : 'bg-slate-950/40'}`}>
         <Canvas 
           ref={canvasRef}
-          shadows="pcf" 
+          shadows="percentage" 
           dpr={1} 
           gl={{ 
             preserveDrawingBuffer: true, 

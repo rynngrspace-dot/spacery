@@ -6,9 +6,19 @@ export interface Tool {
   desc: string;
   category: ToolCategory;
   isComingSoon?: boolean;
+  isNew?: boolean;
 }
 
 export const TOOLS: Tool[] = [
+  // --- New & Featured ---
+  {
+    slug: "arvision",
+    title: "3D AR Vision",
+    desc: "Visualize premium 3D models in your own space using Augmented Reality. Perfect for virtual staging and spatial planning.",
+    category: "Imaging",
+    isNew: true
+  },
+
   // --- Imaging ---
   { 
     slug: "image-compressor", 

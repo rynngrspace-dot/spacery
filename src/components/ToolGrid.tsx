@@ -19,11 +19,11 @@ export default function ToolGrid({ limit }: ToolGridProps) {
   const container = useRef<HTMLDivElement>(null);
 
   let featuredTools = [
+    TOOLS.find(t => t.slug === "arvision"),
     TOOLS.find(t => t.slug === "image-compressor"),
     TOOLS.find(t => t.slug === "video-compressor"),
     TOOLS.find(t => t.slug === "pdf-compressor"),
     TOOLS.find(t => t.slug === "json-formatter"),
-    TOOLS.find(t => t.slug === "unit-converter"),
     TOOLS.find(t => t.slug === "image-filters"),
   ].filter(Boolean);
 
@@ -93,7 +93,10 @@ export default function ToolGrid({ limit }: ToolGridProps) {
               
               <div className="flex justify-between items-start mb-6">
                 <span className="text-[10px] font-mono text-sky-400/60 uppercase tracking-[0.2em] border border-sky-400/20 px-3 py-1 rounded-full">{tool.category}</span>
-                {tool.isComingSoon && <span className="text-[8px] font-mono text-purple-400 uppercase tracking-widest px-2 py-0.5 border border-purple-500/30 rounded">Coming Soon</span>}
+                <div className="flex gap-2">
+                  {tool.isNew && <span className="text-[8px] font-mono text-sky-400 uppercase tracking-widest px-2 py-0.5 border border-sky-500/30 rounded bg-sky-500/10">New</span>}
+                  {tool.isComingSoon && <span className="text-[8px] font-mono text-purple-400 uppercase tracking-widest px-2 py-0.5 border border-purple-500/30 rounded">Coming Soon</span>}
+                </div>
               </div>
 
               <h3 className="relative z-10 text-xl md:text-2xl font-bold mb-4 text-slate-100 group-hover:text-sky-400 transition-colors duration-300">
