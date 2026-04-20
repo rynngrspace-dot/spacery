@@ -137,15 +137,15 @@ export default function AR3DVision() {
     <div className="flex flex-col w-full h-[75vh] md:h-[80vh] bg-[#010205]/40 rounded-[32px] overflow-hidden border border-white/5 relative group">
       
       {/* Reality Mode - Video Feed Layer */}
-      {isRealityMode && (
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover z-0"
-        />
-      )}
+      <video
+        ref={videoRef}
+        autoPlay
+        muted
+        playsInline
+        className={`absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-700 ${
+          isRealityMode ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+      />
 
       {/* 3D Canvas Layer */}
       <div className={`absolute inset-0 z-10 ${isRealityMode ? 'bg-transparent' : 'bg-slate-950/40'}`}>
