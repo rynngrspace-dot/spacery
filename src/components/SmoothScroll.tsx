@@ -16,6 +16,15 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
   useEffect(() => {
     if (!lenis) return;
 
+    // Force browser to stop trying to restore scroll position
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+
+    // Immediately jump to top on load/mount
+    window.scrollTo(0, 0);
+    lenis.scrollTo(0, { immediate: true });
+
     // Sync ScrollTrigger with Lenis
     lenis.on('scroll', ScrollTrigger.update);
 

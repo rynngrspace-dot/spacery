@@ -1,25 +1,48 @@
 "use server";
 
+import { supabase } from "@/lib/supabase";
+
 export async function getCoffeeCount() {
-  const GET_URL = "https://api.counterapi.dev/v1/spacery/java-coffee-buzz";
   try {
-    const res = await fetch(GET_URL, { cache: 'no-store' });
-    const data = await res.json();
-    return data?.count ?? 0;
+    const { data, error } = await supabase
+      .from('site_stats')
+      .select('value')
+      .eq('key', 'java_coffee_buzz')
+      .single();
+
+    if (error) throw error;
+    return data?.value ?? 0;
   } catch (error) {
-    console.error("Error fetching coffee count from server:", error);
+    console.error("Error fetching coffee count from Supabase:", error);
     return 0;
   }
 }
 
 export async function incrementCoffeeCount() {
-  const API_URL = "https://api.counterapi.dev/v1/spacery/java-coffee-buzz/up";
   try {
-    const res = await fetch(API_URL, { cache: 'no-store' });
-    const data = await res.json();
-    return data?.count ?? null;
+    // Fetch current value
+    const { data: current, error: fetchError } = await supabase
+      .from('site_stats')
+      .select('value')
+      .eq('key', 'java_coffee_buzz')
+      .single();
+
+    if (fetchError) throw fetchError;
+
+    const newValue = (current?.value || 0) + 1;
+
+    // Update with new value
+    const { data, error: updateError } = await supabase
+      .from('site_stats')
+      .update({ value: newValue })
+      .eq('key', 'java_coffee_buzz')
+      .select('value')
+      .single();
+
+    if (updateError) throw updateError;
+    return data?.value ?? null;
   } catch (error) {
-    console.error("Error incrementing coffee count from server:", error);
+    console.error("Error incrementing coffee count in Supabase:", error);
     return null;
   }
 }

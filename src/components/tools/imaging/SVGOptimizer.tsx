@@ -7,20 +7,33 @@ export default function SVGOptimizer() {
   const [output, setOutput] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const optimizeSVG = () => {
+  const optimizeSVG = async () => {
     if (!input.trim()) return;
     setIsProcessing(true);
     
-    setTimeout(() => {
-      // Basic simulation of minification/cleaning
-      const optimized = input
-        .replace(/<!--[\s\S]*?-->/g, "") // Remove comments
-        .replace(/>\s+</g, "><")         // Remove spaces between tags
-        .trim();
+    try {
+      // Dynamic import to avoid SSR issues and use official browser export
+      const { optimize } = await import("svgo/browser" as any);
+      const result = optimize(input, {
+        multipass: true,
+        plugins: [
+          { name: "preset-default" },
+          { name: "removeViewBox", active: false },
+          { name: "cleanupIds", active: true }
+        ],
+      });
       
-      setOutput(optimized);
+      if (result && "data" in result) {
+        setOutput(result.data);
+      } else {
+        throw new Error("Optimization failed");
+      }
+    } catch (err) {
+      console.error("SVG optimization failed:", err);
+      alert("Failed to process SVG vector data. Syntax integrity compromised.");
+    } finally {
       setIsProcessing(false);
-    }, 1200);
+    }
   };
 
   return (

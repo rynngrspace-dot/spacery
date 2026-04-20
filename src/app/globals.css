@@ -17,6 +17,17 @@ body {
   overflow-x: hidden;
 }
 
+button, 
+input[type="button"], 
+input[type="submit"], 
+input[type="reset"] {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
 @layer utilities {
   .perspective-1000 {
     perspective: 1000px;
@@ -32,7 +43,7 @@ body {
     z-index: 9999;
     pointer-events: none;
     opacity: 0.03;
-    background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+    /* background-image: url("/assets/img/noise.svg"); */
     filter: contrast(150%) brightness(1500%);
   }
 

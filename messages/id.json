@@ -52,7 +52,23 @@
   "ToolsData": {
     "image-compressor": {
       "title": "Kompresor Gambar",
-      "desc": "Mengecilkan ukuran file tanpa merusak kualitas visual. Cocok buat foto resolusi tinggi yang hobi makan penyimpanan (atau ruang-waktu)."
+      "desc": "Kurangi ukuran file foto tanpa merusak kualitas visualnya. Cocok buat yang memori penyimpanannya (atau ruang-waktunya) mulai penuh."
+    },
+    "jpg-to-png": {
+      "title": "Konverter JPG ke PNG",
+      "desc": "Konversi cepat dan tanpa kehilangan kualitas dari JPG ke PNG. Dukungan transparansi sudah termasuk untuk foto perjalanan galaksi Anda."
+    },
+    "png-to-jpg": {
+      "title": "Konverter PNG ke JPG",
+      "desc": "Ubah gambar PNG menjadi JPG yang ringan. Bersihkan penyimpanan Anda secepat hujan meteor membersihkan langit."
+    },
+    "heic-to-jpg": {
+      "title": "Konverter HEIC ke JPG",
+      "desc": "Ubah format HEIC Apple ke JPG yang kompatibel. Akhirnya, ada cara untuk membagikan jepretan bulan Anda ke seluruh galaksi."
+    },
+    "image-to-webp": {
+      "title": "Konverter Gambar ke WebP",
+      "desc": "Optimalkan visual Anda ke dalam format WebP yang super efisien. Buat aset Anda melakukan diet data lebih cepat dari kecepatan cahaya."
     },
     "image-filters": {
       "title": "Filter Gambar",
@@ -142,6 +158,14 @@
       "title": "Penentu Pilihan Acak",
       "desc": "Biarkan takdir yang memilihkan item dari daftar Anda. Biarkan void yang pusing agar Anda bisa santai."
     },
+    "csv-to-json": {
+      "title": "Konverter CSV ke JSON",
+      "desc": "Transkode aliran data CSV menjadi matriks JSON yang terstruktur. Menjembatani celah antara log lama dan logika modern."
+    },
+    "galaxy-inhabitant": {
+      "title": "Generator Penduduk Galaksi",
+      "desc": "Sintesis data makhluk hidup acak untuk simulasi populasi. Mengisi kekosongan dengan kecerdasan simulasi."
+    },
     "unit-converter": {
       "title": "Konverter Satuan",
       "desc": "Terjemahkan ukuran antara skala standar dan astronomi. Dari milimeter ke megaparsec hanya dalam satu kedipan mata."
@@ -173,6 +197,10 @@
     "color-extractor": {
       "title": "Ekstraktor Warna",
       "desc": "Ambil kode hex dominan dari gambar apa pun seketika. Menyedot warna langsung dari nebula (atau sekadar file JPG)."
+    },
+    "arvision": {
+      "title": "3D AR Vision",
+      "desc": "Visualisator Augmented Reality untuk model 3D premium. Letakkan, skalakan, dan putar kursi futuristik atau robot di lingkungan dunia nyata Anda."
     }
   },
   "Coffee": {

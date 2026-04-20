@@ -17,6 +17,30 @@ export const TOOLS: Tool[] = [
     category: "Imaging"
   },
   { 
+    slug: "jpg-to-png", 
+    title: "JPG to PNG Converter", 
+    desc: "Fast, lossless conversion from JPG to PNG. Transparency support included for your galactic travel photos.",
+    category: "Imaging"
+  },
+  { 
+    slug: "png-to-jpg", 
+    title: "PNG to JPG Converter", 
+    desc: "Convert PNG images to lightweight JPGs. Clean up your storage like a meteor shower clears the sky.",
+    category: "Imaging"
+  },
+  { 
+    slug: "heic-to-jpg", 
+    title: "HEIC to JPG Converter", 
+    desc: "Switch Apple's HEIC format to compatible JPGs. Finally, a way to share your moon shots with the rest of the galaxy.",
+    category: "Imaging"
+  },
+  { 
+    slug: "image-to-webp", 
+    title: "Image to WebP Converter", 
+    desc: "Optimize your visuals into high-performance WebP formats. Put your assets on a data-diet faster than light speed.",
+    category: "Imaging"
+  },
+  { 
     slug: "image-filters", 
     title: "Image Filters", 
     desc: "Apply cinematic effects and visual enhancements. Because every photo deserves a glow-up before being sent into the void.",
@@ -47,6 +71,12 @@ export const TOOLS: Tool[] = [
     desc: "Swiftly switch between JPG, PNG, and WEBP formats. Change image identities faster than a galactic shapeshifter.",
     category: "Imaging"
   },
+  {
+    slug: "arvision",
+    title: "3D AR Vision",
+    desc: "Visualize premium 3D models in your own space using Augmented Reality. Perfect for virtual staging and spatial planning.",
+    category: "Imaging"
+  },
 
   // --- Motion ---
   { 
@@ -69,7 +99,7 @@ export const TOOLS: Tool[] = [
   },
   { 
     slug: "video-muter", 
-    title: "Video Muter", 
+    title: "Video Audio Remover", 
     desc: "Strip audio tracks from your videos instantly. Perfect for when silence is the only mission requirement.",
     category: "Motion"
   },
@@ -205,6 +235,18 @@ export const TOOLS: Tool[] = [
     slug: "random-choice-maker",
     title: "Random Choice Maker",
     desc: "Let fate decide—randomly pick an item from your list. Let the void choose so you don't have to.",
+    category: "Data"
+  },
+  {
+    slug: "csv-to-json",
+    title: "CSV to JSON Converter",
+    desc: "Cleanly transcode CSV data streams into structured JSON matrices. Bridging the gap between legacy logs and modern logic.",
+    category: "Data"
+  },
+  {
+    slug: "galaxy-inhabitant",
+    title: "Galaxy Inhabitant Generator",
+    desc: "Synthesize random life-form data for population simulation. Populating the void with simulated intelligence.",
     category: "Data"
   }
 ];

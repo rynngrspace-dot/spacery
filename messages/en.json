@@ -54,6 +54,22 @@
       "title": "Image Compressor",
       "desc": "Reduces file size while maintaining visual quality. Perfect for when your high-res photos are eating too much disk space (or space-time)."
     },
+    "jpg-to-png": {
+      "title": "JPG to PNG Converter",
+      "desc": "Fast, lossless conversion from JPG to PNG. Transparency support included for your galactic travel photos."
+    },
+    "png-to-jpg": {
+      "title": "PNG to JPG Converter",
+      "desc": "Convert PNG images to lightweight JPGs. Clean up your storage like a meteor shower clears the sky."
+    },
+    "heic-to-jpg": {
+      "title": "HEIC to JPG Converter",
+      "desc": "Switch Apple's HEIC format to compatible JPGs. Finally, a way to share your moon shots with the rest of the galaxy."
+    },
+    "image-to-webp": {
+      "title": "Image to WebP Converter",
+      "desc": "Optimize your visuals into high-performance WebP formats. Put your assets on a data-diet faster than light speed."
+    },
     "image-filters": {
       "title": "Image Filters",
       "desc": "Apply cinematic effects and visual enhancements. Because every photo deserves a glow-up before being sent into the void."
@@ -142,6 +158,14 @@
       "title": "Random Choice Maker",
       "desc": "Let fate decide—randomly pick an item from your list. Let the void choose so you don't have to."
     },
+    "csv-to-json": {
+      "title": "CSV to JSON Converter",
+      "desc": "Cleanly transcode CSV data streams into structured JSON matrices. Bridging the gap between legacy logs and modern logic."
+    },
+    "galaxy-inhabitant": {
+      "title": "Galaxy Inhabitant Generator",
+      "desc": "Synthesize random life-form data for population simulation. Populating the void with simulated intelligence."
+    },
     "unit-converter": {
       "title": "Unit Converter",
       "desc": "Translate measurements between standard and astronomical scales. From millimeters to megaparsecs in a single blink."
@@ -173,6 +197,10 @@
     "color-extractor": {
       "title": "Color Extractor",
       "desc": "Pick dominant hex codes from any image instantly. Sucking the color right out of a nebula (or a JPG)."
+    },
+    "arvision": {
+      "title": "3D AR Vision",
+      "desc": "Augmented Reality visualizer for premium 3D models. Place, scale, and rotate futuristic chairs or robots in your real-world environment."
     }
   },
   "Coffee": {

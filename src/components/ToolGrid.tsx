@@ -88,7 +88,7 @@ export default function ToolGrid({ limit }: ToolGridProps) {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
           {featuredTools.map((tool, i) => tool && (
-            <Link href={`/tools/${tool.category.toLowerCase()}/${tool.slug}`} key={i} className="tool-card group cursor-pointer relative overflow-hidden rounded-[24px] bg-[#060b19]/60 backdrop-blur-xl border border-white/5 p-5 md:p-10 transition-all duration-500 hover:bg-white/5 hover:border-sky-400/30 hover:shadow-[0_20px_60px_-15px_rgba(56,189,248,0.15)] block">
+            <Link href={`/tools/${tool.slug}`} key={i} className="tool-card group cursor-pointer relative overflow-hidden rounded-[24px] bg-[#060b19]/60 backdrop-blur-xl border border-white/5 p-5 md:p-10 transition-all duration-500 hover:bg-white/5 hover:border-sky-400/30 hover:shadow-[0_20px_60px_-15px_rgba(56,189,248,0.15)] block">
               <div className="absolute inset-0 bg-linear-to-br from-sky-400/0 via-sky-400/0 to-sky-400/10 opacity-0 transition-opacity duration-700 group-hover:opacity-100"></div>
               
               <div className="flex justify-between items-start mb-6">

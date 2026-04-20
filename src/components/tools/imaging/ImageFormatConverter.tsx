@@ -1,28 +1,102 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import FileUploader from "@/components/tools/shared/FileUploader";
 import ToolOptionsDrawer from "@/components/tools/shared/ToolOptionsDrawer";
 
-export default function ImageFormatConverter() {
+interface ImageFormatConverterProps {
+  initialFormat?: string;
+  sourceFormat?: string;
+}
+
+export default function ImageFormatConverter({ initialFormat, sourceFormat }: ImageFormatConverterProps) {
   const [imgSrc, setImgSrc] = useState<string>("");
-  const [targetFormat, setTargetFormat] = useState<string>("image/jpeg");
+  const [targetFormat, setTargetFormat] = useState<string>(initialFormat || "image/jpeg");
   const [isProcessing, setIsProcessing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [progress, setProgress] = useState(0);
   const [convertedBlob, setConvertedBlob] = useState<Blob | null>(null);
   const [originalName, setOriginalName] = useState("");
   const imgRef = useRef<HTMLImageElement>(null);
 
-  const onSelectFile = (file: File) => {
+  // Sync target format if initialFormat changes (deep linking)
+  useEffect(() => {
+    if (initialFormat) {
+      setTargetFormat(initialFormat);
+      setConvertedBlob(null);
+    }
+  }, [initialFormat]);
+
+  const onSelectFile = async (file: File) => {
+    setError(null);
+
+    // Validate if sourceFormat is specified for this tool
+    if (sourceFormat) {
+      const fileExt = file.name.split(".").pop()?.toLowerCase();
+      const expectedExt = sourceFormat.split("/")[1]?.toLowerCase();
+      
+      // Basic type checking (covering common variations like jpg/jpeg or heic/heif)
+      const matchesMainType = file.type === sourceFormat;
+      const matchesExtension = 
+        (expectedExt === "jpeg" && (fileExt === "jpg" || fileExt === "jpeg")) ||
+        (expectedExt === "heic" && (fileExt === "heic" || fileExt === "heif")) ||
+        (fileExt === expectedExt);
+
+      if (!matchesMainType && !matchesExtension) {
+        setError(`Warning: This tool is optimized for ${expectedExt?.toUpperCase()} files. You uploaded a ${fileExt?.toUpperCase()} file.`);
+        return;
+      }
+    }
+
     setOriginalName(file.name.split(".")[0]);
-    const reader = new FileReader();
-    reader.addEventListener("load", () => setImgSrc(reader.result?.toString() || ""));
-    reader.readAsDataURL(file);
+    setIsProcessing(true);
+    setProgress(0);
+
+    try {
+      let processedFile: File | Blob = file;
+
+      // Check for HEIC/HEIF or TIFF that might need pre-conversion for browser display
+      const isHeic = file.type === "image/heic" || file.type === "image/heif" || file.name.toLowerCase().endsWith(".heic");
+      const isTiff = file.type === "image/tiff" || file.name.toLowerCase().endsWith(".tiff") || file.name.toLowerCase().endsWith(".tif");
+
+      if (isHeic || isTiff) {
+        const heic2any = (await import("heic2any")).default;
+        const result = await heic2any({
+          blob: file,
+          toType: "image/jpeg",
+          quality: 0.8
+        });
+        processedFile = Array.isArray(result) ? result[0] : result;
+      }
+
+      const reader = new FileReader();
+      reader.addEventListener("load", () => {
+        setImgSrc(reader.result?.toString() || "");
+        setProgress(100);
+        setTimeout(() => setIsProcessing(false), 300);
+      });
+      reader.readAsDataURL(processedFile);
+    } catch (err) {
+      console.error("Error processing specialized image format:", err);
+      setError("Failed to process image orbit.");
+      setIsProcessing(false);
+    }
+    
     setConvertedBlob(null);
   };
 
-  const handleConvert = () => {
+  const handleConvert = async () => {
     if (!imgRef.current) return;
     setIsProcessing(true);
+    setProgress(0);
+
+    // Simulate progress for better feedback
+    const interval = setInterval(() => {
+      setProgress(prev => (prev < 95 ? prev + 5 : prev));
+    }, 100);
+
+    // Add a small delay for "transcoding" simulation
+    await new Promise(resolve => setTimeout(resolve, 1500));
 
     const canvas = document.createElement("canvas");
     const img = imgRef.current;
@@ -39,8 +113,10 @@ export default function ImageFormatConverter() {
       ctx.drawImage(img, 0, 0);
       
       canvas.toBlob((blob) => {
+        clearInterval(interval);
+        setProgress(100);
         setConvertedBlob(blob);
-        setIsProcessing(false);
+        setTimeout(() => setIsProcessing(false), 500);
       }, targetFormat, 0.9);
     }
   };
@@ -56,17 +132,66 @@ export default function ImageFormatConverter() {
     URL.revokeObjectURL(url);
   };
 
+  const getFormatLabel = (mime: string) => {
+    if (mime === "image/jpeg") return "JPEG";
+    if (mime === "image/png") return "PNG";
+    if (mime === "image/webp") return "WEBP";
+    return mime.split("/")[1]?.toUpperCase() || "IMG";
+  };
+
   return (
     <div className="flex flex-col gap-10">
+      {error && (
+        <div className="p-4 rounded-2xl bg-red-500/5 border border-red-500/20 flex items-center gap-4 animate-in fade-in slide-in-from-top-4 duration-500">
+          <div className="shrink-0 w-10 h-10 rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center">
+            <span className="text-lg font-bold font-mono text-red-500">!</span>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-[10px] font-mono text-red-500 uppercase tracking-widest font-bold">Protocol Violation</span>
+            <span className="text-[11px] font-mono text-slate-400 mt-0.5">{error}</span>
+          </div>
+          <button 
+            onClick={() => setError(null)}
+            className="ml-auto text-[10px] font-mono text-slate-600 hover:text-white transition-colors uppercase tracking-widest"
+          >
+            Dismiss
+          </button>
+        </div>
+      )}
+
       {!imgSrc ? (
-        <FileUploader accept="image/*" label="Upload Image" onFileSelect={onSelectFile} />
+        <FileUploader 
+          accept="image/*,.heic,.heif,.tiff,.tif" 
+          label={isProcessing ? "Recalibrating..." : "Upload Image"} 
+          onFileSelect={onSelectFile} 
+        />
       ) : (
         <div className="flex flex-col lg:flex-row gap-8 md:gap-10">
           <div className="flex-1 bg-black/40 rounded-[32px] border border-white/5 p-4 md:p-8 flex items-center justify-center min-h-[400px] relative overflow-hidden">
             {isProcessing && (
               <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/70 backdrop-blur-md">
-                <div className="w-12 h-12 border-4 border-sky-500/20 border-t-sky-500 rounded-full animate-spin mb-4"></div>
-                <span className="text-[10px] font-mono text-sky-400 uppercase tracking-widest animate-pulse">Converting Format...</span>
+                {/* Orbital spinner */}
+                <div className="relative w-24 h-24 mb-8">
+                  <div className="absolute inset-0 rounded-full border-2 border-sky-500/20"></div>
+                  <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-sky-400 animate-spin"></div>
+                  <div className="absolute inset-2 rounded-full border-2 border-transparent border-b-sky-300 animate-spin" style={{ animationDirection: "reverse", animationDuration: "1.5s" }}></div>
+                  <div className="absolute inset-4 rounded-full border-2 border-transparent border-t-white/40 animate-spin" style={{ animationDuration: "2s" }}></div>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-sm font-mono text-sky-400 font-bold">{progress}%</span>
+                  </div>
+                </div>
+
+                {/* Progress bar */}
+                <div className="w-48 h-1 bg-white/10 rounded-full overflow-hidden mb-4">
+                  <div
+                    className="h-full bg-linear-to-r from-sky-500 to-sky-300 rounded-full transition-all duration-300 ease-out"
+                    style={{ width: `${progress}%` }}
+                  ></div>
+                </div>
+
+                <span className="text-[10px] font-mono text-sky-400 uppercase tracking-[0.3em] animate-pulse">
+                  Transcoding Pixels...
+                </span>
               </div>
             )}
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -80,28 +205,37 @@ export default function ImageFormatConverter() {
 
           <ToolOptionsDrawer title="Conversion Settings">
             <div className="space-y-8">
-              <div className="flex flex-col gap-4">
-                <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Target Format</span>
-                <div className="grid grid-cols-1 gap-2">
-                  {[
-                    { label: "JPEG (Standard)", value: "image/jpeg" },
-                    { label: "PNG (Lossless)", value: "image/png" },
-                    { label: "WEBP (High Efficiency)", value: "image/webp" },
-                  ].map((format) => (
-                    <button
-                      key={format.value}
-                      onClick={() => { setTargetFormat(format.value); setConvertedBlob(null); }}
-                      className={`py-4 rounded-xl text-[10px] font-mono uppercase tracking-widest border transition-all ${
-                        targetFormat === format.value 
-                          ? "bg-sky-500 text-white border-sky-400" 
-                          : "bg-white/2 text-slate-500 border-white/5 hover:border-white/10"
-                      }`}
-                    >
-                      {format.label}
-                    </button>
-                  ))}
+              {!initialFormat && (
+                <div className="flex flex-col gap-4">
+                  <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Target Format</span>
+                  <div className="grid grid-cols-1 gap-2">
+                    {[
+                      { label: "JPEG (Standard)", value: "image/jpeg" },
+                      { label: "PNG (Lossless)", value: "image/png" },
+                      { label: "WEBP (High Efficiency)", value: "image/webp" },
+                    ].map((format) => (
+                      <button
+                        key={format.value}
+                        onClick={() => { setTargetFormat(format.value); setConvertedBlob(null); }}
+                        className={`py-4 rounded-xl text-[10px] font-mono uppercase tracking-widest border transition-all ${
+                          targetFormat === format.value 
+                            ? "bg-sky-500 text-white border-sky-400" 
+                            : "bg-white/2 text-slate-400 border-white/5 hover:border-white/10 hover:bg-white/5"
+                        }`}
+                      >
+                        {format.label}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
+
+              {initialFormat && (
+                <div className="p-4 rounded-xl bg-sky-500/5 border border-sky-500/20">
+                  <span className="block text-[8px] font-mono text-slate-500 uppercase tracking-widest mb-1">Active Objective</span>
+                  <span className="text-xs font-mono text-sky-400 uppercase tracking-widest">Converting to {getFormatLabel(targetFormat)}</span>
+                </div>
+              )}
 
               <div className="flex flex-col gap-4">
                  {!convertedBlob ? (
@@ -110,14 +244,14 @@ export default function ImageFormatConverter() {
                       disabled={isProcessing}
                       className="w-full py-5 bg-sky-500 text-white font-bold rounded-2xl hover:bg-sky-400 transition-all text-sm uppercase tracking-[0.2em] shadow-[0_0_30px_rgba(56,189,248,0.2)]"
                     >
-                      Convert Now
+                      {isProcessing ? "Processing..." : "Execute Conversion"}
                     </button>
                  ) : (
                     <button
                       onClick={downloadImage}
-                      className="w-full py-5 bg-emerald-500 text-white font-bold rounded-2xl hover:bg-emerald-400 transition-all text-sm uppercase tracking-[0.2em] shadow-[0_0_30px_rgba(16,185,129,0.2)] flex items-center justify-center gap-3"
+                      className="w-full py-5 bg-emerald-500 text-white font-bold rounded-2xl hover:bg-emerald-400 transition-all text-sm uppercase tracking-[0.2em] shadow-[0_0_30px_rgba(16,185,129,0.25)] flex items-center justify-center gap-3"
                     >
-                      <span>Download {targetFormat.split("/")[1].toUpperCase()}</span>
+                      <span>Download {getFormatLabel(targetFormat)}</span>
                       <span className="animate-bounce">↓</span>
                     </button>
                  )}
@@ -126,7 +260,7 @@ export default function ImageFormatConverter() {
                     onClick={() => { setImgSrc(""); setConvertedBlob(null); }}
                     className="py-3 text-[10px] font-mono text-slate-600 hover:text-red-400 uppercase tracking-widest transition-colors"
                   >
-                    Clear Image
+                    Eject Source
                   </button>
               </div>
             </div>
