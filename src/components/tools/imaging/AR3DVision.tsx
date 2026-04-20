@@ -62,9 +62,18 @@ export default function AR3DVision() {
       }
 
       try {
-        const newStream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: "environment" }
-        });
+        // More flexible constraints to support both mobile and desktop
+        const constraints = {
+          video: { 
+            facingMode: { ideal: "environment" },
+            width: { ideal: 1280 },
+            height: { ideal: 720 }
+          }
+        };
+        
+        console.log("Requesting camera with constraints:", constraints);
+        const newStream = await navigator.mediaDevices.getUserMedia(constraints);
+        
         setStream(newStream);
         if (videoRef.current) {
           videoRef.current.srcObject = newStream;
@@ -72,7 +81,19 @@ export default function AR3DVision() {
         setIsRealityMode(true);
       } catch (err) {
         console.error("Camera access failed:", err);
-        alert("Camera access failed. Please ensure you have granted permissions.");
+        // Fallback for very basic cameras
+        if (err instanceof Error && (err.name === 'OverconstrainedError' || err.name === 'NotFoundError')) {
+          try {
+             const basicStream = await navigator.mediaDevices.getUserMedia({ video: true });
+             setStream(basicStream);
+             if (videoRef.current) videoRef.current.srcObject = basicStream;
+             setIsRealityMode(true);
+             return;
+          } catch (retryErr) {
+             console.error("Retry failed:", retryErr);
+          }
+        }
+        alert("Camera access failed. Please ensure you have granted permissions and no other app is using the camera.");
       }
     }
   };
