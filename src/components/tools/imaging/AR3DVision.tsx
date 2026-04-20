@@ -94,7 +94,7 @@ export default function AR3DVision() {
 
         // Check for zoom capabilities (Chromium based typically)
         // @ts-ignore - getCapabilities is not in standard TS lib yet
-        const capabilities = track.getCapabilities?.() || {};
+        const capabilities = (track.getCapabilities?.() || {}) as any;
         if (capabilities.zoom) {
           setIsZoomSupported(true);
           setZoomRange({ min: capabilities.zoom.min, max: capabilities.zoom.max });
