@@ -16,7 +16,6 @@ export default function VideoCompressor() {
   const [progress, setProgress] = useState(0);
   const [outputUrl, setOutputUrl] = useState<string | null>(null);
   const [compressedSize, setCompressedSize] = useState<number | null>(null);
-  const [resultBlob, setResultBlob] = useState<Blob | null>(null);
   const [securityActive, setSecurityActive] = useState<boolean | null>(null);
   const ffmpegRef = useRef<any>(null);
 
@@ -42,12 +41,10 @@ export default function VideoCompressor() {
     ffmpeg.on("progress", ({ progress }) => setProgress(Math.round(progress * 100)));
     
     try {
-      console.log("[STATION-LOG] Initializing engine with local assets...");
       await ffmpeg.load({
         coreURL: await toBlobURL(`/assets/ffmpeg/ffmpeg-core.js`, "text/javascript"),
         wasmURL: await toBlobURL(`/assets/ffmpeg/ffmpeg-core.wasm`, "application/wasm"),
       });
-      console.log("[STATION-LOG] Engine response stabilized.");
       ffmpegRef.current = ffmpeg;
     } catch (err) {
       console.error("[STATION-ERROR] Engine initialization failure:", err);

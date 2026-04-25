@@ -47,14 +47,12 @@ export default function VideoCutter() {
     ffmpeg.on("progress", ({ progress }) => setProgress(Math.round(progress * 100)));
     
     try {
-      console.log("[STATION-LOG] Initializing Cutter engine...");
       checkSecurity();
       // Using locally hosted assets for stability
       await ffmpeg.load({
         coreURL: await toBlobURL(`/assets/ffmpeg/ffmpeg-core.js`, "text/javascript"),
         wasmURL: await toBlobURL(`/assets/ffmpeg/ffmpeg-core.wasm`, "application/wasm"),
       });
-      console.log("[STATION-LOG] Cutter engine response stabilized.");
       ffmpegRef.current = ffmpeg;
     } catch (err) {
       console.error("[STATION-ERROR] Cutter initialization failure:", err);

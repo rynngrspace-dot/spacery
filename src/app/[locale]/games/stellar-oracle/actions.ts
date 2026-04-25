@@ -1,7 +1,6 @@
 "use server";
 
 export async function getOracleWisdom(story: string) {
-  console.log("Oracle Action: Initiating Wisdom Generation (Groq Cloud)...");
   
   const groqKey = process.env.GROQ_API_KEY;
   if (!groqKey) {
@@ -45,7 +44,6 @@ export async function getOracleWisdom(story: string) {
   
   for (const modelName of modelsToTry) {
     try {
-      console.log(`📡 Oracle Diagnostic: Contacting Groq via ${modelName}...`);
       const response = await fetch(
         "https://api.groq.com/openai/v1/chat/completions",
         {
@@ -75,7 +73,6 @@ export async function getOracleWisdom(story: string) {
 
       const data = await response.json();
       const text = data.choices[0]?.message?.content || "";
-      console.log(`✅ ${modelName} responded successfully.`);
       
       try {
           const parsed = JSON.parse(text);

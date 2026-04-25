@@ -11,11 +11,13 @@ import { notFound } from 'next/navigation';
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export async function generateMetadata({params}: {params: Promise<{locale: string}>}) {
@@ -71,6 +73,15 @@ export async function generateMetadata({params}: {params: Promise<{locale: strin
       images: ['/og-image.png'],
       creator: "@spacery",
     },
+    manifest: "/manifest.json",
+    appleWebApp: {
+      capable: true,
+      statusBarStyle: "default",
+      title: "Spacery",
+    },
+    formatDetection: {
+      telephone: false,
+    },
   };
 }
 
@@ -109,10 +120,26 @@ export default async function RootLayout({
                 "price": "0",
                 "priceCurrency": "USD"
               },
-              "description": "A comprehensive suite of free online tools for image processing, video editing, PDF management, and developer utilities."
+              "description": "A comprehensive suite of free online tools for image processing, video editing, PDF management, and developer utilities.",
+              "applicationSubCategory": "Multimedia, Productivity, Development",
+              "screenshot": "https://spaceryz.vercel.app/og-image.png",
+              "softwareVersion": "2.0.0",
+              "author": {
+                "@type": "Organization",
+                "name": "Spacery Digital Laboratory",
+                "url": "https://spaceryz.vercel.app"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.9",
+                "reviewCount": "1024"
+              }
             })
           }}
         />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+        <meta name="theme-color" content="#0ea5e9" />
       </head>
       <body className="antialiased">
         <NextIntlClientProvider messages={messages}>

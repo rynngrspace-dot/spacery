@@ -1,7 +1,7 @@
 {
   "Index": {
     "title": "Spacery | Free Online Web Tools & Digital Laboratory",
-    "description": "Access a comprehensive suite of free online tools including PDF to Word, PNG to JPG, image compressor, video editor, and developer utilities. Fast, secure, and entirely browser-based.",
+    "description": "Welcome to my digital laboratory. A collection of custom-built web tools and code experiments, designed for those who value speed, simplicity, and great design.",
     "explore": "Poke Around",
     "about": "Who Am I?"
   },
@@ -12,10 +12,10 @@
   },
   "Greeting": {
     "sequence": [
-      "Spacery Digital Lab",
-      "Designing for the modern web",
-      "Focused on performance & aesthetics",
-      "Welcome, Explorer."
+      "Hey there, glad you found this place.",
+      "I build useful things for the web.",
+      "Focused on performance and aesthetics.",
+      "Welcome to my digital laboratory!"
     ]
   },
   "Tools": {
@@ -118,6 +118,18 @@
       "title": "Image to PDF Converter",
       "desc": "Bundle your visual assets into a professional PDF document. Wrapping your photos in a neat digital package."
     },
+    "pdf-to-jpg": {
+      "title": "PDF to JPG Converter",
+      "desc": "Extract pages from your PDF documents as high-quality JPG images. Bringing document layers back to the visual plane."
+    },
+    "pdf-to-word": {
+      "title": "PDF to Word Converter",
+      "desc": "Transform PDF documents into editable Word files. Reversing the static nature of your transmissions."
+    },
+    "docx-to-pdf": {
+      "title": "DOCX to PDF Converter",
+      "desc": "Convert Microsoft Word documents into portable PDF files. Hardening your reports for universal distribution."
+    },
     "docx-compressor": {
       "title": "Word Document Compressor",
       "desc": "Efficiently optimize Microsoft Word files for sharing. Lighten the load of your intergalactic paperwork."
@@ -201,6 +213,46 @@
     "arvision": {
       "title": "3D AR Vision",
       "desc": "Augmented Reality visualizer for premium 3D models. Place, scale, and rotate futuristic chairs or robots in your real-world environment."
+    },
+    "heic-to-pdf": {
+      "title": "HEIC to PDF Converter",
+      "desc": "Directly wrap your iPhone photos into a neat PDF document. Skipping the rasterization step for major efficiency."
+    },
+    "pdf-to-epub": {
+      "title": "PDF to EPUB Converter",
+      "desc": "Transform your documents into reader-friendly ebook formats. Optimized for digital scrolls across the galaxy."
+    },
+    "epub-to-pdf": {
+      "title": "EPUB to PDF Converter",
+      "desc": "Flatten ebook formats back into standard documents for printing or sharing."
+    },
+    "ebook-converter": {
+      "title": "Universal Ebook Converter",
+      "desc": "Cross-transcode between various ebook and document formats with ease."
+    },
+    "webp-to-png": {
+      "title": "WEBP to PNG Converter",
+      "desc": "Convert high-efficiency WEBP visuals back to lossless PNG formats."
+    },
+    "webp-to-jpg": {
+      "title": "WEBP to JPG Converter",
+      "desc": "Switch WEBP assets to standard JPG formats for maximum compatibility."
+    },
+    "jfif-to-png": {
+      "title": "JFIF to PNG Converter",
+      "desc": "Cleanly convert legacy JFIF images into modern, transparent PNG formats."
+    },
+    "heic-to-png": {
+      "title": "HEIC to PNG Converter",
+      "desc": "Transform specialized Apple formats into universal, lossless PNG visuals."
+    },
+    "png-to-svg": {
+      "title": "PNG to SVG Vectorizer",
+      "desc": "Trace raster PNG pixels into scalable vector paths. Infinite resolution for your digital icons."
+    },
+    "svg-converter": {
+      "title": "SVG Rasterizer",
+      "desc": "Convert vector SVG files into JPG, PNG, or WEBP raster formats."
     }
   },
   "Coffee": {

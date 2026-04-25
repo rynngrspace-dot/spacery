@@ -12,7 +12,6 @@ export default function VideoAudioRemover() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [progress, setProgress] = useState(0);
   const [outputUrl, setOutputUrl] = useState<string | null>(null);
-  const [resultBlob, setResultBlob] = useState<Blob | null>(null);
   const [securityActive, setSecurityActive] = useState<boolean | null>(null);
   const ffmpegRef = useRef<any>(null);
 
@@ -34,20 +33,17 @@ export default function VideoAudioRemover() {
 
   const loadFFmpeg = async () => {
     const ffmpeg = new FFmpeg();
-    ffmpeg.on("log", ({ message }) => console.log(message));
     ffmpeg.on("progress", ({ progress }) => {
       setProgress(Math.round(progress * 100));
     });
 
     try {
-      console.log("[STATION-LOG] Initializing Audio Stripper engine...");
       checkSecurity();
       // Using locally hosted assets for stability
       await ffmpeg.load({
         coreURL: await toBlobURL(`/assets/ffmpeg/ffmpeg-core.js`, "text/javascript"),
         wasmURL: await toBlobURL(`/assets/ffmpeg/ffmpeg-core.wasm`, "application/wasm"),
       });
-      console.log("[STATION-LOG] Audio Stripper stabilized.");
       ffmpegRef.current = ffmpeg;
     } catch (err) {
       console.error("[STATION-ERROR] Audio Stripper initialization failure:", err);

@@ -26,6 +26,7 @@ export default function LanguageSwitcher() {
             ? "bg-sky-500 text-white shadow-[0_0_15px_rgba(56,189,248,0.3)]" 
             : "text-slate-500 hover:text-slate-300 hover:bg-white/5"
         }`}
+        aria-label="Switch language to English"
       >
         EN
       </button>
@@ -37,6 +38,7 @@ export default function LanguageSwitcher() {
             ? "bg-sky-500 text-white shadow-[0_0_15px_rgba(56,189,248,0.3)]" 
             : "text-slate-500 hover:text-slate-300 hover:bg-white/5"
         }`}
+        aria-label="Switch language to Indonesian"
       >
         ID
       </button>

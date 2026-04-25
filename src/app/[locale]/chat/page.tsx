@@ -74,7 +74,6 @@ export default function ChatPage() {
           "postgres_changes",
           { event: "INSERT", schema: "public", table: "messages" },
           (payload) => {
-            console.log("📥 New Transmission Received:", payload.new);
             const newMsg = payload.new;
             const formattedMsg: Message = {
               id: newMsg.id,
@@ -107,7 +106,6 @@ export default function ChatPage() {
           }
         )
         .subscribe((status, err) => {
-          console.log(`📡 Connection Status: ${status}`, err || "");
           if (status === 'SUBSCRIBED') setConnStatus("online");
           if (status === 'CHANNEL_ERROR') setConnStatus("error");
           if (status === 'TIMED_OUT') setConnStatus("offline");

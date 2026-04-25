@@ -12,7 +12,7 @@ interface ImageFormatConverterProps {
 export default function ImageFormatConverter({ initialFormat, sourceFormat }: ImageFormatConverterProps) {
   const [imgSrc, setImgSrc] = useState<string>("");
   const [targetFormat, setTargetFormat] = useState<string>(initialFormat || "image/jpeg");
-  const [isProcessing, setIsProcessing] = useState(false);
+  const [status, setStatus] = useState<"idle" | "uploading" | "processing" | "done">("idle");
   const [error, setError] = useState<string | null>(null);
   const [progress, setProgress] = useState(0);
   const [convertedBlob, setConvertedBlob] = useState<Blob | null>(null);
@@ -29,13 +29,22 @@ export default function ImageFormatConverter({ initialFormat, sourceFormat }: Im
 
   const onSelectFile = async (file: File) => {
     setError(null);
+    setStatus("uploading");
+    setProgress(0);
+
+    // Simulation for scanning feel
+    const interval = setInterval(() => {
+      setProgress(prev => (prev < 100 ? prev + 10 : prev));
+    }, 40);
+
+    await new Promise(res => setTimeout(res, 500));
+    clearInterval(interval);
 
     // Validate if sourceFormat is specified for this tool
     if (sourceFormat) {
       const fileExt = file.name.split(".").pop()?.toLowerCase();
       const expectedExt = sourceFormat.split("/")[1]?.toLowerCase();
       
-      // Basic type checking (covering common variations like jpg/jpeg or heic/heif)
       const matchesMainType = file.type === sourceFormat;
       const matchesExtension = 
         (expectedExt === "jpeg" && (fileExt === "jpg" || fileExt === "jpeg")) ||
@@ -43,21 +52,21 @@ export default function ImageFormatConverter({ initialFormat, sourceFormat }: Im
         (fileExt === expectedExt);
 
       if (!matchesMainType && !matchesExtension) {
-        setError(`Warning: This tool is optimized for ${expectedExt?.toUpperCase()} files. You uploaded a ${fileExt?.toUpperCase()} file.`);
+        setError(`Protocol Violation: Expected ${expectedExt?.toUpperCase()} signal, but received ${fileExt?.toUpperCase()}.`);
+        setStatus("idle");
         return;
       }
     }
 
     setOriginalName(file.name.split(".")[0]);
-    setIsProcessing(true);
-    setProgress(0);
 
     try {
       let processedFile: File | Blob = file;
 
-      // Check for HEIC/HEIF or TIFF that might need pre-conversion for browser display
+      // Check for specialized formats
       const isHeic = file.type === "image/heic" || file.type === "image/heif" || file.name.toLowerCase().endsWith(".heic");
       const isTiff = file.type === "image/tiff" || file.name.toLowerCase().endsWith(".tiff") || file.name.toLowerCase().endsWith(".tif");
+      const isJfif = file.name.toLowerCase().endsWith(".jfif");
 
       if (isHeic || isTiff) {
         const heic2any = (await import("heic2any")).default;
@@ -69,17 +78,21 @@ export default function ImageFormatConverter({ initialFormat, sourceFormat }: Im
         processedFile = Array.isArray(result) ? result[0] : result;
       }
 
+      if (isJfif) {
+        // Force blob type for JFIF if needed, though most browsers handle it fine
+        processedFile = new Blob([file], { type: "image/jpeg" });
+      }
+
       const reader = new FileReader();
       reader.addEventListener("load", () => {
         setImgSrc(reader.result?.toString() || "");
-        setProgress(100);
-        setTimeout(() => setIsProcessing(false), 300);
+        setStatus("idle");
       });
       reader.readAsDataURL(processedFile);
     } catch (err) {
       console.error("Error processing specialized image format:", err);
       setError("Failed to process image orbit.");
-      setIsProcessing(false);
+      setStatus("idle");
     }
     
     setConvertedBlob(null);
@@ -87,7 +100,7 @@ export default function ImageFormatConverter({ initialFormat, sourceFormat }: Im
 
   const handleConvert = async () => {
     if (!imgRef.current) return;
-    setIsProcessing(true);
+    setStatus("processing");
     setProgress(0);
 
     // Simulate progress for better feedback
@@ -105,7 +118,6 @@ export default function ImageFormatConverter({ initialFormat, sourceFormat }: Im
     const ctx = canvas.getContext("2d");
 
     if (ctx) {
-      // Paint white background if converting to JPG (transparency support)
       if (targetFormat === "image/jpeg") {
         ctx.fillStyle = "white";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -116,7 +128,7 @@ export default function ImageFormatConverter({ initialFormat, sourceFormat }: Im
         clearInterval(interval);
         setProgress(100);
         setConvertedBlob(blob);
-        setTimeout(() => setIsProcessing(false), 500);
+        setStatus("done");
       }, targetFormat, 0.9);
     }
   };
@@ -160,38 +172,62 @@ export default function ImageFormatConverter({ initialFormat, sourceFormat }: Im
       )}
 
       {!imgSrc ? (
-        <FileUploader 
+          <FileUploader 
           accept="image/*,.heic,.heif,.tiff,.tif" 
-          label={isProcessing ? "Recalibrating..." : "Upload Image"} 
+          label={status !== "idle" ? "Recalibrating..." : "Upload Image"} 
           onFileSelect={onSelectFile} 
         />
       ) : (
         <div className="flex flex-col lg:flex-row gap-8 md:gap-10">
           <div className="flex-1 bg-black/40 rounded-[32px] border border-white/5 p-4 md:p-8 flex items-center justify-center min-h-[400px] relative overflow-hidden">
-            {isProcessing && (
-              <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/70 backdrop-blur-md">
-                {/* Orbital spinner */}
-                <div className="relative w-24 h-24 mb-8">
-                  <div className="absolute inset-0 rounded-full border-2 border-sky-500/20"></div>
-                  <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-sky-400 animate-spin"></div>
-                  <div className="absolute inset-2 rounded-full border-2 border-transparent border-b-sky-300 animate-spin" style={{ animationDirection: "reverse", animationDuration: "1.5s" }}></div>
-                  <div className="absolute inset-4 rounded-full border-2 border-transparent border-t-white/40 animate-spin" style={{ animationDuration: "2s" }}></div>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-sm font-mono text-sky-400 font-bold">{progress}%</span>
-                  </div>
-                </div>
+            {status !== "idle" && (
+              <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/70 backdrop-blur-md p-6 text-center">
+                {/* Stage: Uploading / scanning */}
+                {status === "uploading" && (
+                   <>
+                      <div className="relative w-20 h-20 mb-6">
+                        <div className="absolute inset-0 border-2 border-sky-500/20 rounded-2xl"></div>
+                        <div className="absolute top-0 left-0 right-0 h-0.5 bg-sky-400 shadow-[0_0_15px_rgba(56,189,248,0.8)] animate-[scan_2s_linear_infinite]"></div>
+                        <div className="absolute inset-0 flex items-center justify-center text-2xl animate-pulse">📡</div>
+                      </div>
+                      <span className="text-[10px] font-mono text-sky-400 uppercase tracking-[0.3em] font-bold mb-2">Syncing File...</span>
+                   </>
+                )}
 
-                {/* Progress bar */}
-                <div className="w-48 h-1 bg-white/10 rounded-full overflow-hidden mb-4">
-                  <div
-                    className="h-full bg-linear-to-r from-sky-500 to-sky-300 rounded-full transition-all duration-300 ease-out"
-                    style={{ width: `${progress}%` }}
-                  ></div>
-                </div>
+                {/* Stage: Processing / Synthesis */}
+                {status === "processing" && (
+                   <>
+                      <div className="relative w-24 h-24 mb-6">
+                        <div className="absolute inset-0 border-2 border-sky-500/10 rounded-full"></div>
+                        <div className="absolute inset-[-4px] border-t-2 border-sky-400 rounded-full animate-spin"></div>
+                        <div className="absolute inset-2 border-b-2 border-sky-300/40 rounded-full animate-spin" style={{ animationDirection: "reverse", animationDuration: "2s" }}></div>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <span className="text-sm font-mono text-sky-400 font-bold">{progress}%</span>
+                        </div>
+                      </div>
+                      <span className="text-[10px] font-mono text-sky-400 uppercase tracking-[0.3em] font-bold mb-2">Converting...</span>
+                      <div className="w-32 h-0.5 bg-white/5 rounded-full overflow-hidden">
+                        <div className="h-full bg-sky-500 transition-all duration-300" style={{ width: `${progress}%` }}></div>
+                      </div>
+                   </>
+                )}
 
-                <span className="text-[10px] font-mono text-sky-400 uppercase tracking-[0.3em] animate-pulse">
-                  Transcoding Pixels...
-                </span>
+                {/* Stage: Done / Accomplished */}
+                {status === "done" && (
+                   <>
+                      <div className="w-20 h-20 bg-emerald-500/20 border border-emerald-500/30 rounded-full flex items-center justify-center text-3xl mb-6 shadow-[0_0_40px_rgba(16,185,129,0.2)] animate-in zoom-in duration-500">
+                        ✅
+                      </div>
+                      <span className="text-[10px] font-mono text-emerald-400 uppercase tracking-[0.3em] font-bold mb-2">Success!</span>
+                      <span className="text-[9px] font-mono text-slate-500 uppercase mb-6">Image is ready</span>
+                      <button 
+                        onClick={() => setStatus("idle")}
+                        className="px-6 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-[9px] font-mono uppercase tracking-widest text-slate-300 transition-all"
+                      >
+                        Close
+                      </button>
+                   </>
+                )}
               </div>
             )}
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -238,13 +274,13 @@ export default function ImageFormatConverter({ initialFormat, sourceFormat }: Im
               )}
 
               <div className="flex flex-col gap-4">
-                 {!convertedBlob ? (
+                  {!convertedBlob ? (
                     <button
                       onClick={handleConvert}
-                      disabled={isProcessing}
+                      disabled={status !== "idle"}
                       className="w-full py-5 bg-sky-500 text-white font-bold rounded-2xl hover:bg-sky-400 transition-all text-sm uppercase tracking-[0.2em] shadow-[0_0_30px_rgba(56,189,248,0.2)]"
                     >
-                      {isProcessing ? "Processing..." : "Execute Conversion"}
+                      {status === "processing" ? "Processing..." : "Execute Conversion"}
                     </button>
                  ) : (
                     <button

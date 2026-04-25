@@ -64,6 +64,7 @@ export default function Navbar() {
                     href={link.href}
                     onClick={(e) => handleNavClick(e, link.href)}
                     className="text-sm font-mono text-slate-400 hover:text-sky-400 transition-colors duration-300 uppercase tracking-widest"
+                    aria-label={`Go to ${link.name}`}
                   >
                     {link.name}
                   </Link>

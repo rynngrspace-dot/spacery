@@ -10,7 +10,6 @@ import {
   Environment, 
   ContactShadows,
   Float,
-  PresentationControls
 } from "@react-three/drei";
 import { useTranslations } from "next-intl";
 
@@ -23,18 +22,18 @@ const MODELS = [
   },
   { 
     name: "Luxury Sofa", 
-    url: "https://raw.githubusercontent.com/google/model-viewer/master/packages/shared-assets/models/Sofa.glb",
-    scale: 0.05 // Google's sofa model often has large world coordinates
-  },
-  { 
-    name: "Antique Lantern", 
-    url: "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/main/2.0/Lanterne/glTF-Binary/Lanterne.glb",
+    url: "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/GlamVelvetSofa/glTF-Binary/GlamVelvetSofa.glb",
     scale: 2.0
   },
   { 
-    name: "Cactus Flower", 
-    url: "https://raw.githubusercontent.com/google/model-viewer/master/packages/shared-assets/models/Cactus.glb",
-    scale: 4.0
+    name: "Antique Lantern", 
+    url: "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/Lantern/glTF-Binary/Lantern.glb",
+    scale: 0.08
+  },
+  { 
+    name: "Luxury Plant", 
+    url: "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/DiffuseTransmissionPlant/glTF-Binary/DiffuseTransmissionPlant.glb",
+    scale: 1.8
   }
 ];
 

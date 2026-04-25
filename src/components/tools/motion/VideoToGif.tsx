@@ -13,7 +13,6 @@ export default function VideoToGif() {
   const [progress, setProgress] = useState(0);
   const [outputUrl, setOutputUrl] = useState<string | null>(null);
   const [fps, setFps] = useState(10);
-  const [resultBlob, setResultBlob] = useState<Blob | null>(null);
   const [securityActive, setSecurityActive] = useState<boolean | null>(null);
   const ffmpegRef = useRef<any>(null);
 
@@ -37,14 +36,12 @@ export default function VideoToGif() {
     ffmpeg.on("progress", ({ progress }) => setProgress(Math.round(progress * 100)));
     
     try {
-      console.log("[STATION-LOG] Initializing GIF engine...");
       checkSecurity();
       // Using locally hosted assets for stability
       await ffmpeg.load({
         coreURL: await toBlobURL(`/assets/ffmpeg/ffmpeg-core.js`, "text/javascript"),
         wasmURL: await toBlobURL(`/assets/ffmpeg/ffmpeg-core.wasm`, "application/wasm"),
       });
-      console.log("[STATION-LOG] GIF engine response stabilized.");
       ffmpegRef.current = ffmpeg;
     } catch (err) {
       console.error("[STATION-ERROR] GIF initialization failure:", err);

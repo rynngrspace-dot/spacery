@@ -10,6 +10,7 @@ import TechStack from "@/components/TechStack";
 import Contact from "@/components/Contact";
 import GameGrid from "@/components/GameGrid";
 import CoffeeButton from "@/components/CoffeeButton";
+import StellarStats from "@/components/StellarStats";
 import { Link } from "@/i18n/routing";
 
 export default function Home() {
@@ -103,7 +104,7 @@ export default function Home() {
             <Magnetic>
               <button 
                 onClick={handleScrollToTools}
-                className="group relative flex items-center gap-3 overflow-hidden rounded-full bg-sky-500 px-8 py-4 text-sm font-bold text-white transition-all hover:bg-sky-400 hover:shadow-[0_0_30px_rgba(56,189,248,0.4)]"
+                className="group relative flex items-center gap-3 overflow-hidden rounded-full bg-sky-500 px-6 py-4 sm:px-8 text-sm font-bold text-white transition-all hover:bg-sky-400 hover:shadow-[0_0_30px_rgba(56,189,248,0.4)]"
               >
                 <span>{t("explore")}</span>
                 <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
@@ -129,6 +130,11 @@ export default function Home() {
 
       {/* Recreation Wing (Games) Section */}
       <GameGrid />
+
+      {/* Stellar Stats (Micro-interaction section) */}
+      <div className="max-w-6xl mx-auto px-4">
+        <StellarStats />
+      </div>
 
       {/* Tools Section */}
       <ToolGrid limit={3} />

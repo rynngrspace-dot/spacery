@@ -1,7 +1,7 @@
 {
   "Index": {
     "title": "Spacery | Alat Web Online Gratis & Laboratorium Digital",
-    "description": "Akses koleksi lengkap alat web online gratis: Konversi PDF ke Word, PNG ke JPG, kompres gambar, edit video, dan utilitas developer. Cepat, aman, dan berbasis browser.",
+    "description": "Selamat datang di laboratorium digital saya. Di sini Anda dapat menemukan berbagai alat web praktis dan eksperimen kode yang saya rancang untuk mempermudah pekerjaan—tentunya dengan performa yang kencang.",
     "explore": "Lihat-Lihat Modul",
     "about": "Siapa Saya?"
   },
@@ -12,10 +12,10 @@
   },
   "Greeting": {
     "sequence": [
-      "Spacery Digital Lab",
-      "Mendesain untuk web modern",
-      "Fokus pada performa & estetika",
-      "Selamat datang, Penjelajah."
+      "Halo, senang kamu mampir ke sini.",
+      "Saya hobi bereksperimen di dunia web.",
+      "Fokus bikin yang simpel, rapi, dan kencang.",
+      "Selamat datang di lab digital saya!"
     ]
   },
   "Tools": {
@@ -118,6 +118,18 @@
       "title": "Konverter Gambar ke PDF",
       "desc": "Bungkus aset visual Anda menjadi dokumen PDF profesional. Merapikan foto-foto Anda dalam paket digital yang cantik."
     },
+    "pdf-to-jpg": {
+      "title": "Konverter PDF ke JPG",
+      "desc": "Ekstrak halaman dari dokumen PDF kamu menjadi gambar JPG berkualitas tinggi. Mengubah tumpukan dokumen jadi visual instan."
+    },
+    "pdf-to-word": {
+      "title": "Konverter PDF ke Word",
+      "desc": "Ubah dokumen PDF menjadi file Word yang bisa diedit. Mengembalikan kelenturan transmisi data kamu."
+    },
+    "docx-to-pdf": {
+      "title": "Konverter DOCX ke PDF",
+      "desc": "Ubah dokumen Microsoft Word menjadi file PDF yang portabel. Memperkuat laporan harian buat distribusi universal."
+    },
     "docx-compressor": {
       "title": "Kompresor Dokumen Word",
       "desc": "Optimalkan file Microsoft Word agar lebih mudah dibagikan. Ringankan beban tumpukan berkas birokrasi galaksi Anda."
@@ -200,7 +212,47 @@
     },
     "arvision": {
       "title": "3D AR Vision",
-      "desc": "Visualisator Augmented Reality untuk model 3D premium. Letakkan, skalakan, dan putar kursi futuristik atau robot di lingkungan dunia nyata Anda."
+      "desc": "Visualisator Augmented Reality untuk model 3D premium. Letakkan, skalakan, dan putar kursi futuristik atau robot di lingkungan dunia nyata kamu."
+    },
+    "heic-to-pdf": {
+      "title": "Konverter HEIC ke PDF",
+      "desc": "Bungkus foto iPhone kamu langsung jadi dokumen PDF yang rapi. Lewati proses ribet buat efisiensi maksimal."
+    },
+    "pdf-to-epub": {
+      "title": "Konverter PDF ke EPUB",
+      "desc": "Ubah dokumen kamu jadi format ebook yang nyaman dibaca. Dioptimalkan buat scrol digital di seluruh galaksi."
+    },
+    "epub-to-pdf": {
+      "title": "Konverter EPUB ke PDF",
+      "desc": "Ratakan format ebook kembali menjadi dokumen standar untuk dicetak atau dibagikan."
+    },
+    "ebook-converter": {
+      "title": "Konverter Ebook Universal",
+      "desc": "Transkode silang antara berbagai format ebook dan dokumen dengan mudah."
+    },
+    "webp-to-png": {
+      "title": "Konverter WEBP ke PNG",
+      "desc": "Ubah visual WEBP berefisiensi tinggi kembali ke format PNG tanpa kompresi."
+    },
+    "webp-to-jpg": {
+      "title": "Konverter WEBP ke JPG",
+      "desc": "Ganti aset WEBP ke format JPG standar untuk kompatibilitas maksimal di semua perangkat."
+    },
+    "jfif-to-png": {
+      "title": "Konverter JFIF ke PNG",
+      "desc": "Ubah gambar JFIF lama secara bersih menjadi format PNG modern yang mendukung transparansi."
+    },
+    "heic-to-png": {
+      "title": "Konverter HEIC ke PNG",
+      "desc": "Transformasi format khusus Apple menjadi visual PNG universal yang bening dan tajam."
+    },
+    "png-to-svg": {
+      "title": "Vektorisasi PNG ke SVG",
+      "desc": "Ubah piksel gambar PNG menjadi jalur vektor yang bisa diperbesar tanpa pecah. Resolusi tanpa batas buat ikon digitalmu."
+    },
+    "svg-converter": {
+      "title": "Rasterisasi SVG",
+      "desc": "Ubah file vektor SVG menjadi format gambar JPG, PNG, atau WEBP."
     }
   },
   "Coffee": {

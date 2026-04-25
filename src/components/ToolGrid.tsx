@@ -86,9 +86,13 @@ export default function ToolGrid({ limit }: ToolGridProps) {
           {t("title")}
         </h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20 perspective-1000">
           {featuredTools.map((tool, i) => tool && (
-            <Link href={`/tools/${tool.slug}`} key={i} className="tool-card group cursor-pointer relative overflow-hidden rounded-[24px] bg-[#060b19]/60 backdrop-blur-xl border border-white/5 p-5 md:p-10 transition-all duration-500 hover:bg-white/5 hover:border-sky-400/30 hover:shadow-[0_20px_60px_-15px_rgba(56,189,248,0.15)] block">
+            <Link 
+              href={`/tools/${tool.slug}`} 
+              key={i} 
+              className="tool-card group cursor-pointer relative overflow-hidden rounded-[24px] bg-[#060b19]/60 backdrop-blur-xl border border-white/5 p-5 md:p-10 transition-all duration-700 hover:bg-white/5 hover:border-sky-400/30 hover:shadow-[0_20px_60px_-15px_rgba(56,189,248,0.25)] block hover:-translate-y-2 hover:rotate-x-1 hover:rotate-y-1"
+            >
               <div className="absolute inset-0 bg-linear-to-br from-sky-400/0 via-sky-400/0 to-sky-400/10 opacity-0 transition-opacity duration-700 group-hover:opacity-100"></div>
               
               <div className="flex justify-between items-start mb-6">
@@ -106,7 +110,10 @@ export default function ToolGrid({ limit }: ToolGridProps) {
                 {td(`${tool.slug}.desc`)}
               </p>
               
-              <div className="relative z-10 mt-8 md:mt-10 flex items-center text-[10px] md:text-[11px] font-mono text-sky-500/70 uppercase tracking-[0.2em] group-hover:translate-x-2 group-hover:text-sky-400 transition-all duration-500">
+              <div 
+                className="relative z-10 mt-8 md:mt-10 flex items-center text-[10px] md:text-[11px] font-mono text-sky-500/70 uppercase tracking-[0.2em] group-hover:translate-x-2 group-hover:text-sky-400 transition-all duration-500"
+                aria-label={`Start using ${td(`${tool.slug}.title`)}`}
+              >
                 {t("initiate")} <span className="ml-3 transition-transform group-hover:scale-125">→</span>
               </div>
             </Link>
@@ -117,7 +124,7 @@ export default function ToolGrid({ limit }: ToolGridProps) {
           <Magnetic>
             <Link 
               href="/tools" 
-              className="group relative px-12 py-5 bg-white/5 border border-white/10 rounded-full text-white text-sm font-bold uppercase tracking-[0.3em] overflow-hidden transition-all hover:bg-white/10 hover:border-sky-500/50 hover:shadow-[0_0_40px_rgba(56,189,248,0.2)]"
+              className="group relative px-8 py-4 sm:px-12 sm:py-5 bg-white/5 border border-white/10 rounded-full text-white text-[10px] sm:text-sm font-bold uppercase tracking-[0.2em] sm:tracking-[0.3em] overflow-hidden transition-all hover:bg-white/10 hover:border-sky-500/50 hover:shadow-[0_0_40px_rgba(56,189,248,0.2)] text-center min-w-[200px] sm:min-w-fit"
             >
               <div className="absolute inset-0 bg-linear-to-r from-sky-500/0 via-sky-500/10 to-sky-500/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
               {t("viewAll")}

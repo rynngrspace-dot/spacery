@@ -81,12 +81,6 @@ export const TOOLS: Tool[] = [
     desc: "Swiftly switch between JPG, PNG, and WEBP formats. Change image identities faster than a galactic shapeshifter.",
     category: "Imaging"
   },
-  {
-    slug: "arvision",
-    title: "3D AR Vision",
-    desc: "Visualize premium 3D models in your own space using Augmented Reality. Perfect for virtual staging and spatial planning.",
-    category: "Imaging"
-  },
 
   // --- Motion ---
   { 
@@ -133,11 +127,89 @@ export const TOOLS: Tool[] = [
     desc: "Bundle your visual assets into a professional PDF document. Wrapping your photos in a neat digital package.",
     category: "Documents"
   },
+  {
+    slug: "pdf-to-jpg",
+    title: "PDF to JPG Converter",
+    desc: "Extract pages from your PDF documents as high-quality JPG images. Bringing document layers back to the visual plane.",
+    category: "Documents"
+  },
+  {
+    slug: "pdf-to-word",
+    title: "PDF to Word Converter",
+    desc: "Transform PDF documents into editable Word files. Reversing the static nature of your transmissions.",
+    category: "Documents"
+  },
+  {
+    slug: "docx-to-pdf",
+    title: "DOCX to PDF Converter",
+    desc: "Convert Microsoft Word documents into portable PDF files. Hardening your reports for universal distribution.",
+    category: "Documents"
+  },
   { 
     slug: "docx-compressor", 
     title: "Word Document Compressor", 
     desc: "Efficiently optimize Microsoft Word files for sharing. Lighten the load of your intergalactic paperwork.",
     category: "Documents"
+  },
+  {
+    slug: "heic-to-pdf",
+    title: "HEIC to PDF Converter",
+    desc: "Directly wrap your iPhone photos into a neat PDF document. Skipping the rasterization step for major efficiency.",
+    category: "Documents"
+  },
+  {
+    slug: "pdf-to-epub",
+    title: "PDF to EPUB Converter",
+    desc: "Transform your documents into reader-friendly ebook formats. Optimized for digital scrolls across the galaxy.",
+    category: "Documents"
+  },
+  {
+    slug: "epub-to-pdf",
+    title: "EPUB to PDF Converter",
+    desc: "Flatten ebook formats back into standard documents for printing or sharing.",
+    category: "Documents"
+  },
+  {
+    slug: "ebook-converter",
+    title: "Universal Ebook Converter",
+    desc: "Cross-transcode between various ebook and document formats with ease.",
+    category: "Documents"
+  },
+  {
+    slug: "webp-to-png",
+    title: "WEBP to PNG Converter",
+    desc: "Convert high-efficiency WEBP visuals back to lossless PNG formats.",
+    category: "Imaging"
+  },
+  {
+    slug: "webp-to-jpg",
+    title: "WEBP to JPG Converter",
+    desc: "Switch WEBP assets to standard JPG formats for maximum compatibility.",
+    category: "Imaging"
+  },
+  {
+    slug: "jfif-to-png",
+    title: "JFIF to PNG Converter",
+    desc: "Cleanly convert legacy JFIF images into modern, transparent PNG formats.",
+    category: "Imaging"
+  },
+  {
+    slug: "heic-to-png",
+    title: "HEIC to PNG Converter",
+    desc: "Transform specialized Apple formats into universal, lossless PNG visuals.",
+    category: "Imaging"
+  },
+  {
+    slug: "png-to-svg",
+    title: "PNG to SVG Vectorizer",
+    desc: "Trace raster PNG pixels into scalable vector paths. Infinite resolution for your digital icons.",
+    category: "Imaging"
+  },
+  {
+    slug: "svg-converter",
+    title: "SVG Rasterizer",
+    desc: "Convert vector SVG files into JPG, PNG, or WEBP raster formats.",
+    category: "Imaging"
   },
 
   // --- Data ---

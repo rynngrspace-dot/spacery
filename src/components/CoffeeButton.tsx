@@ -70,6 +70,7 @@ export default function CoffeeButton() {
           ref={buttonRef}
           onClick={handleClick}
           className="group relative flex flex-col items-center justify-center overflow-hidden rounded-2xl bg-[#060b19]/60 backdrop-blur-2xl border border-white/10 hover:border-sky-500/30 px-8 py-6 transition-all duration-500 hover:bg-sky-500/10 hover:shadow-[0_0_50px_rgba(56,189,248,0.2)] active:scale-95"
+          aria-label="Give a coffee to the developer"
         >
           {/* Subtle Glow */}
           <div className="absolute inset-0 z-0 bg-radial-gradient from-sky-500/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />

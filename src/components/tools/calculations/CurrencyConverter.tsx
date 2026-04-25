@@ -81,9 +81,9 @@ export default function CurrencyConverter() {
                 <select 
                   value={fromCurrency}
                   onChange={(e) => setFromCurrency(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl p-4 font-mono text-sm text-slate-300 focus:outline-none focus:border-sky-500/40"
+                  className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl p-4 font-mono text-sm text-slate-300 focus:outline-none focus:border-sky-500/40 appearance-none"
                 >
-                  {CURRENCIES.map(c => <option key={c.code} value={c.code}>{c.flag} {c.code} - {c.name}</option>)}
+                  {CURRENCIES.map(c => <option key={c.code} value={c.code} className="bg-[#0a0a0a]">{c.flag} {c.code} - {c.name}</option>)}
                 </select>
              </div>
 
@@ -103,9 +103,9 @@ export default function CurrencyConverter() {
                 <select 
                   value={toCurrency}
                   onChange={(e) => setToCurrency(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl p-4 font-mono text-sm text-slate-300 focus:outline-none focus:border-sky-500/40"
+                  className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl p-4 font-mono text-sm text-slate-300 focus:outline-none focus:border-sky-500/40 appearance-none"
                 >
-                  {CURRENCIES.map(c => <option key={c.code} value={c.code}>{c.flag} {c.code} - {c.name}</option>)}
+                  {CURRENCIES.map(c => <option key={c.code} value={c.code} className="bg-[#0a0a0a]">{c.flag} {c.code} - {c.name}</option>)}
                 </select>
              </div>
           </div>
@@ -152,7 +152,7 @@ export default function CurrencyConverter() {
 
       <div className="p-8 rounded-2xl bg-white/2 border border-white/5 text-center">
          <p className="text-[10px] font-mono text-slate-600 uppercase tracking-[0.3em] leading-relaxed max-w-lg mx-auto">
-           Real-time currency triangulation powered by Frankfurter open API. Synchronizing with global market indices.
+           Real-time exchange rates powered by Frankfurter API.
          </p>
       </div>
 
